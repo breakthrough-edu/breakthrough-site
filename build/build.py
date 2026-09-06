@@ -19,20 +19,26 @@ OUT = os.path.join(SITE, 'index.html')
 TPL = os.path.join(HERE, 'index.tpl.html')
 # Originals (full-size photos, the seven lockup vectors, the wordmark). Only read when a file under assets/
 # is missing or --refresh-photos is given; a checkout without this folder still rebuilds index.html.
-SOURCE = os.environ.get('BT_SOURCE', os.path.join(os.path.dirname(SITE), 'bold', 'assets'))
+_DRIVE = os.path.expanduser('~/Documents/Breakthrough-Assets/Breakthrough-EDU/website/homepage-design-2026-09-06/assets')
+SOURCE = os.environ.get('BT_SOURCE', _DRIVE)   # the design folder in the Drive asset library holds every original
 CAP = 160 * 1024          # every photo at or under 160KB as a JPEG
 QUALITIES = (80, 76, 72, 68, 64, 60, 55, 50)   # tried in order until the file fits under CAP
 
 # ---------------- photos: output name in assets/img -> (original under SOURCE, target width in px) ----------------
+# JW picked these on 2026-09-06 (photo-picker artifact); originals are in the Drive asset library, see build/README.md.
 PHOTOS = {
-    'live-grouphoto.jpg': ('grouphoto.jpg', 1000),
-    'live-talk.jpg':      ('talk.jpg', 720),
-    'live-pair.jpg':      ('group2.jpg', 720),
-    '2bi-classroom.jpg':  ('2bi.jpg', 1000),
-    '2bi-whiteboard.jpg': ('rows/2bi-2.jpg', 720),
-    '2bi-pair.jpg':       ('rows/2bi-3.jpg', 720),
-    'buildday-room.jpg':  ('rows/buildday.jpg', 1000),
-    'circle-pair.jpg':    ('group1.jpg', 640),
+    'live-grouphoto.jpg':  ('grouphoto.jpg', 1000),
+    'live-stage.jpg':      ('20260703_Breakthrough Live_316_talk.jpg', 720),
+    'live-audience.jpg':   ('20260703_Breakthrough Live_113_audience.jpg', 720),
+    '2bi-room.jpg':        ('DSC03599.jpg', 1000),
+    '2bi-huddle.jpg':      ('DSC03737.jpg', 720),
+    '2bi-pair.jpg':        ('rows/2bi-3.jpg', 720),
+    'buildday-front.jpg':  ('DSCF8211.JPG', 1000),
+    'buildday-board.jpg':  ('DSCF8123.JPG', 720),
+    'buildday-banner.jpg': ('DSCF8220.JPG', 720),
+    'bsbb-room.jpg':       ('DSC08837.jpg', 1000),
+    'bsbb-flipchart.jpg':  ('DSC08884.jpg', 720),
+    'bsbb-marker.jpg':     ('DSC08955.jpg', 720),
 }
 # ---------------- logos: the seven product lockups (<slug>-ink.svg), the wordmark bitmap, the favicon ----------------
 SLUGS = ('breakthrough-live', '2nd-brain-intensive', 'breakthrough-build-day', 'breakthrough-circle',
@@ -55,9 +61,9 @@ def need_source(what):
 
 def make_photo(name, src, width):
     """Resize the original to `width` (never upscale) and save a progressive JPEG under CAP, trying QUALITIES in order."""
-    from PIL import Image
+    from PIL import Image, ImageOps
     need_source(f'assets/img/{name}')
-    im = Image.open(os.path.join(SOURCE, src)).convert('RGB')
+    im = ImageOps.exif_transpose(Image.open(os.path.join(SOURCE, src))).convert('RGB')
     if im.width > width:
         im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
     for q in QUALITIES:
@@ -208,7 +214,7 @@ CARDS = {
     '{{CLK3}}': ('2nd-brain-intensive', '2nd Brain Intensive Cohort 02', 'Cohort 02'),
 }
 
-# ---------------- the seven rows (section 03) ----------------
+# ---------------- the rows (section 03); hidden=True keeps a row in the table but off the page ----------------
 # a photo slot: (file in assets/img, aspect, alt, extra style) ; None = paper card PHOTO · TO COME ; ('note', text) = the SKOOL sticker
 TAPE_A = '<i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i>'
 TAPE_B = '<i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i>'
@@ -235,27 +241,29 @@ def slot(letter, spec):
 ROWS = [
     dict(id='live', slug='breakthrough-live', name='Breakthrough Live', lw=1,
          pics=[('live-grouphoto.jpg', '4/3', 'Breakthrough Live 大合照, 挑高白墙空间里满场笔电', ''),
-               ('live-talk.jpg', '3/2', 'Jia Wei 在 Breakthrough Live 台上', ''),
-               ('live-pair.jpg', '3/2', '两位学员看着一台笔电一起 build', '')],
+               ('live-stage.jpg', '3/2', 'Jia Wei 在 Breakthrough Live 前面讲, 两边屏幕, 满场笔电', ''),
+               ('live-audience.jpg', '3/2', 'Breakthrough Live 全场举手', '')],
          para='每个月一个晚上, 免费, 线下。不是讲座, 是 build night: 先看 Jia Wei 现场跑自己的 2nd Brain, 再全场打开笔电, 一起 build 你自己的。走的时候, 你电脑里已经有一颗。',
          rec='Offline · Kaloz EDU, Shah Alam · 每月一个週五 8PM · 下一场 <b>9月11日</b>',
          action=('link', 'https://kalozedu.com/breakthrough-live')),
     dict(id='intensive', slug='2nd-brain-intensive', name='2nd Brain Intensive', lw=.84,
-         pics=[('2bi-classroom.jpg', '4/3', '2nd Brain Intensive 课堂, 学员穿黑色刷字 T 恤围着笔电', ''),
-               ('2bi-whiteboard.jpg', '3/2', 'Jia Wei 在白板前带 2nd Brain Intensive', ''),
+         pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
+               ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
          para='不是 AI 课, 是 2nd Brain 的课。两天, 把你做生意的那套判断, 从只在你脑袋里, build 进你自己的 2nd Brain, 装成你的 Personal OS。从那天起, AI 做出来的东西开始像你, 同事去问 AI 就像问你, 你不用再当全公司的硬盘; 再往上一步, 就是整间公司的 OS。教的人不是纸上谈兵, 他自己的生意, 每天就是这样跑的。',
          rec='两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>9月26至27日</b>',
          action=('link', 'https://kalozedu.com/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
     dict(id='buildday', slug='breakthrough-build-day', name='Breakthrough Build Day', lw=1,
-         pics=[('buildday-room.jpg', '4/3', 'Build Day 现场, 满桌笔电, 墙上 Breakthrough 刷字', ' style="--op:50% 12%"'),
-               None, None],
+         pics=[('buildday-front.jpg', '4/3', 'Build Day 现场, Jia Wei 在大屏前, 满桌笔电', ' style="--op:50% 42%"'),
+               ('buildday-board.jpg', '3/2', 'Jia Wei 指着屏幕讲一个系统怎么 build', ''),
+               ('buildday-banner.jpg', '3/2', 'Jia Wei 在 Breakthrough 立牌旁带 Build Day', ' style="--op:50% 42%"')],
          para='Circle 会员每个月一次的现场。带着生意上一个卡住的地方来, 一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来, 卡住了旁边就有人。',
          rec='Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>9月19日</b>',
          action=('soon',)),
     # Circle: a tall cluster (one portrait photo, the SKOOL sticker, one blank card), so it does not read as Build Day's wide cluster again
-    dict(id='circle', slug='breakthrough-circle', name='Breakthrough Circle', lw=1,
+    dict(id='circle', hidden=True,  # JW 2026-09-06: hidden until it has photos
+         slug='breakthrough-circle', name='Breakthrough Circle', lw=1,
          pics=[('circle-pair.jpg', '2/3', 'Jia Wei 跟一位 Circle 会员一起看一台笔电', ' style="width:50%"'),
                (None, ' style="width:44%;top:2%"'),
                ('note', 'SKOOL 社群', ' style="width:44%;left:42%;bottom:4%"')],
@@ -263,16 +271,20 @@ ROWS = [
          rec='SKOOL + WhatsApp · 会员每月一次 Build Day',
          action=('soon',)),
     dict(id='strategy', slug='brand-strategy-breakthrough', name='Brand Strategy Breakthrough', lw=.84,
-         pics=[None, None, None],
+         pics=[('bsbb-room.jpg', '4/3', 'Brand Strategy Breakthrough 课室, 学员围桌, 屏上是品牌图', ''),
+               ('bsbb-flipchart.jpg', '3/2', 'Jia Wei 在 flipchart 前带 Brand Strategy Breakthrough', ''),
+               ('bsbb-marker.jpg', '3/2', 'Jia Wei 在白板上写', ' style="--op:50% 22%"')],
          para='三天, build 你的品牌策略, 用的是我们自己的方法论 Da Vinci Code。从六个 pillar, 把品牌一层一层理清楚: 你的定位是什么, 你跟别人的差异到底在哪里, 客户为什么非选你不可。',
          rec='三天 · Offline · Kaloz EDU, Shah Alam',
          action=('link', 'https://claude.ai/code/artifact/013398e6-c655-4f95-85e8-b5fdff49907c')),
-    dict(id='challenge', slug='brand-launch-off-challenge', name='Brand Launch Off Challenge', lw=.84,
+    dict(id='challenge', hidden=True,  # JW 2026-09-06: hidden until it has photos
+         slug='brand-launch-off-challenge', name='Brand Launch Off Challenge', lw=.84,
          pics=[None, None, None],
          para='六个月的 challenge。我们跟你的团队一起, 把你的品牌从 0 build 到 launch, 从策略一路做到打市场; 不是听课, 是每一步真的做出来。',
          rec='六个月 · 带着你的团队一起',
          action=('soon',)),
-    dict(id='roundtable', slug='breakthrough-roundtable', name='Breakthrough Roundtable', lw=1,
+    dict(id='roundtable', hidden=True,  # JW 2026-09-06: hidden until it has photos
+         slug='breakthrough-roundtable', name='Breakthrough Roundtable', lw=1,
          pics=[None, None, None],
          para='别人的 Breakthrough, 是怎么 build 出来的? 一档访谈节目, 每集请一位真的在做生意的人坐下来, 不讲成功学, 拆他把方法落地的过程: 怎么判断、怎么取舍、踩过什么坑。',
          rec=None,
@@ -280,9 +292,12 @@ ROWS = [
 ]
 
 
+LIVE_ROWS = [r for r in ROWS if not r.get('hidden')]
+
+
 def rows_html():
     out = []
-    for i, r in enumerate(ROWS):
+    for i, r in enumerate(LIVE_ROWS):
         n = i + 1
         flip = ' flip' if n % 2 == 0 else ''
         pics = ''.join(slot(l, s) for l, s in zip('abc', r['pics']))
@@ -294,7 +309,7 @@ def rows_html():
         out.append(f'''    <div class="row{flip}" id="{r['id']}">
       <div class="pics">{pics}</div>
       <div class="txt">
-        <div class="idx">Row <b>{n:02d}</b> / {len(ROWS):02d}</div>
+        <div class="idx">Row <b>{n:02d}</b> / {len(LIVE_ROWS):02d}</div>
         {lockup(r['slug'], r['name'], r['lw'])}
         <p class="one">{r['para']}</p>{rec}
         {act}
@@ -331,6 +346,7 @@ rep = {
     '{{LOG}}': log_html(),
     '{{TAPEBAND}}': TAPEBAND,
     '{{ROWS}}': rows,
+    '{{NROWS}}': f'{len(LIVE_ROWS):02d}',
     '{{NOTE}}': NOTE,
     **cards,
 }
@@ -347,16 +363,18 @@ refs = re.findall(r'(?:src|href)="(assets/[^"]+)"', out)
 for r in refs:
     assert os.path.exists(os.path.join(SITE, r)), f'referenced file missing: {r}'
 photos = [r for r in refs if r.startswith('assets/img/')]
-assert len(photos) == 8 and len(set(photos)) == 8, 'eight photos, each referenced exactly once'
+assert len(photos) == len(PHOTOS) and len(set(photos)) == len(PHOTOS), 'every photo referenced exactly once'
 assert set(os.path.basename(p) for p in photos) == set(PHOTOS), 'every photo in PHOTOS is on the page'
 lks = [r for r in refs if r.endswith('-ink.svg')]
-assert len(lks) == 7 and len(set(lks)) == 7, 'seven lockups, each embedded exactly once'
+assert len(lks) == len(LIVE_ROWS) and len(set(lks)) == len(LIVE_ROWS), 'one lockup per visible row, each embedded exactly once'
 assert out.count(f'href="{rep["{{WM}}"]}"') == 1, 'wordmark bitmap referenced exactly once'
 for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
     assert out.count(f'href="#lk-{slug}"') == 2, f'{slug}: one use on its row, one on its sheet'
-assert out.count('<use href="#lk-') == 10, 'seven rows + three sheets'
+assert out.count('<use href="#lk-') == len(LIVE_ROWS) + 3, 'visible rows + three sheets'
 assert 'class="kind"' not in out, 'the kind line is gone from the sheets'
-assert '<div class="idx">Row <b>04</b> / 07</div>' in out and 'id="buildday"' in out
+assert '<div class="idx">Row <b>03</b> / 04</div>' in out and 'id="buildday"' in out
+for rid in ('circle', 'challenge', 'roundtable'):
+    assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'
 ext = re.findall(r'(?:src|href)="(https?://[^"]+)"', out)
 for u in ext:
     assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://wa.me/', 'https://www.skool.com/', 'https://claude.ai/')), u
