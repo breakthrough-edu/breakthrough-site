@@ -267,8 +267,16 @@ img{display:block;max-width:100%}
   .sheet .lkc{width:42%}
   .sheet .qb{padding:14px 22px 22px}
   .sheet .stampw{right:-8px}
-  .row,.row.flip{grid-template-columns:1fr;gap:34px}
-  .row.flip .pics{order:0}
+  /* one column, read like a page: Row index, the lockup (the title), then the photo cluster as the illustration, then the line, the record line, the action.
+     JW 2026-09-06: photos first felt wrong on a phone. .txt dissolves into the row's grid so its children can be ordered around the photos. */
+  .row,.row.flip{grid-template-columns:1fr;gap:0}
+  .row .txt{display:contents}
+  .row .idx{order:1}
+  .row .txt h3{order:2}
+  .row .pics,.row.flip .pics{order:3;margin:2px 0 28px}
+  .row .one{order:4}
+  .row .rec{order:5}
+  .row .btn,.row .soon{order:6}
 }
 @media (max-width:640px){
   .hero{min-height:0}
