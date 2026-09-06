@@ -128,11 +128,11 @@ def reg(slug):
 
 
 def card_lockup(slug, name, edition):
-    """The lockup printed on a sheet: static, no mask, no motion of its own (the sheet already has its slap).
-    A visually hidden text title stays for readers and screen readers; the edition is one mono line under it."""
+    """The lockup printed on the lower piece of a sheet: static, no mask, no motion of its own.
+    A visually hidden text title stays for readers and screen readers. (The edition is on the stub's serial, see stub().)"""
     x, y, w, h = reg(slug)
     return (f'<h3><svg class="lkc" viewBox="{x:g} {y:g} {w:g} {h:g}" aria-hidden="true" focusable="false"><use href="#lk-{slug}"/></svg>'
-            f'<span class="sr">{name}</span></h3>\n        <div class="ed">{edition}</div>')
+            f'<span class="sr">{name}</span></h3>')
 
 
 def lockup(slug, name, lw=1):
@@ -255,7 +255,39 @@ CARDS = {   # the three sheets, fixed order Live / Build Day / 2BI (their stamps
     '{{CLK2}}': ('breakthrough-build-day', f'Breakthrough Build Day {NEXT["buildday"]["edition"].split()[-1]}', NEXT['buildday']['edition']),
     '{{CLK3}}': ('2nd-brain-intensive', f'2nd Brain Intensive {NEXT["intensive"]["edition"]}', NEXT['intensive']['edition']),
 }
-DATES = {'{{D1}}': sheet_date(NEXT['live']), '{{D2}}': sheet_date(NEXT['buildday']), '{{D3}}': sheet_date(NEXT['intensive']),
+def entry_index(e):
+    """The number this event carries on the build-log tape (0001... counting every entry except the cursor)."""
+    n = 0
+    for status, date, label in ENTRIES:
+        if status == 'now':
+            continue
+        n += 1
+        if date == e['start'] and label == LOG_LABEL[e['kind']](e):
+            return n
+    raise AssertionError(f'{e["id"]} is not on the tape')
+
+
+def stub(e):
+    """The top piece of a sheet (B3, JW 2026-09-06): orange bar, the edition as a boxed serial that ticks up, and the ruled ledger field
+    with the DAY as the biggest thing on the card, month / weekday / time stacked in mono beside it, the tape's entry index ghosted behind."""
+    label, num = e['edition'].rsplit(' ', 1)                      # 'Vol 03' -> Vol, 03
+    a, b = d(e['start']), d(e['end'])
+    days = ' + '.join(WD[(a + datetime.timedelta(i)).weekday()] for i in range((b - a).days + 1))
+    if a == b:
+        n = f'<div class="n" aria-hidden="true">{a.day}</div>'
+    else:
+        n = f'<div class="n two" aria-hidden="true"><span>{a.day}<i>至</i></span><span>{b.day}</span></div>'
+    col = f'<span class="m">{a.month}月</span><span class="w">{days}</span>' + (f'<span class="t">{e["time"]}</span>' if e.get('time') else '')
+    return (f'<div class="stub">\n          <div class="bar"></div>\n'
+            f'          <div class="serial"><span><em>{label}</em> <b class="tick" data-v="{num}">{num}</b></span></div>\n'
+            f'          <div class="day" aria-label="{sheet_date(e)}">\n'
+            f'            <span class="idx" aria-hidden="true">{entry_index(e):04d}</span>\n'
+            f'            {n}\n'
+            f'            <div class="col" aria-hidden="true">{col}</div>\n'
+            f'          </div>\n        </div>')
+
+
+DATES = {'{{STUB1}}': stub(NEXT['live']), '{{STUB2}}': stub(NEXT['buildday']), '{{STUB3}}': stub(NEXT['intensive']),
          '{{NEXTMETA}}': d(min(e['start'] for e in NEXT.values())).strftime('%b %Y'), '{{REV}}': EV['synced']}
 
 # ---------------- the rows (section 03); hidden=True keeps a row in the table but off the page ----------------
@@ -422,7 +454,8 @@ assert out.count(f'href="{rep["{{WM}}"]}"') == 1, 'wordmark bitmap referenced ex
 for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
     assert out.count(f'href="#lk-{slug}"') == 2, f'{slug}: one use on its row, one on its sheet'
 assert out.count('<use href="#lk-') == len(LIVE_ROWS) + 3, 'visible rows + three sheets'
-assert 'class="kind"' not in out, 'the kind line is gone from the sheets'
+assert 'class="kind"' not in out and 'class="ed"' not in out, 'the kind and edition lines are gone from the sheets'
+assert out.count('class="idx" aria-hidden') == 3 and out.count('class="tick"') == 3, 'three stubs, each with its tape index and ticking serial'
 assert '<div class="idx">Row <b>03</b> / 04</div>' in out and 'id="buildday"' in out
 for rid in ('circle', 'challenge', 'roundtable'):
     assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'
