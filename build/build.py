@@ -260,7 +260,8 @@ ROWS = [
                ('buildday-banner.jpg', '3/2', 'Jia Wei 在 Breakthrough 立牌旁带 Build Day', ' style="--op:50% 42%"')],
          para='Circle 会员每个月一次的现场。带着生意上一个卡住的地方来, 一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来, 卡住了旁边就有人。',
          rec='Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>9月19日</b>',
-         action=('soon',)),
+         # JW 2026-09-06: WhatsApp button instead of the stamp (same link as the sheet in section 02)
+         action=('wa', 'https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day.')),
     # Circle: a tall cluster (one portrait photo, the SKOOL sticker, one blank card), so it does not read as Build Day's wide cluster again
     dict(id='circle', hidden=True,  # JW 2026-09-06: hidden until it has photos
          slug='breakthrough-circle', name='Breakthrough Circle', lw=1,
@@ -276,7 +277,7 @@ ROWS = [
                ('bsbb-marker.jpg', '3/2', 'Jia Wei 在白板上写', ' style="--op:50% 22%"')],
          para='三天, build 你的品牌策略, 用的是我们自己的方法论 Da Vinci Code。从六个 pillar, 把品牌一层一层理清楚: 你的定位是什么, 你跟别人的差异到底在哪里, 客户为什么非选你不可。',
          rec='三天 · Offline · Kaloz EDU, Shah Alam',
-         action=('link', 'https://claude.ai/code/artifact/013398e6-c655-4f95-85e8-b5fdff49907c')),
+         action=('none',)),   # JW 2026-09-06: no button until the BSBB page exists
     dict(id='challenge', hidden=True,  # JW 2026-09-06: hidden until it has photos
          slug='brand-launch-off-challenge', name='Brand Launch Off Challenge', lw=.84,
          pics=[None, None, None],
@@ -302,8 +303,13 @@ def rows_html():
         flip = ' flip' if n % 2 == 0 else ''
         pics = ''.join(slot(l, s) for l, s in zip('abc', r['pics']))
         rec = f'\n        <div class="rec">{r["rec"]}</div>' if r['rec'] else ''
-        if r['action'][0] == 'link':
+        kind = r['action'][0]
+        if kind == 'link':
             act = f'<a class="btn" href="{r["action"][1]}">了解更多 <span class="ar" aria-hidden="true">→</span></a>'
+        elif kind == 'wa':
+            act = f'<a class="btn" href="{r["action"][1]}">WhatsApp 我们 <span class="ar" aria-hidden="true">→</span></a>'
+        elif kind == 'none':
+            act = ''
         else:
             act = '<div class="soon"><span class="stamp">Coming soon</span></div>'
         out.append(f'''    <div class="row{flip}" id="{r['id']}">
