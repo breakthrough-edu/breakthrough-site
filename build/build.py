@@ -451,6 +451,7 @@ assert set(os.path.basename(p) for p in photos) == set(PHOTOS), 'every photo in 
 lks = [r for r in refs if r.endswith('-ink.svg')]
 assert len(lks) == len(LIVE_ROWS) and len(set(lks)) == len(LIVE_ROWS), 'one lockup per visible row, each embedded exactly once'
 assert out.count(f'href="{rep["{{WM}}"]}"') == 1, 'wordmark bitmap referenced exactly once'
+assert os.path.exists(os.path.join(IMG, 'og.jpg')) and 'assets/img/og.jpg"' in out, 'the share image (1200x630, wordmark on the wall black) is in place and declared'
 for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
     assert out.count(f'href="#lk-{slug}"') == 2, f'{slug}: one use on its row, one on its sheet'
 assert out.count('<use href="#lk-') == len(LIVE_ROWS) + 3, 'visible rows + three sheets'
