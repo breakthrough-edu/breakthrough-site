@@ -383,7 +383,7 @@ for rid in ('circle', 'challenge', 'roundtable'):
     assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'
 ext = re.findall(r'(?:src|href)="(https?://[^"]+)"', out)
 for u in ext:
-    assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://wa.me/', 'https://www.skool.com/', 'https://claude.ai/')), u
+    assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/', 'https://claude.ai/')), u
 assert out.startswith('<!doctype html>') and out.rstrip().endswith('</html>')
 
 open(OUT, 'w', encoding='utf-8').write(out)
