@@ -169,9 +169,51 @@ GRIT = svg_uri("""
 <rect width='200' height='80' filter='url(#g)'/>
 </svg>""")
 
+# ---------------- dates: everything dated on the page comes from build/events.json (see its _readme) ----------------
+import datetime, json
+EV = json.load(open(os.path.join(HERE, 'events.json'), encoding='utf-8'))
+NOW = EV['now']
+UPCOMING = [e for e in EV['upcoming'] if e['end'] >= NOW]          # still ahead of the cursor
+NEXT = {}                                                          # kind -> its next occurrence
+for e in UPCOMING:
+    NEXT.setdefault(e['kind'], e)
+for k in ('live', 'buildday', 'intensive'):
+    assert k in NEXT, f'events.json has no upcoming {k}: run build/sync-events.py (or the event has no brief yet)'
+WD = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
+
+
+def d(iso):
+    return datetime.date.fromisoformat(iso)
+
+
+def zh_date(e):
+    """9月11日  /  9月26至27日  (same month) /  9月30日至10月1日"""
+    a, b = d(e['start']), d(e['end'])
+    if a == b: return f'{a.month}月{a.day}日'
+    if a.month == b.month: return f'{a.month}月{a.day}至{b.day}日'
+    return f'{a.month}月{a.day}日至{b.month}月{b.day}日'
+
+
+def sheet_date(e):
+    """9月11日 · FRI · 8:00 PM  /  9月26至27日 · SAT + SUN"""
+    a, b = d(e['start']), d(e['end'])
+    days = ' + '.join(WD[(a + datetime.timedelta(i)).weekday()] for i in range((b - a).days + 1))
+    return f'{zh_date(e)} · {days}' + (f' · {e["time"]}' if e.get('time') else '')
+
+
+LOG_LABEL = {'live': lambda e: f'Breakthrough Live · {e["edition"].replace(" ", "")}',
+             'buildday': lambda e: f'Build Day {e["edition"].split()[-1]}',
+             'intensive': lambda e: f'2nd Brain Intensive · {e["edition"]}'}
+
 # ---------------- the build log (top tape) ----------------
-# (status, date, label)  status: x = built, o = scheduled, now = cursor
-ENTRIES = [
+# (status, date, label)  status: x = built, o = scheduled, now = cursor. History is curated in events.json;
+# upcoming entries come from the vault briefs via sync-events.py; an upcoming entry already behind `now` shows as built.
+ENTRIES = [("x", date, label) for date, label in EV['history']]
+ENTRIES += [("x" if e['end'] < NOW else "o", e['start'], LOG_LABEL[e['kind']](e)) for e in EV['upcoming']]
+ENTRIES += [("o", date, label) for date, label in EV.get('planned', []) if (date, label) not in {(t[1], t[2]) for t in ENTRIES}]
+ENTRIES.sort(key=lambda t: t[1])
+ENTRIES.insert(next(i for i, t in enumerate(ENTRIES + [(None, '9999', None)]) if t[1] > NOW), ("now", NOW, "Now"))
+_OLD_ENTRIES = [
     ("x", "2024-12-18", "Brand Strategy Breakthrough · Class 01"),
     ("x", "2026-03-19", "Brand Launch Off Challenge · Batch 01 start"),
     ("x", "2026-05-22", "Brand Strategy Breakthrough · Class 10"),
@@ -188,7 +230,7 @@ ENTRIES = [
     ("o", "2026-10-02", "Breakthrough Live · Vol04"),
     ("o", "2026-10-17", "Build Day 04"),
     ("o", "2026-10-24", "2nd Brain Intensive · Cohort 03"),
-]
+]   # (the hand-typed list the page shipped with on 2026-09-06; kept only as a record of the tape's first entries)
 
 
 def log_html():
@@ -208,11 +250,13 @@ TAPEBAND = ("<b>Think it.</b><i>//</i><b>Build it.</b><i>//</i><b class='o'>Brea
 
 # ---------------- the three sheets (section 02): which lockup and which edition line each card carries ----------------
 # The date, the stamp, the one-line copy and the go link of each sheet are typed in build/index.tpl.html.
-CARDS = {
-    '{{CLK1}}': ('breakthrough-live', 'Breakthrough Live Vol03', 'Vol 03'),
-    '{{CLK2}}': ('breakthrough-build-day', 'Breakthrough Build Day 03', 'No. 03'),
-    '{{CLK3}}': ('2nd-brain-intensive', '2nd Brain Intensive Cohort 02', 'Cohort 02'),
+CARDS = {   # the three sheets, fixed order Live / Build Day / 2BI (their stamps and sentences live in the template); edition + date from events.json
+    '{{CLK1}}': ('breakthrough-live', f'Breakthrough Live {NEXT["live"]["edition"].replace(" ", "")}', NEXT['live']['edition']),
+    '{{CLK2}}': ('breakthrough-build-day', f'Breakthrough Build Day {NEXT["buildday"]["edition"].split()[-1]}', NEXT['buildday']['edition']),
+    '{{CLK3}}': ('2nd-brain-intensive', f'2nd Brain Intensive {NEXT["intensive"]["edition"]}', NEXT['intensive']['edition']),
 }
+DATES = {'{{D1}}': sheet_date(NEXT['live']), '{{D2}}': sheet_date(NEXT['buildday']), '{{D3}}': sheet_date(NEXT['intensive']),
+         '{{NEXTMETA}}': d(min(e['start'] for e in NEXT.values())).strftime('%b %Y'), '{{REV}}': EV['synced']}
 
 # ---------------- the rows (section 03); hidden=True keeps a row in the table but off the page ----------------
 # a photo slot: (file in assets/img, aspect, alt, extra style) ; None = paper card PHOTO · TO COME ; ('note', text) = the SKOOL sticker
@@ -244,14 +288,14 @@ ROWS = [
                ('live-stage.jpg', '3/2', 'Jia Wei 在 Breakthrough Live 前面讲, 两边屏幕, 满场笔电', ''),
                ('live-audience.jpg', '3/2', 'Breakthrough Live 全场举手', '')],
          para='每个月一个晚上, 免费, 线下。不是讲座, 是 build night: 先看 Jia Wei 现场跑自己的 2nd Brain, 再全场打开笔电, 一起 build 你自己的。走的时候, 你电脑里已经有一颗。',
-         rec='Offline · Kaloz EDU, Shah Alam · 每月一个週五 8PM · 下一场 <b>9月11日</b>',
+         rec=f'Offline · Kaloz EDU, Shah Alam · 每月一个週五 8PM · 下一场 <b>{zh_date(NEXT["live"])}</b>',
          action=('link', 'https://kalozedu.com/breakthrough-live')),
     dict(id='intensive', slug='2nd-brain-intensive', name='2nd Brain Intensive', lw=.84,
          pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
                ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
          para='不是 AI 课, 是 2nd Brain 的课。两天, 把你做生意的那套判断, 从只在你脑袋里, build 进你自己的 2nd Brain, 装成你的 Personal OS。从那天起, AI 做出来的东西开始像你, 同事去问 AI 就像问你, 你不用再当全公司的硬盘; 再往上一步, 就是整间公司的 OS。教的人不是纸上谈兵, 他自己的生意, 每天就是这样跑的。',
-         rec='两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>9月26至27日</b>',
+         rec=f'两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
          action=('link', 'https://kalozedu.com/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
     dict(id='buildday', slug='breakthrough-build-day', name='Breakthrough Build Day', lw=1,
@@ -259,7 +303,7 @@ ROWS = [
                ('buildday-board.jpg', '3/2', 'Jia Wei 指着屏幕讲一个系统怎么 build', ''),
                ('buildday-banner.jpg', '3/2', 'Jia Wei 在 Breakthrough 立牌旁带 Build Day', ' style="--op:50% 42%"')],
          para='Circle 会员每个月一次的现场。带着生意上一个卡住的地方来, 一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来, 卡住了旁边就有人。',
-         rec='Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>9月19日</b>',
+         rec=f'Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>{zh_date(NEXT["buildday"])}</b>',
          # JW 2026-09-06: WhatsApp button instead of the stamp (same link as the sheet in section 02)
          action=('wa', 'https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day.')),
     # Circle: a tall cluster (one portrait photo, the SKOOL sticker, one blank card), so it does not read as Build Day's wide cluster again
@@ -355,6 +399,7 @@ rep = {
     '{{NROWS}}': f'{len(LIVE_ROWS):02d}',
     '{{NOTE}}': NOTE,
     **cards,
+    **DATES,
 }
 out = tpl
 for k, v in rep.items():

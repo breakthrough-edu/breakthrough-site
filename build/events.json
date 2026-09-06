@@ -1,0 +1,86 @@
+{
+ "_readme": "Every date on the page comes from here: the build-log tape (history + now + upcoming), the three sheets in section 02 (date line + edition), the rows' 下一场 line, and the Rev stamp. `upcoming` is written by build/sync-events.py from the vault's event briefs (never typed here); `history` is the curated past of the build log, edit by hand. Copy (the three sheets' sentences, the rows' paragraphs) stays in index.tpl.html / build.py, this file is dates only. `planned` is the tape-only list of dated-but-not-yet-briefed events (hand-typed, shown as scheduled on the tape, never on a sheet); once an occurrence brief exists and sync-events.py picks it up, delete the planned line (build.py also drops a planned entry whose date+label an upcoming one already covers).",
+ "synced": "2026-09-06",
+ "now": "2026-09-06",
+ "history": [
+  [
+   "2024-12-18",
+   "Brand Strategy Breakthrough · Class 01"
+  ],
+  [
+   "2026-03-19",
+   "Brand Launch Off Challenge · Batch 01 start"
+  ],
+  [
+   "2026-05-22",
+   "Brand Strategy Breakthrough · Class 10"
+  ],
+  [
+   "2026-07-03",
+   "Breakthrough Live · Vol01"
+  ],
+  [
+   "2026-07-25",
+   "Build Day 01"
+  ],
+  [
+   "2026-08-07",
+   "Breakthrough Live · Vol02"
+  ],
+  [
+   "2026-08-15",
+   "Build Day 02"
+  ],
+  [
+   "2026-08-20",
+   "Brand Launch Off Challenge · Batch 01 graduated"
+  ],
+  [
+   "2026-08-29",
+   "2nd Brain Intensive · Cohort 01"
+  ]
+ ],
+ "planned": [
+  [
+   "2026-10-02",
+   "Breakthrough Live · Vol04"
+  ],
+  [
+   "2026-10-17",
+   "Build Day 04"
+  ],
+  [
+   "2026-10-24",
+   "2nd Brain Intensive · Cohort 03"
+  ]
+ ],
+ "upcoming": [
+  {
+   "id": "vol03",
+   "kind": "live",
+   "edition": "Vol 03",
+   "start": "2026-09-11",
+   "end": "2026-09-11",
+   "time": "8:00 PM",
+   "link": "https://kalozedu.com/breakthrough-live"
+  },
+  {
+   "id": "build-day-03",
+   "kind": "buildday",
+   "edition": "No. 03",
+   "start": "2026-09-19",
+   "end": "2026-09-19",
+   "time": "",
+   "link": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
+  },
+  {
+   "id": "2bi-cohort-02",
+   "kind": "intensive",
+   "edition": "Cohort 02",
+   "start": "2026-09-26",
+   "end": "2026-09-27",
+   "time": "",
+   "link": "https://kalozedu.com/2nd-brain-intensive"
+  }
+ ]
+}
