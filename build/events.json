@@ -1,7 +1,7 @@
 {
  "_readme": "Every date on the page comes from here: the build-log tape (history + now + upcoming), the three sheets in section 02 (date line + edition), the rows' 下一场 line, and the Rev stamp. `upcoming` is written by build/sync-events.py from the vault's event briefs (never typed here); `history` is the curated past of the build log, edit by hand. Copy (the three sheets' sentences, the rows' paragraphs) stays in index.tpl.html / build.py, this file is dates only. `planned` is the tape-only list of dated-but-not-yet-briefed events (hand-typed, shown as scheduled on the tape, never on a sheet); once an occurrence brief exists and sync-events.py picks it up, delete the planned line (build.py also drops a planned entry whose date+label an upcoming one already covers).",
- "synced": "2026-09-06",
- "now": "2026-09-06",
+ "synced": "2026-09-12",
+ "now": "2026-09-12",
  "history": [
   [
    "2024-12-18",
@@ -42,10 +42,6 @@
  ],
  "planned": [
   [
-   "2026-10-02",
-   "Breakthrough Live · Vol04"
-  ],
-  [
    "2026-10-17",
    "Build Day 04"
   ],
@@ -81,6 +77,15 @@
    "end": "2026-09-27",
    "time": "",
    "link": "https://kalozedu.com/2nd-brain-intensive"
+  },
+  {
+   "id": "vol04",
+   "kind": "live",
+   "edition": "Vol 04",
+   "start": "2026-10-02",
+   "end": "2026-10-02",
+   "time": "8:00 PM",
+   "link": "https://kalozedu.com/breakthrough-live"
   }
  ]
 }
