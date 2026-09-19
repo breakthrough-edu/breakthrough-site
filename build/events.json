@@ -1,7 +1,7 @@
 {
  "_readme": "Every date on the page comes from here: the build-log tape (history + now + upcoming), the three sheets in section 02 (date line + edition), the rows' 下一场 line, and the Rev stamp. `upcoming` is written by build/sync-events.py from the vault's event briefs (never typed here); `history` is the curated past of the build log, edit by hand. Copy (the three sheets' sentences, the rows' paragraphs) stays in index.tpl.html / build.py, this file is dates only. `planned` is the tape-only list of dated-but-not-yet-briefed events (hand-typed, shown as scheduled on the tape, never on a sheet); once an occurrence brief exists and sync-events.py picks it up, delete the planned line (build.py also drops a planned entry whose date+label an upcoming one already covers).",
- "synced": "2026-09-12",
- "now": "2026-09-12",
+ "synced": "2026-09-20",
+ "now": "2026-09-20",
  "history": [
   [
    "2024-12-18",
@@ -40,16 +40,7 @@
    "2nd Brain Intensive · Cohort 01"
   ]
  ],
- "planned": [
-  [
-   "2026-10-17",
-   "Build Day 04"
-  ],
-  [
-   "2026-10-24",
-   "2nd Brain Intensive · Cohort 03"
-  ]
- ],
+ "planned": [],
  "upcoming": [
   {
    "id": "vol03",
@@ -86,6 +77,69 @@
    "end": "2026-10-02",
    "time": "8:00 PM",
    "link": "https://kalozedu.com/breakthrough-live"
+  },
+  {
+   "id": "build-day-04",
+   "kind": "buildday",
+   "edition": "No. 04",
+   "start": "2026-10-10",
+   "end": "2026-10-10",
+   "time": "",
+   "link": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
+  },
+  {
+   "id": "vol05",
+   "kind": "live",
+   "edition": "Vol 05",
+   "start": "2026-10-17",
+   "end": "2026-10-17",
+   "time": "1:30 PM",
+   "link": "https://kalozedu.com/breakthrough-live"
+  },
+  {
+   "id": "2bi-cohort-03",
+   "kind": "intensive",
+   "edition": "Cohort 03",
+   "start": "2026-10-24",
+   "end": "2026-10-25",
+   "time": "",
+   "link": "https://kalozedu.com/2nd-brain-intensive"
+  },
+  {
+   "id": "vol06",
+   "kind": "live",
+   "edition": "Vol 06",
+   "start": "2026-11-06",
+   "end": "2026-11-06",
+   "time": "8:00 PM",
+   "link": "https://kalozedu.com/breakthrough-live"
+  },
+  {
+   "id": "build-day-05",
+   "kind": "buildday",
+   "edition": "No. 05",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "time": "",
+   "link": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
+  },
+  {
+   "id": "vol07",
+   "kind": "live",
+   "edition": "Vol 07",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "time": "1:30 PM",
+   "link": "https://kalozedu.com/breakthrough-live"
+  },
+  {
+   "id": "2bi-cohort-04",
+   "kind": "intensive",
+   "edition": "Cohort 04",
+   "start": "2026-11-28",
+   "end": "2026-11-29",
+   "time": "",
+   "link": "https://kalozedu.com/2nd-brain-intensive"
   }
  ]
 }
