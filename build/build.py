@@ -179,6 +179,8 @@ for e in UPCOMING:
     NEXT.setdefault(e['kind'], e)
 for k in ('live', 'buildday', 'intensive'):
     assert k in NEXT, f'events.json has no upcoming {k}: run build/sync-events.py (or the event has no brief yet)'
+# 一个月两场 Live 之后 (decision 2026-09-20), section 02 要能印第二场; 没有第二场时第四格自己消失。
+LIVE2 = next((e for e in UPCOMING if e['kind'] == 'live' and e is not NEXT['live']), None)
 WD = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
 
 
@@ -255,6 +257,8 @@ CARDS = {   # the three sheets, fixed order Live / Build Day / 2BI (their stamps
     '{{CLK2}}': ('breakthrough-build-day', f'Breakthrough Build Day {NEXT["buildday"]["edition"].split()[-1]}', NEXT['buildday']['edition']),
     '{{CLK3}}': ('2nd-brain-intensive', f'2nd Brain Intensive {NEXT["intensive"]["edition"]}', NEXT['intensive']['edition']),
 }
+if LIVE2:
+    CARDS['{{CLK4}}'] = ('breakthrough-live', f'Breakthrough Live {LIVE2["edition"].replace(" ", "")}', LIVE2['edition'])
 def entry_index(e):
     """The number this event carries on the build-log tape (0001... counting every entry except the cursor)."""
     n = 0
@@ -288,6 +292,9 @@ def stub(e):
 
 
 DATES = {'{{STUB1}}': stub(NEXT['live']), '{{STUB2}}': stub(NEXT['buildday']), '{{STUB3}}': stub(NEXT['intensive']),
+         '{{STUB4}}': stub(LIVE2) if LIVE2 else '',
+         '{{S4CLS}}': 'sheetw' if LIVE2 else 'sheetw gone',
+         '{{NCOUNT}}': '4' if LIVE2 else '3',
          '{{NEXTMETA}}': d(min(e['start'] for e in NEXT.values())).strftime('%b %Y'), '{{REV}}': EV['synced']}
 
 # ---------------- the rows (section 03); hidden=True keeps a row in the table but off the page ----------------
@@ -419,6 +426,7 @@ print('photos:')
 rows = rows_html()
 # the three sheets carry the same lockups as their rows (registered above, so these are <use>s of the same image)
 cards = {k: card_lockup(*v) for k, v in CARDS.items()}
+if '{{CLK4}}' not in cards: cards['{{CLK4}}'] = ''
 logo(FAVICON)
 rep = {
     '{{HL}}': HL,
@@ -453,10 +461,13 @@ assert len(lks) == len(LIVE_ROWS) and len(set(lks)) == len(LIVE_ROWS), 'one lock
 assert out.count(f'href="{rep["{{WM}}"]}"') == 1, 'wordmark bitmap referenced exactly once'
 assert os.path.exists(os.path.join(IMG, 'og.jpg')) and 'assets/img/og.jpg"' in out, 'the share image (1200x630, wordmark on the wall black) is in place and declared'
 for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
-    assert out.count(f'href="#lk-{slug}"') == 2, f'{slug}: one use on its row, one on its sheet'
-assert out.count('<use href="#lk-') == len(LIVE_ROWS) + 3, 'visible rows + three sheets'
+    # 一行 + 一格; Live 在一个月两场的月份有两格 (decision 2026-09-20), 所以它是 2 或 3, 别的仍然只能是 2。
+    want = (2, 3) if (slug == 'breakthrough-live' and LIVE2) else (2,)
+    assert out.count(f'href="#lk-{slug}"') in want, f'{slug}: one use on its row, one per sheet (got {out.count(chr(34)+"#lk-"+slug+chr(34))})'
+assert out.count('<use href="#lk-') == len(LIVE_ROWS) + (4 if LIVE2 else 3), 'visible rows + the sheets (four when the month has two Lives)'
 assert 'class="kind"' not in out and 'class="ed"' not in out, 'the kind and edition lines are gone from the sheets'
-assert out.count('class="idx" aria-hidden') == 3 and out.count('class="tick"') == 3, 'three stubs, each with its tape index and ticking serial'
+N_SHEETS = 4 if LIVE2 else 3
+assert out.count('class="idx" aria-hidden') == N_SHEETS and out.count('class="tick"') == N_SHEETS, 'one stub per sheet, each with its tape index and ticking serial'
 assert '<div class="idx">Row <b>03</b> / 04</div>' in out and 'id="buildday"' in out
 for rid in ('circle', 'challenge', 'roundtable'):
     assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'

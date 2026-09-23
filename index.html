@@ -174,6 +174,13 @@ img{display:block;max-width:100%}
    the stub (orange bar, boxed serial, a ruled ledger field with the DAY as the biggest thing on the card and the tape's entry index ghosted behind)
    and the piece below it (lockup, one line, the go link; its block is .qb, not .quiet, which is the hero's link). At rest everything is already on the paper; the motion layer only stamps the writing in. ---------- */
 .sheets{--hero:clamp(104px,11.6vw,168px);--lh:24.75px;--rule:rgba(42,42,40,.11);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px);align-items:stretch;padding-top:18px}
+.sheetw.gone{display:none}
+/* 一个月两场 Live 的月份 = 四格 (decision 2026-09-20)。只有这一档收紧, 三格的月份维持原比例。 */
+.sheets.s4{--hero:clamp(70px,6.4vw,102px);grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.4vw,22px)}
+.sheets.s4 .sheet .day{padding:var(--pad-t) 16px 20px;gap:10px}
+.sheets.s4 .sheet .day .col{font-size:11px;letter-spacing:.14em;gap:7px}
+.sheets.s4 .sheet .day .idx{right:12px;bottom:8px;font-size:calc(var(--hero) * .5)}
+.sheets.s4 .piece .qb p{font-size:14px}
 .sheetw{display:flex;min-width:0}
 .sheet{position:relative;flex:1;min-width:0;color:var(--ink);display:grid;grid-template-rows:auto auto 1fr;transform:rotate(var(--r,0deg))}
 .stub{position:relative;background:var(--card);border:1px solid var(--ink);border-bottom:0}
@@ -259,7 +266,7 @@ img{display:block;max-width:100%}
   .tape-tail{display:none}
 }
 @media (max-width:820px){
-  .sheets{grid-template-columns:1fr;gap:34px}
+  .sheets,.sheets.s3,.sheets.s4{grid-template-columns:1fr;gap:34px}
   .sheet .serial{padding:18px 22px 0}
   .sheet .day{--pad-t:12px;padding:var(--pad-t) 22px 20px}
   .sheet .day .idx{right:18px}
@@ -420,9 +427,9 @@ img{display:block;max-width:100%}
     <div class="sh">
       <span class="n">02</span>
       <h2 class="h2" lang="en"><span class="l"><span>What's getting</span></span><span class="l"><span>built next.</span></span></h2>
-      <span class="meta">Next 3 entries · <b>Sep 2026</b></span>
+      <span class="meta">Next 4 entries · <b>Sep 2026</b></span>
     </div>
-    <div class="sheets">
+    <div class="sheets s4">
       <div class="sheetw"><article class="sheet">
         <div class="stampw" style="--sr:-8deg"><span class="stamp">Free meetup</span></div>
         <div class="stub">
@@ -440,6 +447,26 @@ img{display:block;max-width:100%}
           <div class="qb">
             <p>你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。</p>
             <a class="go" href="https://kalozedu.com/breakthrough-live">RSVP →</a>
+          </div>
+        </div>
+      </article></div>
+      <div class="sheetw"><article class="sheet">
+        <div class="stampw" style="--sr:5deg"><span class="stamp">Free meetup</span></div>
+        <div class="stub">
+          <div class="bar"></div>
+          <div class="serial"><span><em>Vol</em> <b class="tick" data-v="05">05</b></span></div>
+          <div class="day" aria-label="10月17日 · SAT · 1:30 PM">
+            <span class="idx" aria-hidden="true">0015</span>
+            <div class="n" aria-hidden="true">17</div>
+            <div class="col" aria-hidden="true"><span class="m">10月</span><span class="w">SAT</span><span class="t">1:30 PM</span></div>
+          </div>
+        </div>
+        <div class="tear" aria-hidden="true"></div>
+        <div class="piece">
+          <div class="what"><h3><svg class="lkc" viewBox="12.01 99.55 489 375.41" aria-hidden="true" focusable="false"><use href="#lk-breakthrough-live"/></svg><span class="sr">Breakthrough Live Vol05</span></h3></div>
+          <div class="qb">
+            <p>同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场; 日期近了在社群开放报名。</p>
+            <a class="go" href="https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm">进群 →</a>
           </div>
         </div>
       </article></div>
