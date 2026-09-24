@@ -254,7 +254,7 @@ TAPEBAND = ("<b>Think it.</b><i>//</i><b>Build it.</b><i>//</i><b class='o'>Brea
 # ---------------- the sheets (section 02): what each kind of event prints, and which events get a sheet ----------------
 # One table for every word on a sheet (the stamp, the one line, the go link), so the page and upcoming.json (the feed the
 # Student Portal reads, see FEED below) are both printed from it and can never disagree. Dates and editions come from events.json.
-SITE_URL = 'https://breakthrough-edu.github.io/breakthrough-site/'   # where GitHub Pages serves this repo; the feed's logo links are absolute
+SITE_URL = 'https://project-breakthrough.com.my/'   # where GitHub Pages serves this repo; the feed's logo links are absolute
 PRODUCT = {   # kind -> (lockup slug, the product's English name, the lockup's hidden title on a sheet)
     'live': ('breakthrough-live', 'Breakthrough Live', lambda e: f'Breakthrough Live {e["edition"].replace(" ", "")}'),
     'buildday': ('breakthrough-build-day', 'Build Day', lambda e: f'Breakthrough Build Day {e["edition"].split()[-1]}'),

@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-09-24T02:39:59Z",
- "source": "https://breakthrough-edu.github.io/breakthrough-site/",
+ "generatedAt": "2026-09-24T04:22:51Z",
+ "source": "https://project-breakthrough.com.my/",
  "events": [
   {
    "id": "2bi-cohort-02",
@@ -27,7 +27,7 @@
     "label": "REGISTER →",
     "href": "https://kalozedu.com/2nd-brain-intensive"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/2nd-brain-intensive-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0012",
    "onSheet": true
   },
@@ -54,7 +54,7 @@
     "label": "RSVP →",
     "href": "https://kalozedu.com/breakthrough-live"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-live-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0013",
    "onSheet": true
   },
@@ -81,7 +81,7 @@
     "label": "WHATSAPP US →",
     "href": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-build-day-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-build-day-ink.svg",
    "tapeIndex": "0014",
    "onSheet": true
   },
@@ -108,7 +108,7 @@
     "label": "进群 →",
     "href": "https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-live-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0015",
    "onSheet": true
   },
@@ -136,7 +136,7 @@
     "label": "REGISTER →",
     "href": "https://kalozedu.com/2nd-brain-intensive"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/2nd-brain-intensive-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0016",
    "onSheet": false
   },
@@ -163,7 +163,7 @@
     "label": "RSVP →",
     "href": "https://kalozedu.com/breakthrough-live"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-live-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0017",
    "onSheet": false
   },
@@ -190,7 +190,7 @@
     "label": "WHATSAPP US →",
     "href": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-build-day-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-build-day-ink.svg",
    "tapeIndex": "0018",
    "onSheet": false
   },
@@ -217,7 +217,7 @@
     "label": "进群 →",
     "href": "https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/breakthrough-live-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0019",
    "onSheet": false
   },
@@ -245,7 +245,7 @@
     "label": "REGISTER →",
     "href": "https://kalozedu.com/2nd-brain-intensive"
    },
-   "logo": "https://breakthrough-edu.github.io/breakthrough-site/assets/logos/2nd-brain-intensive-ink.svg",
+   "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0020",
    "onSheet": false
   }
