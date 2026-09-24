@@ -174,7 +174,6 @@ img{display:block;max-width:100%}
    the stub (orange bar, boxed serial, a ruled ledger field with the DAY as the biggest thing on the card and the tape's entry index ghosted behind)
    and the piece below it (lockup, one line, the go link; its block is .qb, not .quiet, which is the hero's link). At rest everything is already on the paper; the motion layer only stamps the writing in. ---------- */
 .sheets{--hero:clamp(104px,11.6vw,168px);--lh:24.75px;--rule:rgba(42,42,40,.11);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px);align-items:stretch;padding-top:18px}
-.sheetw.gone{display:none}
 /* 一个月两场 Live 的月份 = 四格 (decision 2026-09-20)。只有这一档收紧, 三格的月份维持原比例。 */
 .sheets.s4{--hero:clamp(70px,6.4vw,102px);grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.4vw,22px)}
 .sheets.s4 .sheet .day{padding:var(--pad-t) 16px 20px;gap:10px}
@@ -217,6 +216,14 @@ img{display:block;max-width:100%}
 .sheet .go{align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px;transition:color .2s,border-color .2s}
 .sheet .go:hover,.sheet .go:focus-visible{color:var(--orange)}
 .sheet .stampw{top:30px;right:-18px;z-index:3}
+/* a sheet too narrow for the stamp and the boxed serial side by side (four sheets from 821px to about 1250px wide, three near 821px):
+   the stamp keeps its corner, pulled in so it stays in the gutter, and the serial drops under it, so the two never touch
+   (2026-09-24: PAID WORKSHOP sat on COHORT 02 at 1000px). The sheet is the container, so the rule follows the sheet's own width. */
+.sheet{container:sheet/inline-size}
+@container sheet (max-width:290px){
+  .sheet .stampw{top:26px;right:-6px}
+  .sheet .serial{padding-top:62px}
+}
 
 /* ecosystem rows: seven of them, photos left / right / left, one 1px ink rule between rows. The product lockup is the row's title (ink version, on paper). */
 .row{display:grid;grid-template-columns:5fr 6fr;gap:clamp(24px,5vw,80px);align-items:center;padding:clamp(8px,2vh,24px) 0 clamp(32px,6vh,64px)}

@@ -174,7 +174,6 @@ img{display:block;max-width:100%}
    the stub (orange bar, boxed serial, a ruled ledger field with the DAY as the biggest thing on the card and the tape's entry index ghosted behind)
    and the piece below it (lockup, one line, the go link; its block is .qb, not .quiet, which is the hero's link). At rest everything is already on the paper; the motion layer only stamps the writing in. ---------- */
 .sheets{--hero:clamp(104px,11.6vw,168px);--lh:24.75px;--rule:rgba(42,42,40,.11);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px);align-items:stretch;padding-top:18px}
-.sheetw.gone{display:none}
 /* 一个月两场 Live 的月份 = 四格 (decision 2026-09-20)。只有这一档收紧, 三格的月份维持原比例。 */
 .sheets.s4{--hero:clamp(70px,6.4vw,102px);grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.4vw,22px)}
 .sheets.s4 .sheet .day{padding:var(--pad-t) 16px 20px;gap:10px}
@@ -217,6 +216,14 @@ img{display:block;max-width:100%}
 .sheet .go{align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px;transition:color .2s,border-color .2s}
 .sheet .go:hover,.sheet .go:focus-visible{color:var(--orange)}
 .sheet .stampw{top:30px;right:-18px;z-index:3}
+/* a sheet too narrow for the stamp and the boxed serial side by side (four sheets from 821px to about 1250px wide, three near 821px):
+   the stamp keeps its corner, pulled in so it stays in the gutter, and the serial drops under it, so the two never touch
+   (2026-09-24: PAID WORKSHOP sat on COHORT 02 at 1000px). The sheet is the container, so the rule follows the sheet's own width. */
+.sheet{container:sheet/inline-size}
+@container sheet (max-width:290px){
+  .sheet .stampw{top:26px;right:-6px}
+  .sheet .serial{padding-top:62px}
+}
 
 /* ecosystem rows: seven of them, photos left / right / left, one 1px ink rule between rows. The product lockup is the row's title (ink version, on paper). */
 .row{display:grid;grid-template-columns:5fr 6fr;gap:clamp(24px,5vw,80px);align-items:center;padding:clamp(8px,2vh,24px) 0 clamp(32px,6vh,64px)}
@@ -430,54 +437,7 @@ img{display:block;max-width:100%}
       <span class="meta">Next {{NCOUNT}} entries · <b>{{NEXTMETA}}</b></span>
     </div>
     <div class="sheets s{{NCOUNT}}">
-      <div class="sheetw"><article class="sheet">
-        <div class="stampw" style="--sr:-8deg"><span class="stamp">Free meetup</span></div>
-        {{STUB1}}
-        <div class="tear" aria-hidden="true"></div>
-        <div class="piece">
-          <div class="what">{{CLK1}}</div>
-          <div class="qb">
-            <p>你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。</p>
-            <a class="go" href="https://kalozedu.com/breakthrough-live">RSVP →</a>
-          </div>
-        </div>
-      </article></div>
-      <div class="{{S4CLS}}"><article class="sheet">
-        <div class="stampw" style="--sr:5deg"><span class="stamp">Free meetup</span></div>
-        {{STUB4}}
-        <div class="tear" aria-hidden="true"></div>
-        <div class="piece">
-          <div class="what">{{CLK4}}</div>
-          <div class="qb">
-            <p>同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场; 日期近了在社群开放报名。</p>
-            <a class="go" href="https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm">进群 →</a>
-          </div>
-        </div>
-      </article></div>
-      <div class="sheetw"><article class="sheet">
-        <div class="stampw" style="--sr:6deg"><span class="stamp">Members only</span></div>
-        {{STUB2}}
-        <div class="tear" aria-hidden="true"></div>
-        <div class="piece">
-          <div class="what">{{CLK2}}</div>
-          <div class="qb">
-            <p>带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。</p>
-            <a class="go" href="https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day.">WHATSAPP US →</a>
-          </div>
-        </div>
-      </article></div>
-      <div class="sheetw"><article class="sheet">
-        <div class="stampw" style="--sr:-7deg"><span class="stamp">Paid workshop</span></div>
-        {{STUB3}}
-        <div class="tear" aria-hidden="true"></div>
-        <div class="piece">
-          <div class="what">{{CLK3}}</div>
-          <div class="qb">
-            <p>你一直在当全公司的硬盘。两天, 把你怎么做生意的判断 build 进 2nd Brain, 装成你的 Personal OS: AI 照你的方式做事, 团队问 AI 就像问你。公司的 OS, 从这里开始。</p>
-            <a class="go" href="https://kalozedu.com/2nd-brain-intensive">REGISTER →</a>
-          </div>
-        </div>
-      </article></div>
+{{SHEETS}}
     </div>
   </section>
 

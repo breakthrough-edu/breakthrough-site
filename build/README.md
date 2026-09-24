@@ -14,9 +14,9 @@ python3 build/build.py
 
 - **`build.py` 顶部的表**
   - `ROWS`: 第三节的行 (Breakthrough Live, 2nd Brain Intensive, Build Day, Circle, Brand Strategy Breakthrough, Brand Launch Off Challenge, Roundtable) 的段落 `para`、记录行 `rec`、按钮 `action` (`('link', url)` 出「了解更多」, `('soon',)` 出 Coming soon 印章), 以及每行三张照片 `pics` (档名、宽高比、alt 中文描述)。行的顺序就是表的顺序。带 `hidden=True` 的行留在表里但不上页 (2026-09-06 起 Circle / Challenge / Roundtable 这样藏着, 等有照片: 拿掉 flag, 补 `pics`, 页脚 `index.tpl.html` 加回那行的锚点, 跑 build)。
-  - `CARDS`: 第二节三张卡各自印哪个产品的 lockup, 和 lockup 下那行期数 (Vol 03 / No. 03 / Cohort 02)。
+  - `SHEET_COPY` / `PRODUCT`: 第二节每张卡的印章字样、那一句话、go 链接 (字样与 href), 以及每种活动印哪个 lockup。卡上的字只住这里 (2026-09-24 起从模板搬来), 因为同一张表也印 `upcoming.json` (见下面「给 Portal 的 feed」)。Live 週六或週日那场用 `live-weekend` 那句, 週五那场用 `live` 那句。
   - `ENTRIES`: 顶上那条 build log 胶带的条目, `x` 是做过的, `o` 是排定的, `now` 是游标。⚠️ 2026-09-06 起不手打: 它从 `events.json` 生 (下面「改日期」)。
-- **`index.tpl.html`**: 三张卡的印章字样、那一句话和 go 链接; 页脚 (地址、链接); `<head>` 里的 title / description / og。CSS 和动画脚本也在这里, 但那是设计层, 不是改字。卡上的日期与届次不在这里 (见「改日期」)。
+- **`index.tpl.html`**: 页脚 (地址、链接); `<head>` 里的 title / description / og。CSS 和动画脚本也在这里, 但那是设计层, 不是改字。第二节的卡整张由 `build.py` 生 (模板里只剩 `{{SHEETS}}`), 卡上的日期与届次也不在这里 (见「改日期」)。
 
 ## 改日期
 
@@ -31,6 +31,15 @@ python3 build/build.py                 # 重出 index.html, 预览, 再 push
 `events.json` 里手写的只有两段: `history` (胶带上做过的往事) 和 `planned` (有日期还没 brief 的, 只上胶带不上卡; brief 开了就删那行)。⛔ 模板跟 build.py 里不准再打日期; 页要的日期 brief 没有, 去补 brief。这一步已经写进 Event Prep skill 的「Website sync」模式, 平常由它带着跑。
 
 改完跑一次 `python3 build/build.py`。脚本末尾有一串检查 (`PHOTOS` 里每张照片、每个可见行的 lockup 各引用一次, 外链只准 cdnjs / Google Fonts / kalozedu.com / wa.me / skool / claude.ai), 不过就会报错停下, 不会写出半成品。
+
+## 给 Portal 的 feed: `upcoming.json`
+
+每次 build 也在站根写 `upcoming.json` (上线后在 https://breakthrough-edu.github.io/breakthrough-site/upcoming.json , GitHub Pages 自带 `access-control-allow-origin: *`)。2BI Student Portal 的 Home 读它, 在右边那条「What's getting built next」印票根。
+
+- 内容: `events.json` 里还没过 `now` 的活动, 只收站上有字 (`SHEET_COPY`) 的那些, 按日期排; 每条带 id、kind、英文产品名、期数、起讫日期、月份与星期 (照卡上印的)、时间、印章字样、卡上那句话、go 链接的字样与 href、lockup 的绝对网址、`onSheet` (是不是第二节那几张卡之一)。`schemaVersion` 现在是 1; `generatedAt` 是内容最后一次变的时间, 内容没变就不动, 所以重跑 build 不会平白多出 diff。
+- 它跟卡永远一致: build 末尾把 feed 开头那几条跟页面上实际印出的卡逐项比 (从 HTML 读回来比, 不是跟表比), 对不上就停下不写。也要求 feed 开头就是那几张卡 (按日期); 哪天有一场不上卡的活动排在某张卡之前, build 会停下来说, 那时再决定卡的规则。
+- 改卡上的字 = 改 `SHEET_COPY`, 跑 build, 两处一起变。⛔ 别手改 `upcoming.json`。
+- 改 feed 的形状 (加减栏位) 前先想 Portal: 它用 Zod 整份验, 不认得的形状整份丢掉只显示 motto。要改就把 `schemaVersion` 加一, Portal 那边先接好新版再推站。
 
 ## 换照片
 

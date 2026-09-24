@@ -3,12 +3,13 @@
 
 Run from the site root:   python3 build/build.py
 Photos live in assets/img/ and logos in assets/logos/ as plain files; the page references them by
-relative path (no base64). Rebuilding rewrites index.html only. A photo already present in assets/img/
+relative path (no base64). Rebuilding rewrites index.html and upcoming.json (the events feed the Student Portal reads,
+printed from the same table as the section 02 sheets and checked against them). A photo already present in assets/img/
 is left exactly as it is, so swapping a photo = overwrite the file with the same name, no rebuild needed.
 A photo that is missing from assets/img/ is made from the original under SOURCE (resized + JPEG-compressed
 with the parameters below). `--refresh-photos` remakes every photo from SOURCE.
 """
-import argparse, io, os, re, shutil, sys
+import argparse, html, io, os, re, shutil, sys
 from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -250,15 +251,46 @@ def log_html():
 
 TAPEBAND = ("<b>Think it.</b><i>//</i><b>Build it.</b><i>//</i><b class='o'>Break through.</b><i>//</i>") * 4
 
-# ---------------- the three sheets (section 02): which lockup and which edition line each card carries ----------------
-# The date, the stamp, the one-line copy and the go link of each sheet are typed in build/index.tpl.html.
-CARDS = {   # the three sheets, fixed order Live / Build Day / 2BI (their stamps and sentences live in the template); edition + date from events.json
-    '{{CLK1}}': ('breakthrough-live', f'Breakthrough Live {NEXT["live"]["edition"].replace(" ", "")}', NEXT['live']['edition']),
-    '{{CLK2}}': ('breakthrough-build-day', f'Breakthrough Build Day {NEXT["buildday"]["edition"].split()[-1]}', NEXT['buildday']['edition']),
-    '{{CLK3}}': ('2nd-brain-intensive', f'2nd Brain Intensive {NEXT["intensive"]["edition"]}', NEXT['intensive']['edition']),
+# ---------------- the sheets (section 02): what each kind of event prints, and which events get a sheet ----------------
+# One table for every word on a sheet (the stamp, the one line, the go link), so the page and upcoming.json (the feed the
+# Student Portal reads, see FEED below) are both printed from it and can never disagree. Dates and editions come from events.json.
+SITE_URL = 'https://breakthrough-edu.github.io/breakthrough-site/'   # where GitHub Pages serves this repo; the feed's logo links are absolute
+PRODUCT = {   # kind -> (lockup slug, the product's English name, the lockup's hidden title on a sheet)
+    'live': ('breakthrough-live', 'Breakthrough Live', lambda e: f'Breakthrough Live {e["edition"].replace(" ", "")}'),
+    'buildday': ('breakthrough-build-day', 'Build Day', lambda e: f'Breakthrough Build Day {e["edition"].split()[-1]}'),
+    'intensive': ('2nd-brain-intensive', '2nd Brain Intensive', lambda e: f'2nd Brain Intensive {e["edition"]}'),
 }
-if LIVE2:
-    CARDS['{{CLK4}}'] = ('breakthrough-live', f'Breakthrough Live {LIVE2["edition"].replace(" ", "")}', LIVE2['edition'])
+WA_BUILD_DAY = 'https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day.'
+SHEET_COPY = {   # key -> the sheet's stamp, its one line, and its go link (label as printed, href)
+    'live': dict(stamp='Free meetup',
+                 para='你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。',
+                 cta='RSVP →', href='https://kalozedu.com/breakthrough-live'),
+    # 一个月两场 Live (decision 2026-09-20): 週五晚上那场用上面那句, 週末下午那场用这句 (它的字就是在讲周末下午)。
+    'live-weekend': dict(stamp='Free meetup',
+                         para='同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场; 日期近了在社群开放报名。',
+                         cta='进群 →', href='https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm'),
+    'buildday': dict(stamp='Members only',
+                     para='带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。',
+                     cta='WHATSAPP US →', href=WA_BUILD_DAY),
+    'intensive': dict(stamp='Paid workshop',
+                      para='你一直在当全公司的硬盘。两天, 把你怎么做生意的判断 build 进 2nd Brain, 装成你的 Personal OS: AI 照你的方式做事, 团队问 AI 就像问你。公司的 OS, 从这里开始。',
+                      cta='REGISTER →', href='https://kalozedu.com/2nd-brain-intensive'),
+}
+
+
+def copy_key(e):
+    """Which SHEET_COPY entry an event prints, or None when the site has no words for it (such an event is left out of the feed)."""
+    if e['kind'] == 'live':
+        return 'live-weekend' if d(e['start']).weekday() >= 5 else 'live'
+    return e['kind'] if e['kind'] in SHEET_COPY else None
+
+
+# The sheets in page order (Live, the month's second Live when there is one, Build Day, 2BI), each with the tilt of its stamp.
+SHEETS = [(NEXT['live'], '-8deg'), *([(LIVE2, '5deg')] if LIVE2 else []), (NEXT['buildday'], '6deg'), (NEXT['intensive'], '-7deg')]
+for e, _ in SHEETS:
+    assert copy_key(e), f'{e["id"]}: a sheet event needs words in SHEET_COPY'
+
+
 def entry_index(e):
     """The number this event carries on the build-log tape (0001... counting every entry except the cursor)."""
     n = 0
@@ -291,10 +323,76 @@ def stub(e):
             f'          </div>\n        </div>')
 
 
-DATES = {'{{STUB1}}': stub(NEXT['live']), '{{STUB2}}': stub(NEXT['buildday']), '{{STUB3}}': stub(NEXT['intensive']),
-         '{{STUB4}}': stub(LIVE2) if LIVE2 else '',
-         '{{S4CLS}}': 'sheetw' if LIVE2 else 'sheetw gone',
-         '{{NCOUNT}}': '4' if LIVE2 else '3',
+def sheet_html(e, tilt):
+    """One whole sheet: the stamp, the stub, the perforation, and the lower piece (lockup, the one line, the go link), all from
+    SHEET_COPY and events.json. Call it after rows_html(), so the lockups are registered in the rows' order."""
+    c = SHEET_COPY[copy_key(e)]
+    slug, _, title = PRODUCT[e['kind']]
+    return (f'      <div class="sheetw"><article class="sheet">\n'
+            f'        <div class="stampw" style="--sr:{tilt}"><span class="stamp">{escape(c["stamp"])}</span></div>\n'
+            f'        {stub(e)}\n'
+            f'        <div class="tear" aria-hidden="true"></div>\n'
+            f'        <div class="piece">\n'
+            f'          <div class="what">{card_lockup(slug, title(e), e["edition"])}</div>\n'
+            f'          <div class="qb">\n'
+            f'            <p>{escape(c["para"])}</p>\n'
+            f'            <a class="go" href="{escape(c["href"], quote=True)}">{escape(c["cta"])}</a>\n'
+            f'          </div>\n'
+            f'        </div>\n'
+            f'      </article></div>')
+
+
+def escape(text, quote=False):
+    """HTML-escape copy for the page (the feed keeps the plain text); none of today's words need it, so the page is unchanged."""
+    return html.escape(text, quote=quote)
+
+
+# ---------------- the feed (upcoming.json at the site root): the events this site describes, for the Student Portal's Home ----------------
+FEED_FILE = os.path.join(SITE, 'upcoming.json')
+FEED_SCHEMA = 1
+
+
+def feed_entry(e):
+    """One upcoming event as the Portal reads it. Every value is the one the site prints (or would print on a sheet), taken from
+    the same helpers the sheets use."""
+    c = SHEET_COPY[copy_key(e)]
+    slug, product, _ = PRODUCT[e['kind']]
+    label, num = e['edition'].rsplit(' ', 1)
+    a, b = d(e['start']), d(e['end'])
+    logo_file = os.path.join(LOGOS, f'{slug}-ink.svg')
+    assert os.path.exists(logo_file), f'feed logo missing: {logo_file}'
+    return {
+        'id': e['id'],
+        'kind': e['kind'],
+        'product': product,
+        'edition': e['edition'],
+        'editionLabel': label,
+        'editionNumber': num,
+        'start': e['start'],
+        'end': e['end'],
+        'days': [str(a.day)] if a == b else [str(a.day), str(b.day)],   # the big day number(s) the stub prints
+        'through': '至',                                                 # printed between the two days of a range
+        'month': f'{a.month}月',
+        'weekdays': ' + '.join(WD[(a + datetime.timedelta(i)).weekday()] for i in range((b - a).days + 1)),
+        'time': e.get('time') or None,
+        'dateLine': sheet_date(e),
+        'stamp': c['stamp'],
+        'paragraph': c['para'],
+        'cta': {'label': c['cta'], 'href': c['href']},
+        'logo': f'{SITE_URL}assets/logos/{slug}-ink.svg',
+        'tapeIndex': f'{entry_index(e):04d}',                            # the build-log number ghosted on the stub
+        'onSheet': any(e is s for s, _ in SHEETS),
+    }
+
+
+def feed():
+    """The feed: every upcoming event (end on or after events.json's `now`) the site has words for, in date order. The sheets
+    are the first of them; events past the sheets come after (the Portal filters by the learner's own date and shows at most four)."""
+    events = sorted((e for e in UPCOMING if copy_key(e)), key=lambda e: (e['start'], e['end'], e['id']))
+    return {'schemaVersion': FEED_SCHEMA, 'generatedAt': None, 'source': SITE_URL, 'events': [feed_entry(e) for e in events]}
+
+
+DATES = {'{{NCOUNT}}': str(len(SHEETS)),
          '{{NEXTMETA}}': d(min(e['start'] for e in NEXT.values())).strftime('%b %Y'), '{{REV}}': EV['synced']}
 
 # ---------------- the rows (section 03); hidden=True keeps a row in the table but off the page ----------------
@@ -424,9 +522,8 @@ DESIGN NOTE · MIX-BLACK V6 (two client comments, 2026-09-06)
 tpl = open(TPL, encoding='utf-8').read()
 print('photos:')
 rows = rows_html()
-# the three sheets carry the same lockups as their rows (registered above, so these are <use>s of the same image)
-cards = {k: card_lockup(*v) for k, v in CARDS.items()}
-if '{{CLK4}}' not in cards: cards['{{CLK4}}'] = ''
+# the sheets carry the same lockups as their rows (registered above, so these are <use>s of the same image)
+sheets = '\n'.join(sheet_html(e, tilt) for e, tilt in SHEETS)
 logo(FAVICON)
 rep = {
     '{{HL}}': HL,
@@ -438,7 +535,7 @@ rep = {
     '{{ROWS}}': rows,
     '{{NROWS}}': f'{len(LIVE_ROWS):02d}',
     '{{NOTE}}': NOTE,
-    **cards,
+    '{{SHEETS}}': sheets,
     **DATES,
 }
 out = tpl
@@ -476,7 +573,65 @@ for u in ext:
     assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/', 'https://claude.ai/')), u
 assert out.startswith('<!doctype html>') and out.rstrip().endswith('</html>')
 
+# ---------------- the feed: printed from the same table as the sheets, then held to the sheets as the finished page shows them ----------------
+FEED = feed()
+
+
+def rendered_sheets(page):
+    """What each sheet on the finished page says, read back out of the HTML (not out of SHEET_COPY), in page order."""
+    got = []
+    for block in re.findall(r'<article class="sheet">(.*?)</article>', page, re.S):
+        one = lambda rx: html.unescape(re.search(rx, block, re.S).group(1))
+        slug = one(r'<use href="#lk-(.*?)"/>')
+        got.append({
+            'stamp': one(r'<span class="stamp">(.*?)</span>'),
+            'editionLabel': one(r'<em>(.*?)</em>'),
+            'editionNumber': one(r'data-v="(.*?)"'),
+            'dateLine': one(r'class="day" aria-label="(.*?)"'),
+            'days': re.findall(r'(\d+)(?:<i>|</span>|</div>)', re.search(r'<div class="n[^"]*" aria-hidden="true">(.*?)</div>', block, re.S).group(1) + '</div>'),
+            'tapeIndex': one(r'<span class="idx" aria-hidden="true">(.*?)</span>'),
+            'paragraph': one(r'<p>(.*?)</p>'),
+            'cta': {'label': one(r'<a class="go" href="[^"]*">(.*?)</a>'), 'href': one(r'<a class="go" href="([^"]*)"')},
+            'logo': f'{SITE_URL}assets/logos/{slug}-ink.svg',
+        })
+    return got
+
+
+PAGE_SHEETS = rendered_sheets(out)
+assert len(PAGE_SHEETS) == len(SHEETS), f'the page shows {len(PAGE_SHEETS)} sheets, SHEETS lists {len(SHEETS)}'
+BY_DATE = sorted(range(len(SHEETS)), key=lambda i: (SHEETS[i][0]['start'], SHEETS[i][0]['end'], SHEETS[i][0]['id']))
+FIRST = FEED['events'][:len(SHEETS)]
+assert [f['id'] for f in FIRST] == [SHEETS[i][0]['id'] for i in BY_DATE], (
+    'upcoming.json must open with the sheets, in date order; an event that is not on a sheet now falls before one that is: '
+    f'{[f["id"] for f in FIRST]} vs {[SHEETS[i][0]["id"] for i in BY_DATE]}')
+for f, i in zip(FIRST, BY_DATE):
+    want = {k: f[k] for k in PAGE_SHEETS[i]}
+    assert want == PAGE_SHEETS[i], f'upcoming.json {f["id"]} differs from its sheet on the page: {want} vs {PAGE_SHEETS[i]}'
+    assert f['onSheet'], f['id']
+assert not any(f['onSheet'] for f in FEED['events'][len(SHEETS):]), 'only the sheets are marked onSheet'
+assert all(f['logo'].startswith('https://') for f in FEED['events']), 'feed logos are absolute https links'
+assert len({f['id'] for f in FEED['events']}) == len(FEED['events']), 'feed ids are unique'
+
+
+def write_feed(body):
+    """Write upcoming.json. generatedAt is when its content last changed: a rebuild that changes nothing keeps the old stamp,
+    so the file stays byte-identical run after run like index.html."""
+    old = None
+    if os.path.exists(FEED_FILE):
+        try:
+            old = json.load(open(FEED_FILE, encoding='utf-8'))
+        except ValueError:
+            old = None
+    rest = lambda f: {k: v for k, v in f.items() if k != 'generatedAt'}
+    stamp = old.get('generatedAt') if isinstance(old, dict) and rest(old) == rest(body) else None
+    body = dict(body, generatedAt=stamp or datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z'))
+    open(FEED_FILE, 'w', encoding='utf-8').write(json.dumps(body, ensure_ascii=False, indent=1) + '\n')
+    return body
+
+
 open(OUT, 'w', encoding='utf-8').write(out)
+FEED = write_feed(FEED)
+print(f'upcoming.json {len(FEED["events"])} events ({len(SHEETS)} on sheets) · generatedAt {FEED["generatedAt"]}')
 size = lambda p: os.path.getsize(p)
 assets = sum(size(os.path.join(d, f)) for d, _, fs in os.walk(os.path.join(SITE, 'assets')) for f in fs)
 print(f'index.html {size(OUT)/1024:.0f} KB · assets/ {assets/1024/1024:.2f} MB')
