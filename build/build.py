@@ -267,8 +267,8 @@ SHEET_COPY = {   # key -> the sheet's stamp, its one line, and its go link (labe
                  cta='RSVP →', href='https://kalozedu.com/breakthrough-live'),
     # 一个月两场 Live (decision 2026-09-20): 週五晚上那场用上面那句, 週末下午那场用这句 (它的字就是在讲周末下午)。
     'live-weekend': dict(stamp='Free meetup',
-                         para='同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场; 日期近了在社群开放报名。',
-                         cta='进群 →', href='https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm'),
+                         para='同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场。',
+                         cta='RSVP →', href='https://kalozedu.com/breakthrough-live'),   # 报名页两场同时开放 (decision 2026-09-24), 不再指社群
     'buildday': dict(stamp='Members only',
                      para='带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。',
                      cta='WHATSAPP US →', href=WA_BUILD_DAY),
