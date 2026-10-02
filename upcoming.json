@@ -1,36 +1,8 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-09-24T05:38:25Z",
+ "generatedAt": "2026-10-02T05:01:11Z",
  "source": "https://project-breakthrough.com.my/",
  "events": [
-  {
-   "id": "2bi-cohort-02",
-   "kind": "intensive",
-   "product": "2nd Brain Intensive",
-   "edition": "Cohort 02",
-   "editionLabel": "Cohort",
-   "editionNumber": "02",
-   "start": "2026-09-26",
-   "end": "2026-09-27",
-   "days": [
-    "26",
-    "27"
-   ],
-   "through": "至",
-   "month": "9月",
-   "weekdays": "SAT + SUN",
-   "time": null,
-   "dateLine": "9月26至27日 · SAT + SUN",
-   "stamp": "Paid workshop",
-   "paragraph": "你一直在当全公司的硬盘。两天, 把你怎么做生意的判断 build 进 2nd Brain, 装成你的 Personal OS: AI 照你的方式做事, 团队问 AI 就像问你。公司的 OS, 从这里开始。",
-   "cta": {
-    "label": "REGISTER →",
-    "href": "https://kalozedu.com/2nd-brain-intensive"
-   },
-   "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
-   "tapeIndex": "0012",
-   "onSheet": true
-  },
   {
    "id": "vol04",
    "kind": "live",
@@ -138,7 +110,7 @@
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0016",
-   "onSheet": false
+   "onSheet": true
   },
   {
    "id": "vol06",
