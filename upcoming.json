@@ -1,35 +1,8 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-02T05:01:11Z",
+ "generatedAt": "2026-10-02T06:35:34Z",
  "source": "https://project-breakthrough.com.my/",
  "events": [
-  {
-   "id": "vol04",
-   "kind": "live",
-   "product": "Breakthrough Live",
-   "edition": "Vol 04",
-   "editionLabel": "Vol",
-   "editionNumber": "04",
-   "start": "2026-10-02",
-   "end": "2026-10-02",
-   "days": [
-    "2"
-   ],
-   "through": "至",
-   "month": "10月",
-   "weekdays": "FRI",
-   "time": "8:00 PM",
-   "dateLine": "10月2日 · FRI · 8:00 PM",
-   "stamp": "Free meetup",
-   "paragraph": "你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。",
-   "cta": {
-    "label": "RSVP →",
-    "href": "https://kalozedu.com/breakthrough-live"
-   },
-   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
-   "tapeIndex": "0013",
-   "onSheet": true
-  },
   {
    "id": "build-day-04",
    "kind": "buildday",
@@ -137,7 +110,7 @@
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0017",
-   "onSheet": false
+   "onSheet": true
   },
   {
    "id": "build-day-05",

@@ -1,7 +1,7 @@
 {
  "_readme": "Every date on the page comes from here: the build-log tape (history + now + upcoming), the three sheets in section 02 (date line + edition), the rows' 下一场 line, and the Rev stamp. `upcoming` is written by build/sync-events.py from the vault's event briefs (never typed here); `history` is the curated past of the build log, edit by hand. Copy (the three sheets' sentences, the rows' paragraphs) stays in index.tpl.html / build.py, this file is dates only. `planned` is the tape-only list of dated-but-not-yet-briefed events (hand-typed, shown as scheduled on the tape, never on a sheet); once an occurrence brief exists and sync-events.py picks it up, delete the planned line (build.py also drops a planned entry whose date+label an upcoming one already covers).",
- "synced": "2026-10-02",
- "now": "2026-10-02",
+ "synced": "2026-10-03",
+ "now": "2026-10-03",
  "history": [
   [
    "2024-12-18",
