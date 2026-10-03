@@ -274,7 +274,7 @@ SHEET_COPY = {   # key -> the sheet's stamp, its one line, and its go link (labe
                      cta='WHATSAPP US →', href=WA_BUILD_DAY),
     # JW 2026-10-04: 2BI is the two days Included in Breakthrough Circle, no longer a course sold on its own. No「Personal OS → Company OS」, and no「十步」either: a stranger has no context for it.
     'intensive': dict(stamp='Included in Circle',
-                      para='你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起把它写进你自己的 2nd Brain, 之后每个月 Build Day 回来继续 build。',
+                      para='你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起搭起一个认得你、照你的方法替你做事的 2nd Brain, 之后你回去接着 build, 每个月带着手上在做的东西回来 Build Day。',
                       cta='JOIN →', href='https://kalozedu.com/2nd-brain-intensive'),
 }
 
@@ -432,7 +432,7 @@ ROWS = [
          pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
                ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
-         para='很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天就是做这件事, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你。这两天是加入 Breakthrough Circle 之后先上的, 之后每个月有一天 Build Day, 你带着下一个想做的东西回来, 我们继续一起 build。',
+         para='很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天从这件事做起, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你, 接着让它每天照你的方法替你做事, 公司那一层也搭出第一版。这两天是加入 Breakthrough Circle 之后先上的, 之后你回去在自己的生意里接着 build, 卡住了在会员群里问, 每个月有一天 Build Day, 你带着手上在做的东西回来, 我们继续一起 build。',
          rec=f'Included in Circle · 两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
          action=('link', 'https://kalozedu.com/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
