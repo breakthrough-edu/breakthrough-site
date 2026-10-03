@@ -272,9 +272,10 @@ SHEET_COPY = {   # key -> the sheet's stamp, its one line, and its go link (labe
     'buildday': dict(stamp='Members only',
                      para='带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。',
                      cta='WHATSAPP US →', href=WA_BUILD_DAY),
-    'intensive': dict(stamp='Paid workshop',
-                      para='你一直在当全公司的硬盘。两天, 把你怎么做生意的判断 build 进 2nd Brain, 装成你的 Personal OS: AI 照你的方式做事, 团队问 AI 就像问你。公司的 OS, 从这里开始。',
-                      cta='REGISTER →', href='https://kalozedu.com/2nd-brain-intensive'),
+    # JW 2026-10-04: 2BI is the two days Included in Breakthrough Circle, no longer a course sold on its own. No「Personal OS → Company OS」, and no「十步」either: a stranger has no context for it.
+    'intensive': dict(stamp='Included in Circle',
+                      para='你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起把它写进你自己的 2nd Brain, 之后每个月 Build Day 回来继续 build。',
+                      cta='JOIN →', href='https://kalozedu.com/2nd-brain-intensive'),
 }
 
 
@@ -431,8 +432,8 @@ ROWS = [
          pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
                ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
-         para='不是 AI 课, 是 2nd Brain 的课。两天, 把你做生意的那套判断, 从只在你脑袋里, build 进你自己的 2nd Brain, 装成你的 Personal OS。从那天起, AI 做出来的东西开始像你, 同事去问 AI 就像问你, 你不用再当全公司的硬盘; 再往上一步, 就是整间公司的 OS。教的人不是纸上谈兵, 他自己的生意, 每天就是这样跑的。',
-         rec=f'两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
+         para='很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天就是做这件事, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你。这两天是加入 Breakthrough Circle 之后先上的, 之后每个月有一天 Build Day, 你带着下一个想做的东西回来, 我们继续一起 build。',
+         rec=f'Included in Circle · 两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
          action=('link', 'https://kalozedu.com/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
     dict(id='buildday', slug='breakthrough-build-day', name='Breakthrough Build Day', lw=1,
