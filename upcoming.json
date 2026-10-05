@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-03T21:42:13Z",
+ "generatedAt": "2026-10-05T05:57:49Z",
  "source": "https://project-breakthrough.com.my/",
  "events": [
   {
@@ -18,8 +18,8 @@
    "through": "至",
    "month": "10月",
    "weekdays": "SAT",
-   "time": null,
-   "dateLine": "10月10日 · SAT",
+   "time": "10AM to 7PM",
+   "dateLine": "10月10日 · SAT · 10AM to 7PM",
    "stamp": "Members only",
    "paragraph": "带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。",
    "cta": {
@@ -51,7 +51,7 @@
    "paragraph": "同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场。",
    "cta": {
     "label": "RSVP →",
-    "href": "https://kalozedu.com/breakthrough-live"
+    "href": "https://join.project-breakthrough.com.my/breakthrough-live"
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0015",
@@ -79,7 +79,7 @@
    "paragraph": "你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起搭起一个认得你、照你的方法替你做事的 2nd Brain, 之后你回去接着 build, 每个月带着手上在做的东西回来 Build Day。",
    "cta": {
     "label": "JOIN →",
-    "href": "https://kalozedu.com/2nd-brain-intensive"
+    "href": "https://join.project-breakthrough.com.my/2nd-brain-intensive"
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0016",
@@ -106,7 +106,7 @@
    "paragraph": "你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。",
    "cta": {
     "label": "RSVP →",
-    "href": "https://kalozedu.com/breakthrough-live"
+    "href": "https://join.project-breakthrough.com.my/breakthrough-live"
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0017",
@@ -127,8 +127,8 @@
    "through": "至",
    "month": "11月",
    "weekdays": "SAT",
-   "time": null,
-   "dateLine": "11月14日 · SAT",
+   "time": "10AM to 7PM",
+   "dateLine": "11月14日 · SAT · 10AM to 7PM",
    "stamp": "Members only",
    "paragraph": "带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。",
    "cta": {
@@ -160,7 +160,7 @@
    "paragraph": "同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场。",
    "cta": {
     "label": "RSVP →",
-    "href": "https://kalozedu.com/breakthrough-live"
+    "href": "https://join.project-breakthrough.com.my/breakthrough-live"
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0019",
@@ -188,7 +188,7 @@
    "paragraph": "你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起搭起一个认得你、照你的方法替你做事的 2nd Brain, 之后你回去接着 build, 每个月带着手上在做的东西回来 Build Day。",
    "cta": {
     "label": "JOIN →",
-    "href": "https://kalozedu.com/2nd-brain-intensive"
+    "href": "https://join.project-breakthrough.com.my/2nd-brain-intensive"
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/2nd-brain-intensive-ink.svg",
    "tapeIndex": "0020",

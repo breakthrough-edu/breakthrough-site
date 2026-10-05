@@ -264,18 +264,18 @@ WA_BUILD_DAY = 'https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20
 SHEET_COPY = {   # key -> the sheet's stamp, its one line, and its go link (label as printed, href)
     'live': dict(stamp='Free meetup',
                  para='你的生意, 有多少只住在你脑袋里? 来现场, 看 2nd Brain 怎么让 AI 真的帮得上你, 然后当场 build 一颗自己的。',
-                 cta='RSVP →', href='https://kalozedu.com/breakthrough-live'),
+                 cta='RSVP →', href='https://join.project-breakthrough.com.my/breakthrough-live'),
     # 一个月两场 Live (decision 2026-09-20): 週五晚上那场用上面那句, 週末下午那场用这句 (它的字就是在讲周末下午)。
     'live-weekend': dict(stamp='Free meetup',
                          para='同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场。',
-                         cta='RSVP →', href='https://kalozedu.com/breakthrough-live'),   # 报名页两场同时开放 (decision 2026-09-24), 不再指社群
+                         cta='RSVP →', href='https://join.project-breakthrough.com.my/breakthrough-live'),   # 报名页两场同时开放 (decision 2026-09-24), 不再指社群
     'buildday': dict(stamp='Members only',
                      para='带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。',
                      cta='WHATSAPP US →', href=WA_BUILD_DAY),
     # JW 2026-10-04: 2BI is the two days Included in Breakthrough Circle, no longer a course sold on its own. No「Personal OS → Company OS」, and no「十步」either: a stranger has no context for it.
     'intensive': dict(stamp='Included in Circle',
                       para='你怎么做生意的那套东西, 现在只有你脑袋里有。加入 Breakthrough Circle 先上这两天, 我们一起搭起一个认得你、照你的方法替你做事的 2nd Brain, 之后你回去接着 build, 每个月带着手上在做的东西回来 Build Day。',
-                      cta='JOIN →', href='https://kalozedu.com/2nd-brain-intensive'),
+                      cta='JOIN →', href='https://join.project-breakthrough.com.my/2nd-brain-intensive'),
 }
 
 
@@ -427,14 +427,14 @@ ROWS = [
                ('live-audience.jpg', '3/2', 'Breakthrough Live 全场举手', '')],
          para='每个月两场, 免费, 线下。不是讲座, 是一起动手: 先看 Jia Wei 现场跑自己的 2nd Brain, 再全场打开笔电, 一起 build 你自己的。走的时候, 你电脑里已经有一颗。',
          rec=f'Offline · Kaloz EDU, Shah Alam · 每月两场 (週五晚上 · 週六下午) · 下一场 <b>{zh_date(NEXT["live"])}</b>',
-         action=('link', 'https://kalozedu.com/breakthrough-live')),
+         action=('link', 'https://join.project-breakthrough.com.my/breakthrough-live')),
     dict(id='intensive', slug='2nd-brain-intensive', name='2nd Brain Intensive', lw=.84,
          pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
                ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
          para='很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天从这件事做起, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你, 接着让它每天照你的方法替你做事, 公司那一层也搭出第一版。这两天是加入 Breakthrough Circle 之后先上的, 之后你回去在自己的生意里接着 build, 卡住了在会员群里问, 每个月有一天 Build Day, 你带着手上在做的东西回来, 我们继续一起 build。',
          rec=f'Included in Circle · 两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
-         action=('link', 'https://kalozedu.com/2nd-brain-intensive')),
+         action=('link', 'https://join.project-breakthrough.com.my/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
     dict(id='buildday', slug='breakthrough-build-day', name='Breakthrough Build Day', lw=1,
          pics=[('buildday-front.jpg', '4/3', 'Build Day 现场, Jia Wei 在大屏前, 满桌笔电', ' style="--op:50% 42%"'),
@@ -571,7 +571,7 @@ for rid in ('circle', 'challenge', 'roundtable'):
     assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'
 ext = re.findall(r'(?:src|href)="(https?://[^"]+)"', out)
 for u in ext:
-    assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/', 'https://claude.ai/')), u
+    assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://join.project-breakthrough.com.my/', 'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/', 'https://claude.ai/')), u
 assert out.startswith('<!doctype html>') and out.rstrip().endswith('</html>')
 
 # ---------------- the feed: printed from the same table as the sheets, then held to the sheets as the finished page shows them ----------------
