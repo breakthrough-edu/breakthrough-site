@@ -705,7 +705,7 @@ def record_page(r):
             assert os.path.exists(os.path.join(SITE, 'assets', 'film', f'{f}.{ext}')), f'film file missing: assets/film/{f}.{ext}'
         film = (f'<div class="x-film"><video controls playsinline preload="none" poster="{ROOT}assets/film/{f}.jpg" aria-label="{escape(rec_label(r), quote=True)} highlight">'
                 f'<source src="{ROOT}assets/film/{f}.mp4" type="video/mp4"></video>'
-                f'<div><span class="x-k">Film · {r["film"]["duration"]}</span><h2>The highlight.</h2><p>这一场剪成的一支短片。</p></div></div>')
+                f'<div><span class="x-k">Film · {r["film"]["duration"]}</span><h2>The highlight.</h2></div></div>')
     fields = (f'<div><dt>Date</dt><dd>{when(r)}</dd></div><div><dt>Line</dt><dd>{escape(r["name"])}</dd></div>'
               f'<div><dt>Where</dt><dd>{escape(REC["where"])}</dd></div><div><dt>Record</dt><dd><b>{len(imgs)}</b> photos{" · 1 film" if r.get("film") else ""}</dd></div>')
     pn = ((f'<a href="{ROOT}log/{older["key"]}/">← {escape(older["edition"])}</a>' if older else '<span></span>')
