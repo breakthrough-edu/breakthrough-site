@@ -1,0 +1,1012 @@
+{
+ "_readme": "Everything the build log pages print: section 03 on the homepage, /log/, one page per record under /log/<key>/, the two pooled photo pages (/log/live/, /log/build-day/) and /roundtable/. build.py reads this file and writes the pages; nothing here is typed into a template. ADD A RECORD (a 2BI cohort, a one-off milestone): one entry in `records` (key = its folder under /log/, dates, edition, `copy` naming a block in `copy`, photos) and its photos in assets/rec/ as <key>-lead.jpg + <key>-01.jpg ... The homepage's section 03 shows `home.featured` wide and the newest record of line `home.latest_line` beside it, so a new cohort takes the 2BI card by itself. ADD PHOTOS TO A POOLED PAGE (Live, Build Day): append to that collection's `photos`, each with `cap` saying which edition it is from. The Editions range on the page is counted from build/events.json (editions already held), not typed. PHOTOS: the first photo of a list is the lead (1600px on the long side), the rest are 960px, JPEG q78; `w`/`h` are the file's pixels, `orig` is the original's path inside the Drive asset library (~/Documents/Breakthrough-Assets/), `group` marks a posed group photo (it only changes the alt text). A record or collection may carry `og_focus` (0 = top, 1 = bottom, default 0.5): where its share picture (assets/og/<key>.jpg, cut 1200x630 from the lead photo) sits; delete the file in assets/og/ to have it cut again. The owner picks every photo himself on the picker page; nothing here is auto-selected. COPY: `text` is the short line on cards, `long` the paragraphs on the page (signed Jia Wei). Change words in the vault's SOT first, then here. ROUNDTABLE: `episodes` lists only episodes that are published on YouTube, numbered as YouTube numbers them and matched by the guest's name; the cover is assets/rt/<file>.jpg. Add an episode here when it is published, not before.",
+ "home": {
+  "featured": "bloc-batch-01-luncheon",
+  "latest_line": "2bi"
+ },
+ "lines": {
+  "2bi": "2BI",
+  "bloc": "BLOC",
+  "bsbb": "BSBB"
+ },
+ "where": "Shah Alam, Malaysia",
+ "copy": {
+  "2bi": {
+   "text": "每一届来的人都不一样; 但是坐下来, 大家都是打开自己的电脑, 拿自己真实的生意, 亲手把自己的 2nd Brain build 出来。",
+   "long": [
+    "每一届来的人都不一样, 做的生意不一样, 走到的阶段不一样, 对 AI 的熟悉程度也不一样; 但是坐下来的那一刻, 大家想解决的其实是同一件事: 自己怎么做生意的那一套, 一直只放在自己的脑袋里。",
+    "这两天我们做的, 就是把这些东西一样一样写下来, 写进属于自己的 2nd Brain。没有人替谁代做, 每个人都是打开自己的电脑, 拿自己真实的生意, 亲手把它 build 出来。过程不算轻松, 可是每一次看到有人发现 AI 做出来的东西终于像他自己, 我都会觉得这两天很值得。",
+    "两天结束, 带回去的是一个认得自己的 2nd Brain, 还有一群同样愿意自己动手的人。"
+   ]
+  },
+  "bloc-luncheon": {
+   "text": "他们来自不同的背景, 有着不同的身份; 但是来到这里, 每个人就只是一个想认认真真把事情一件一件落实的人。走完半年, 我们没有办典礼, 只是一桌人坐下来好好吃一顿饭。",
+   "long": [
+    "这半年我最喜欢的, 是跟这群人一起 brainstorm 的时候。他们可能各自来自不同的背景, 有着不同的身份, 有过不同的经历; 但是他们来到这里, 每个人就只是一个想认认真真把心里想要完成的目标, 一件一件落地落实的人。",
+    "他们遇到的问题各不相同, 需要的解法自然也不一样, 所以在这里, 从来没有一套谁都适用的标准答案。更多的时候, 是大家坐在一起, 你一言我一语地帮彼此把问题看清楚; 有时候自己以为卡在这一步, 旁人一听, 才发现真正卡住的地方其实在更前面。问题看准了, 接下来该怎么做, 心里往往也就有了答案。",
+    "Brand Launch Off Challenge 就是这样一路走了半年。走完的那一天, 我们没有办什么典礼, 只是订了一间包间, 一桌人坐下来好好吃一顿饭, 聊的依然是各自手上正在做的事。我很珍惜能遇到这样一群志同道合的人, 不爱空谈, 只想踏踏实实把事情 build 出来。在 Breakthrough, 走进来的每一个人, 都是 builder。"
+   ]
+  }
+ },
+ "log": {
+  "lede": "这里记着 Breakthrough 一路走来发生过的事, 每一件, 都是大家真的做出来的。"
+ },
+ "records": [
+  {
+   "key": "2bi-cohort-02",
+   "line": "2bi",
+   "lockup": "2nd-brain-intensive",
+   "name": "2nd Brain Intensive",
+   "edition": "Cohort 02",
+   "start": "2026-09-26",
+   "end": "2026-09-27",
+   "stamp": "Built",
+   "copy": "2bi",
+   "photos": [
+    {
+     "src": "2bi-cohort-02-lead.jpg",
+     "w": 1600,
+     "h": 1067,
+     "orig": "2BI/2026-09-cohort-02/photos/Group Photo/20260927_190915.JPG",
+     "group": true
+    },
+    {
+     "src": "2bi-cohort-02-01.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8297.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-02.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8346.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-03.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8381.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-04.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8411.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-05.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8426.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-06.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8432.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-07.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8465.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-08.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8484.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-09.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8485.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-10.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8497.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-11.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-26 Day 1/DSCF8509.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-12.jpg",
+     "w": 900,
+     "h": 600,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC01940.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-13.jpg",
+     "w": 900,
+     "h": 600,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC01975.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-14.jpg",
+     "w": 600,
+     "h": 900,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC01978.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-15.jpg",
+     "w": 600,
+     "h": 900,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC01986.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-16.jpg",
+     "w": 600,
+     "h": 900,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02008.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-17.jpg",
+     "w": 600,
+     "h": 900,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02030.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-18.jpg",
+     "w": 600,
+     "h": 900,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02035.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-19.jpg",
+     "w": 900,
+     "h": 600,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02063.jpg"
+    },
+    {
+     "src": "2bi-cohort-02-20.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02096.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-21.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02102.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-22.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02113.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-23.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02134.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-24.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02135.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-25.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02138.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-26.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02142.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-27.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02149.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-28.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02150.JPG"
+    },
+    {
+     "src": "2bi-cohort-02-29.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-09-cohort-02/photos/2026-09-27 Day 2/DSC02190.JPG"
+    }
+   ]
+  },
+  {
+   "key": "bloc-batch-01-luncheon",
+   "line": "bloc",
+   "lockup": "brand-launch-off-challenge",
+   "name": "Brand Launch Off Challenge",
+   "edition": "Batch 01 · Graduation luncheon",
+   "start": "2026-09-21",
+   "end": "2026-09-21",
+   "stamp": "Milestone",
+   "milestone": true,
+   "film": {
+    "file": "bloc-batch-01-luncheon",
+    "duration": "0:45"
+   },
+   "copy": "bloc-luncheon",
+   "photos": [
+    {
+     "src": "bloc-batch-01-luncheon-lead.jpg",
+     "w": 1600,
+     "h": 1067,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01556.jpg",
+     "group": true
+    },
+    {
+     "src": "bloc-batch-01-luncheon-01.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01214.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-02.jpg",
+     "w": 648,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01218.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-03.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01256.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-04.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01258.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-05.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01268.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-06.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01294.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-07.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01300.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-08.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01339.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-09.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01345.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-10.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01349.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-11.jpg",
+     "w": 960,
+     "h": 539,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01375.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-12.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01407.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-13.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01433.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-14.jpg",
+     "w": 696,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01444.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-15.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01452.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-16.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01458.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-17.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01462.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-18.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01469.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-19.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01472.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-20.jpg",
+     "w": 610,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01479.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-21.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01489.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-22.jpg",
+     "w": 664,
+     "h": 960,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01501.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-23.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01503.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-24.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01507.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-25.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01509.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-26.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01533.jpg",
+     "group": true
+    },
+    {
+     "src": "bloc-batch-01-luncheon-27.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01540.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-28.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01543.jpg"
+    },
+    {
+     "src": "bloc-batch-01-luncheon-29.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01561.jpg",
+     "group": true
+    }
+   ]
+  },
+  {
+   "key": "2bi-cohort-01",
+   "line": "2bi",
+   "lockup": "2nd-brain-intensive",
+   "name": "2nd Brain Intensive",
+   "edition": "Cohort 01",
+   "start": "2026-08-29",
+   "end": "2026-08-30",
+   "stamp": "Built",
+   "film": {
+    "file": "2bi-cohort-01",
+    "duration": "1:20"
+   },
+   "copy": "2bi",
+   "photos": [
+    {
+     "src": "2bi-cohort-01-lead.jpg",
+     "w": 1600,
+     "h": 1067,
+     "orig": "2BI/2026-08-cohort-01/photos/Group Photo/DSC03656.jpg",
+     "group": true
+    },
+    {
+     "src": "2bi-cohort-01-01.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-29 Day 1/DSC03187.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-02.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-29 Day 1/DSC03253.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-03.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-29 Day 1/DSC03455.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-04.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-29 Day 1/DSC03505.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-05.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03566.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-06.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03571.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-07.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03582.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-08.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03589.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-09.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03600.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-10.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03615.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-11.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03621.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-12.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03624.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-13.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03625.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-14.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03628.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-15.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03634.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-16.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03637.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-17.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03644.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-18.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03648.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-19.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03668.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-20.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03670.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-21.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03688.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-22.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03696.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-23.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03697.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-24.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03708.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-25.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03716.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-26.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03732.jpg"
+    },
+    {
+     "src": "2bi-cohort-01-27.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-08-cohort-01/photos/2026-08-30 Day 2/DSC03737.jpg"
+    }
+   ]
+  }
+ ],
+ "collections": [
+  {
+   "key": "live",
+   "kind": "live",
+   "lockup": "breakthrough-live",
+   "name": "Breakthrough Live",
+   "h1": "Every volume.",
+   "since": "2026 · 7月",
+   "edition_label": "Vol",
+   "text": "很多人第一次走进 Breakthrough, 就是从这一场开始的。没有人只是坐着听, 全场一起打开电脑, 亲手踏出自己 2nd Brain 的第一步。",
+   "long": [
+    "Breakthrough Live 是很多人第一次走进来的地方。有人是朋友带来的, 有人是自己看到就报名了, 有人其实还不太确定 AI 跟自己的生意有什么关系; 但是这一场, 没有人只是坐着听。",
+    "我会先把我自己每天在用的 2nd Brain 打开给大家看, 然后全场一起打开电脑, 把属于自己的 2nd Brain 起一个头。一场的时间做不完, 也不需要急着做完; 能够亲手踏出第一步, 知道这条路自己走得通, 就已经很好了。我们每个月都把门打开, 欢迎每一个想亲手试一试的人。"
+   ],
+   "photos": [
+    {
+     "src": "live-lead.jpg",
+     "w": 1600,
+     "h": 1200,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/IDG_20260703_224735_505.JPG",
+     "cap": "Vol 01",
+     "group": true
+    },
+    {
+     "src": "live-01.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_029_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-02.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_040_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-03.jpg",
+     "w": 960,
+     "h": 540,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_095_talk.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-04.jpg",
+     "w": 960,
+     "h": 540,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_109_audience.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-05.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_216_talk.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-06.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_220_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-07.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_238_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-08.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_251_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-09.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_262_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-10.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_273_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-11.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_274_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-12.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_276_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-13.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_278_groupwork.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-14.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_316_talk.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-15.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/20260703_Breakthrough Live_328_talk.jpg",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-16.jpg",
+     "w": 960,
+     "h": 720,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/IDG_20260703_202731_687.JPG",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-17.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/IMG_1786.HEIC",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-18.jpg",
+     "w": 960,
+     "h": 720,
+     "orig": "Breakthrough-Live/2026-07-vol01/photos/IMG_1796.HEIC",
+     "cap": "Vol 01"
+    },
+    {
+     "src": "live-19.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-09-vol03/photos/DSC00858.jpg",
+     "cap": "Vol 03"
+    },
+    {
+     "src": "live-20.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-09-vol03/photos/DSC00912.jpg",
+     "cap": "Vol 03"
+    },
+    {
+     "src": "live-21.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-09-vol03/photos/DSC00975.jpg",
+     "cap": "Vol 03"
+    },
+    {
+     "src": "live-22.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02215.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-23.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02224.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-24.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02284.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-25.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02311.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-26.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02538.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-27.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02708.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-28.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC02995.jpg",
+     "cap": "Vol 04"
+    },
+    {
+     "src": "live-29.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC03024.jpg",
+     "cap": "Vol 04"
+    }
+   ]
+  },
+  {
+   "key": "build-day",
+   "og_focus": 0.1,
+   "kind": "buildday",
+   "lockup": "breakthrough-build-day",
+   "name": "Breakthrough Build Day",
+   "h1": "Every Build Day.",
+   "since": "2026 · 7月",
+   "edition_label": "No.",
+   "text": "AI 一直在变, 生意也一直在走, 所以我们每个月固定回来碰头一天: 带着手上在做的东西, 坐在一起 build。",
+   "long": [
+    "我一直不太想把 Breakthrough 办成上完就结束的课程。AI 更新得太快了, 今天做好的东西, 过几个月可能就有更好的做法; 回到公司之后, 要跟团队开会, 要让大家真的用起来, 新的问题又会一个接一个冒出来。这些事情, 没有办法在几天里面一次讲完。",
+    "所以对我来说, Breakthrough 比较像一段大家一起走的 journey, 而 Build Day 就是每个月我们回来碰头的那一天。大家带着自己这段时间在做的东西、遇到的问题回来, 坐在一起 build。有人卡住了, 抬头问一声, 旁边总会有人走过来一起看。这条路很长, 我们就一段一段, 陪着彼此走下去。"
+   ],
+   "photos": [
+    {
+     "src": "build-day-lead.jpg",
+     "w": 1600,
+     "h": 1200,
+     "orig": "Breakthrough-Circle/2026-08-build-day-02/photos/DSCF8174.JPG",
+     "cap": "No. 02"
+    },
+    {
+     "src": "build-day-01.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-08-build-day-02/photos/DSCF8164.JPG",
+     "cap": "No. 02"
+    },
+    {
+     "src": "build-day-02.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-08-build-day-02/photos/DSCF8168.JPG",
+     "cap": "No. 02"
+    },
+    {
+     "src": "build-day-03.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-08-build-day-02/photos/DSCF8189.JPG",
+     "cap": "No. 02"
+    },
+    {
+     "src": "build-day-04.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-08-build-day-02/photos/DSCF8179.JPG",
+     "cap": "No. 02"
+    },
+    {
+     "src": "build-day-05.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2153.HEIC",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-06.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2234.HEIC",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-07.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2243.heic",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-08.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2250.HEIC",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-09.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2254.HEIC",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-10.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2260.heic",
+     "cap": "No. 03"
+    },
+    {
+     "src": "build-day-11.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2277.HEIC",
+     "cap": "No. 03"
+    }
+   ]
+  }
+ ],
+ "plain": [
+  [
+   "2026-08-20",
+   "bloc",
+   "Brand Launch Off Challenge · Batch 01 graduated"
+  ],
+  [
+   "2026-05-22",
+   "bsbb",
+   "Brand Strategy Breakthrough · Class 10"
+  ],
+  [
+   "2026-03-19",
+   "bloc",
+   "Brand Launch Off Challenge · Batch 01 start"
+  ],
+  [
+   "2024-12-18",
+   "bsbb",
+   "Brand Strategy Breakthrough · Class 01"
+  ]
+ ],
+ "roundtable": {
+  "channel": "https://www.youtube.com/@BreakthroughRoundtable",
+  "season": "01",
+  "lede": "别人的 Breakthrough, 是怎么 build 出来的? 每一集, 我都会请一位真的把事情做出来的人坐下来, 听他讲当初是怎么判断、怎么取舍、又是怎么走过来的。",
+  "episodes": [
+   {
+    "n": 6,
+    "guest": "Simon Pang",
+    "file": "simon-pang",
+    "video": "4253_mrOZKY"
+   },
+   {
+    "n": 5,
+    "guest": "Siu Chong",
+    "file": "siu-chong",
+    "video": "JVY-nie4MXg"
+   },
+   {
+    "n": 4,
+    "guest": "Raymond Cheah",
+    "file": "raymond-cheah",
+    "video": "A_KrHLur-VE"
+   },
+   {
+    "n": 3,
+    "guest": "Jeff Chin",
+    "file": "jeff-chin",
+    "video": "NZCn8BLPirk"
+   },
+   {
+    "n": 2,
+    "guest": "Dato' Tony Looi",
+    "file": "tony-looi",
+    "video": "Y3q506lR9Og"
+   },
+   {
+    "n": 1,
+    "guest": "Dato' Sri Norman Pang",
+    "file": "norman-pang",
+    "video": "pbj1Tn4ojZw"
+   }
+  ]
+ }
+}

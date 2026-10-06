@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Rebuild index.html from build/index.tpl.html.
+"""Rebuild the site from build/index.tpl.html: the homepage (index.html) and the build log pages
+(log/, log/<key>/, roundtable/; their content is build/records.json).
 
 Run from the site root:   python3 build/build.py
 Photos live in assets/img/ and logos in assets/logos/ as plain files; the page references them by
@@ -112,6 +113,15 @@ def svg_uri(svg):
 
 LK = {}       # slug -> (x, y, w, h); the one <image> per lockup lives in the page's defs, every use of it is a <use>
 LKDEFS = []
+ROOT = ''     # the way from the page being written back to the site root: '' on the homepage, '../' in /log/, '../../' in /log/<key>/
+
+
+def begin(root):
+    """Start a new page: its own path back to the root, and its own (empty) set of lockups in the defs."""
+    global ROOT
+    ROOT = root
+    LK.clear()
+    LKDEFS.clear()
 
 
 def reg(slug):
@@ -123,7 +133,7 @@ def reg(slug):
     raw = open(os.path.join(SITE, href), 'rb').read()
     vb = re.search(rb'viewBox="([^"]+)"', raw).group(1).decode().split()
     x, y, w, h = map(float, vb)
-    LKDEFS.append(f'<image id="lk-{slug}" href="{href}" x="{x:g}" y="{y:g}" width="{w:g}" height="{h:g}"/>')
+    LKDEFS.append(f'<image id="lk-{slug}" href="{ROOT}{href}" x="{x:g}" y="{y:g}" width="{w:g}" height="{h:g}"/>')
     LK[slug] = (x, y, w, h)
     return LK[slug]
 
@@ -414,7 +424,11 @@ def slot(letter, spec):
         extra = spec[2] if len(spec) > 2 else ''
         return f'<figure class="pinw {letter}"{extra}><div class="pin"><div class="ph note" style="--ar:3/2">{spec[1]}</div>{tape}</div></figure>'
     file, ar, alt, extra = spec
-    src, w, h = photo(file)
+    if file.startswith('assets/'):      # a picture that lives outside assets/img/ (a Roundtable cover): used as it is, never remade
+        assert os.path.exists(os.path.join(SITE, file)), f'row picture missing: {file}'
+        src = file
+    else:
+        src, w, h = photo(file)
     # Every photo sits below the fold (section 03), so all of them load lazily. No width/height attributes on purpose:
     # the CSS box is width:100% + aspect-ratio, and a height attribute would become a fixed height that beats the aspect-ratio.
     return (f'<figure class="pinw {letter}"{extra}><div class="pin"><img src="{src}" alt="{alt}" style="--ar:{ar}" loading="lazy">{tape}</div></figure>')
@@ -466,12 +480,15 @@ ROWS = [
          para='六个月的 challenge。我们跟你的团队一起, 把你的品牌从 0 build 到 launch, 从策略一路做到打市场; 不是听课, 是每一步真的做出来。',
          rec='六个月 · 带着你的团队一起',
          action=('soon',)),
-    dict(id='roundtable', hidden=True,  # JW 2026-09-06: hidden until it has photos
+    # JW 2026-10-06: Roundtable is back as the last row. Its pictures are three episode covers (no photos from the shoots), its button goes to /roundtable/.
+    dict(id='roundtable',
          slug='breakthrough-roundtable', name='Breakthrough Roundtable', lw=1,
-         pics=[None, None, None],
+         pics=[('assets/rt/simon-pang.jpg', '16/9', 'Breakthrough Roundtable 一集的封面: Simon Pang', ''),
+               ('assets/rt/siu-chong.jpg', '16/9', 'Breakthrough Roundtable 一集的封面: Siu Chong', ''),
+               ('assets/rt/jeff-chin.jpg', '16/9', 'Breakthrough Roundtable 一集的封面: Jeff Chin', '')],
          para='别人的 Breakthrough, 是怎么 build 出来的? 一档访谈节目, 每集请一位真的在做生意的人坐下来, 不讲成功学, 拆他把方法落地的过程: 怎么判断、怎么取舍、踩过什么坑。',
-         rec=None,
-         action=('soon',)),
+         rec='访谈节目 · 华语为主 · 每集一位嘉宾',
+         action=('page', 'roundtable/', '看每一集')),
 ]
 
 
@@ -490,6 +507,8 @@ def rows_html():
             act = f'<a class="btn" href="{r["action"][1]}">了解更多 <span class="ar" aria-hidden="true">→</span></a>'
         elif kind == 'wa':
             act = f'<a class="btn" href="{r["action"][1]}">WhatsApp 我们 <span class="ar" aria-hidden="true">→</span></a>'
+        elif kind == 'page':
+            act = f'<a class="btn" href="{r["action"][1]}">{r["action"][2]} <span class="ar" aria-hidden="true">→</span></a>'
         elif kind == 'none':
             act = ''
         else:
@@ -507,6 +526,252 @@ def rows_html():
     return '\n'.join(out)
 
 
+# ---------------- the build log pages (JW 2026-10-06): what has been built, one place per event ----------------
+# Section 03 on the homepage, /log/, one page per record under /log/<key>/, the pooled photo pages of Live and Build Day, and /roundtable/.
+# Every word, date and photo on them comes from build/records.json (see its _readme); the look is the x- block at the end of the template's CSS.
+REC = json.load(open(os.path.join(HERE, 'records.json'), encoding='utf-8'))
+for _r in REC['records']:
+    _r.update({k: v for k, v in REC['copy'][_r['copy']].items()})       # a record prints the copy block it names (the 2BI cohorts share one)
+RECORDS = sorted(REC['records'], key=lambda r: r['start'], reverse=True)   # newest first, whatever order the file is in
+COLLECTIONS = REC['collections']
+FEATURED = next(r for r in RECORDS if r['key'] == REC['home']['featured'])
+LATEST = next(r for r in RECORDS if r['line'] == REC['home']['latest_line'] and r is not FEATURED)   # a new cohort takes this card by itself
+EPISODES = sorted(REC['roundtable']['episodes'], key=lambda e: e['n'], reverse=True)
+OGDIR = os.path.join(SITE, 'assets', 'og')
+
+
+def held(kind):
+    """The edition numbers of a recurring event that have already happened, read off events.json (the tape's history + upcoming entries behind `now`)."""
+    prefix = {'live': 'Breakthrough Live · Vol', 'buildday': 'Build Day '}[kind]
+    nums = [int(label[len(prefix):]) for _, label in EV['history'] if label.startswith(prefix)]
+    nums += [int(e['edition'].rsplit(' ', 1)[1]) for e in EV['upcoming'] if e['kind'] == kind and e['end'] < NOW]
+    return sorted(set(nums))
+
+
+for _c in COLLECTIONS:
+    _n = held(_c['kind'])
+    _c['editions'] = f'{_c["edition_label"]} {_n[0]:02d} to {_n[-1]:02d}'            # Vol 01 to 04: counted, never typed
+    for _p in _c['photos']:
+        assert int(_p['cap'].rsplit(' ', 1)[1]) in _n, f'{_c["key"]}: {_p["src"]} is captioned {_p["cap"]}, which events.json has not seen happen'
+
+
+def when(r):
+    a, b = d(r['start']), d(r['end'])
+    return f'{a.year} · {a.month}月{a.day}日' if a == b else f'{a.year} · {a.month}月{a.day}至{b.day}日'
+
+
+def x_lockup(slug, label):
+    """A lockup on the build log pages: a <use> of the page's one image of it, flat on the paper (no brush mask), with its name for screen readers."""
+    x, y, w, h = reg(slug)
+    return (f'<svg class="x-lk" viewBox="{x:g} {y:g} {w:g} {h:g}" aria-hidden="true" focusable="false"><use href="#lk-{slug}"/></svg>'
+            f'<span class="sr">{escape(label)}</span>')
+
+
+def pin(img, label, cls='', tapes=1, eager=False, cap=False):
+    """One photo pinned to the paper. `label` says whose photo it is; the alt text is that plus 合照 / 现场 (the photos' indexing notes describe
+    the people in them and stay out of the page). width/height are the file's own pixels, so the masonry holds its shape before the photo arrives."""
+    assert os.path.exists(os.path.join(SITE, 'assets', 'rec', img['src'])), f'photo missing: assets/rec/{img["src"]}'
+    t = '<i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i>'
+    if tapes > 1: t += '<i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i>'
+    if tapes == 0: t = ''
+    alt = f'{label} {img["cap"]}' if img.get('cap') else label
+    alt += ' 合照' if img.get('group') else ' 现场'
+    lazy = '' if eager else ' loading="lazy"'
+    fc = f'<figcaption>{escape(img["cap"])}</figcaption>' if cap and img.get('cap') else ''
+    return (f'<figure class="x-pin {cls}"><img src="{ROOT}assets/rec/{img["src"]}" width="{img["w"]}" height="{img["h"]}" alt="{escape(alt, quote=True)}"{lazy}>{t}{fc}</figure>')
+
+
+def rec_label(r):
+    return f'{r["name"]} {r["edition"]}'
+
+
+def datebox(r):
+    a, b = d(r['start']), d(r['end'])
+    if a != b:
+        n = f'<b class="two"><span>{a.day}<i>至</i></span><span>{b.day}</span></b>'
+        wd = f'{WD[a.weekday()]} + {WD[b.weekday()]}'
+    else:
+        n, wd = f'<b>{a.day}</b>', WD[a.weekday()]
+    return f'<div class="x-date" aria-label="{when(r)}">{n}<span aria-hidden="true">{a.month}月<br>{a.year}<br>{wd}</span></div>'
+
+
+def stamp(text, tilt):
+    return f'<div class="stampw" style="--sr:{tilt}"><span class="stamp">{escape(text)}</span></div>'
+
+
+# ---- the homepage's section 03: one wide card (named by hand in records.json, for the kind of event that does not come round every month,
+#      so later editions cannot push it off), then three equal cards: the newest 2BI cohort, Live, Build Day. Lockup first, then the photo. ----
+def built_card(r, feat=False):
+    lead = r['photos'][0]
+    head = f'<h3>{x_lockup(r["lockup"], r["name"])}</h3><span class="x-ed">{escape(r["edition"])}</span>'
+    foot = f'<span class="x-foot"><span class="x-when">{when(r)}</span><span class="x-go">看这一场 →</span></span>'
+    href = f'{ROOT}log/{r["key"]}/'
+    if feat:
+        return (f'<a class="x-bc x-feat" href="{href}">{stamp(r["stamp"], "-7deg")}<span class="x-ft">{head}<p>{escape(r["text"])}</p>{foot}</span>'
+                f'{pin(lead, rec_label(r), tapes=2)}</a>')
+    return f'<a class="x-bc" href="{href}">{stamp(r["stamp"], "-7deg")}{head}{pin(lead, rec_label(r))}{foot}</a>'
+
+
+def col_card(c, tilt, tapes=1, text=False):
+    """Live / Build Day as a card: on the homepage (no words), and on top of /log/ (two tapes, the short line)."""
+    imgs = c['photos']
+    p = f'<p>{escape(c["text"])}</p>' if text else ''
+    return (f'<a class="x-bc" href="{ROOT}log/{c["key"]}/">{stamp("Every month", tilt)}'
+            f'<h3>{x_lockup(c["lockup"], c["name"])}</h3><span class="x-ed">{escape(c["editions"])}</span>'
+            f'{pin(imgs[0], c["name"], tapes=tapes)}{p}<span class="x-foot"><span class="x-when"><b>{len(imgs)}</b> photos</span><span class="x-go">看全部照片 →</span></span></a>')
+
+
+def built_html():
+    cards = built_card(FEATURED, True) + built_card(LATEST) + ''.join(col_card(c, '6deg') for c in COLLECTIONS)
+    return f"""  <!-- 03 · what's already been built -->
+  <section class="sec wrap" id="built">
+    <div class="sh">
+      <span class="n">03</span>
+      <h2 class="h2" lang="en"><span class="l"><span>What's already</span></span><span class="l"><span>been built.</span></span></h2>
+      <span class="meta">From the <b>build log</b></span>
+    </div>
+    <div class="x-built">{cards}</div>
+    <div class="x-more"><a class="btn" href="{ROOT}log/">看整条 build log <span class="ar" aria-hidden="true">→</span></a></div>
+  </section>
+"""
+
+
+def story(paras):
+    return '<div class="x-story">' + ''.join(f'<p>{escape(t)}</p>' for t in paras) + '<span class="x-sign">Jia Wei</span></div>'
+
+
+def main(inner):
+    return f'<main class="paper x-page"><section class="sec wrap">\n{inner}\n</section></main>\n'
+
+
+# ---- /log/: Live and Build Day as two cards on top, then every record by date, with the dated lines that have no page of their own ----
+def log_page():
+    def entry(r):
+        imgs = r['photos']
+        ct = f'<b>{len(imgs)}</b> photos' + (' · <b>1</b> film' if r.get('film') else '')
+        fs = stamp('Milestone', '-6deg') if r.get('milestone') else ''
+        return (f'<li class="x-en" data-line="{r["line"]}"{" data-feat" if r.get("milestone") else ""}><a href="{ROOT}log/{r["key"]}/">{fs}{datebox(r)}'
+                f'<div class="x-what"><h3>{x_lockup(r["lockup"], r["name"])}</h3><strong>{escape(r["edition"])}</strong><p>{escape(r["text"])}</p>'
+                f'<span class="x-ct">{ct} · 看这一场 →</span></div>{pin(imgs[0], rec_label(r))}</a></li>')
+    plain = lambda date, line, name: f'<li class="x-en plain" data-line="{line}"><div><span>[x]</span><span>{date}</span><span>{escape(name)}</span></div></li>'
+    items = [(r['start'], entry(r)) for r in RECORDS] + [(date, plain(date, line, name)) for date, line, name in REC['plain']]
+    items.sort(key=lambda t: t[0], reverse=True)
+    rows, year = '', None
+    for date, h in items:
+        if date[:4] != year:
+            year = date[:4]
+            rows += f'<li class="x-year" aria-hidden="true">{year}</li>'
+        rows += h
+    chips = ('<button class="x-chip" type="button" data-f="all" aria-pressed="true">全部</button>'
+             + ''.join(f'<button class="x-chip" type="button" data-f="{k}" aria-pressed="false">{escape(v)}</button>' for k, v in REC['lines'].items())
+             + '<button class="x-chip" type="button" data-f="feat" aria-pressed="false">Milestones</button>')
+    band = f'<div class="x-band"><div class="x-built x-two">{"".join(col_card(c, "-6deg", tapes=2, text=True) for c in COLLECTIONS)}</div></div>'
+    return main(f'''  <a class="x-back" href="{ROOT}#built">← 回首页</a>
+  <div class="sh"><span class="n">Log</span><h1 class="h2" lang="en">Build log.</h1><span class="meta"><b>{len(items)}</b> entries · since {min(t[0] for t in items)[:4]}</span></div>
+  <p class="x-lede">{escape(REC['log']['lede'])}</p>
+  {band}
+  <div class="x-sub x-sub2"><span class="x-k">By date</span></div>
+  <div class="x-chips" role="group" aria-label="按产品线看">{chips}</div>
+  <ol class="x-log">{rows}</ol>''')
+
+
+# the filter on /log/: a chip shows its line (or the milestones), and a year with nothing left under it hides too. Without JS every entry simply shows.
+LOG_JS = '''<script>
+(function(){
+  var chips=[].slice.call(document.querySelectorAll('.x-chip'));
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    var f=c.getAttribute('data-f');
+    chips.forEach(function(o){o.setAttribute('aria-pressed',o===c)});
+    [].forEach.call(document.querySelectorAll('.x-en'),function(e){e.hidden=f==='feat'?!e.hasAttribute('data-feat'):(f!=='all'&&e.getAttribute('data-line')!==f)});
+    [].forEach.call(document.querySelectorAll('.x-year'),function(y){var n=y.nextElementSibling,any=false;while(n&&!n.classList.contains('x-year')){if(!n.hidden)any=true;n=n.nextElementSibling}y.hidden=!any});
+  })});
+})();
+</script>
+'''
+
+
+# ---- /log/<key>/: one record. The lead photo, the story in the founder's words, the film when there is one, then every photo. ----
+def record_page(r):
+    imgs = r['photos']
+    lead, rest = imgs[0], imgs[1:]
+    same = [x for x in RECORDS if x['line'] == r['line']]
+    j = same.index(r)
+    newer = same[j - 1] if j > 0 else None
+    older = same[j + 1] if j + 1 < len(same) else None
+    film = ''
+    if r.get('film'):
+        f = r['film']['file']
+        for ext in ('mp4', 'jpg'):
+            assert os.path.exists(os.path.join(SITE, 'assets', 'film', f'{f}.{ext}')), f'film file missing: assets/film/{f}.{ext}'
+        film = (f'<div class="x-film"><video controls playsinline preload="none" poster="{ROOT}assets/film/{f}.jpg" aria-label="{escape(rec_label(r), quote=True)} highlight">'
+                f'<source src="{ROOT}assets/film/{f}.mp4" type="video/mp4"></video>'
+                f'<div><span class="x-k">Film · {r["film"]["duration"]}</span><h2>The highlight.</h2><p>这一场剪成的一支短片。</p></div></div>')
+    fields = (f'<div><dt>Date</dt><dd>{when(r)}</dd></div><div><dt>Line</dt><dd>{escape(r["name"])}</dd></div>'
+              f'<div><dt>Where</dt><dd>{escape(REC["where"])}</dd></div><div><dt>Record</dt><dd><b>{len(imgs)}</b> photos{" · 1 film" if r.get("film") else ""}</dd></div>')
+    pn = ((f'<a href="{ROOT}log/{older["key"]}/">← {escape(older["edition"])}</a>' if older else '<span></span>')
+          + f'<a href="{ROOT}log/">整条 build log</a>'
+          + (f'<a href="{ROOT}log/{newer["key"]}/">{escape(newer["edition"])} →</a>' if newer else '<span></span>'))
+    return main(f'''  <a class="x-back" href="{ROOT}log/">← Build log</a>
+  <header class="x-rh">{stamp(r['stamp'], '-7deg')}{datebox(r)}
+    <div class="x-rt"><div class="x-rlk">{x_lockup(r['lockup'], r['name'])}</div><h1>{escape(r['edition'])}</h1></div></header>
+  <dl class="x-fields">{fields}</dl>
+  {pin(lead, rec_label(r), 'x-lead', tapes=2, eager=True)}
+  {story(r['long'])}
+  {film}
+  <div class="x-grid">{''.join(pin(m, rec_label(r), tapes=0) for m in rest)}</div>
+  <nav class="x-pn" aria-label="其他记录">{pn}</nav>''')
+
+
+# ---- /log/live/ and /log/build-day/: every edition's photos on one page, each photo captioned with the edition it is from ----
+def collection_page(c):
+    imgs = c['photos']
+    lead, rest = imgs[0], imgs[1:]
+    fields = (f'<div><dt>Since</dt><dd>{escape(c["since"])}</dd></div><div><dt>Editions</dt><dd>{escape(c["editions"])}</dd></div>'
+              f'<div><dt>Where</dt><dd>{escape(REC["where"])}</dd></div><div><dt>Record</dt><dd><b>{len(imgs)}</b> photos</dd></div>')
+    return main(f'''  <a class="x-back" href="{ROOT}log/">← Build log</a>
+  <header class="x-rh x-rhc">{stamp('Every month', '-7deg')}
+    <div class="x-rt"><div class="x-rlk">{x_lockup(c['lockup'], c['name'])}</div><h1 lang="en">{escape(c['h1'])}</h1></div></header>
+  <dl class="x-fields">{fields}</dl>
+  {pin(lead, c['name'], 'x-lead', tapes=2, eager=True)}
+  {story(c['long'])}
+  <div class="x-grid">{''.join(pin(m, c['name'], tapes=0, cap=True) for m in rest)}</div>
+  <nav class="x-pn" aria-label="其他记录"><span></span><a href="{ROOT}log/">整条 build log</a><span></span></nav>''')
+
+
+# ---- /roundtable/: the published episodes, each cover a link to its episode on YouTube, and one subscribe button. No photos from the shoots. ----
+def roundtable_page():
+    rt = REC['roundtable']
+    eps = ''
+    for e in EPISODES:
+        assert os.path.exists(os.path.join(SITE, 'assets', 'rt', f'{e["file"]}.jpg')), f'cover missing: assets/rt/{e["file"]}.jpg'
+        alt = escape(f'Breakthrough Roundtable EP{e["n"]}, {e["guest"]}', quote=True)
+        eps += (f'<a class="x-ep" href="https://www.youtube.com/watch?v={e["video"]}" target="_blank" rel="noopener">'
+                f'<figure class="x-pin "><img src="{ROOT}assets/rt/{e["file"]}.jpg" width="1280" height="720" alt="{alt}" loading="lazy">'
+                f'<i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i></figure>'
+                f'<span>EP {e["n"]:02d} · 在 YouTube 看 →</span><b>{escape(e["guest"])}</b></a>')
+    return main(f'''  <a class="x-back" href="{ROOT}#built">← 回首页</a>
+  <div class="sh"><span class="n">Show</span><h1 class="x-rtlk">{x_lockup('breakthrough-roundtable', 'Breakthrough Roundtable')}</h1><span class="meta">Season <b>{rt['season']}</b> · {len(EPISODES)} episodes</span></div>
+  <p class="x-lede">{escape(rt['lede'])}</p>
+  <div class="x-eps">{eps}</div>
+  <div class="x-more"><a class="btn" href="{rt['channel']}" target="_blank" rel="noopener">去 YouTube 订阅 <span class="ar" aria-hidden="true">→</span></a></div>''')
+
+
+def og_image(name, source, focus=.5):
+    """The share picture of a page (assets/og/<name>.jpg, 1200x630), cut from one of the page's own pictures; made only when it is not there yet.
+    `focus` is where the cut sits between the top (0) and the bottom (1) of the source."""
+    path = os.path.join(OGDIR, f'{name}.jpg')
+    if ARGS.refresh_photos or not os.path.exists(path):
+        from PIL import Image
+        im = Image.open(os.path.join(SITE, source)).convert('RGB')
+        s = max(1200 / im.width, 630 / im.height)
+        im = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
+        left, top = (im.width - 1200) // 2, round((im.height - 630) * focus)
+        os.makedirs(OGDIR, exist_ok=True)
+        im.crop((left, top, left + 1200, top + 630)).save(path, 'JPEG', quality=80, optimize=True, progressive=True)
+        print(f'  made  assets/og/{name}.jpg  (from {source})')
+    return f'{SITE_URL}assets/og/{name}.jpg'
+
+
 NOTE = """<!--
 DESIGN NOTE · MIX-BLACK V6 (two client comments, 2026-09-06)
 1 Everything v5 settled stays. V6 does two things: Circle and Build Day become two rows, and the three sheets carry the product lockups instead of typed titles.
@@ -519,60 +784,154 @@ DESIGN NOTE · MIX-BLACK V6 (two client comments, 2026-09-06)
 8 Nothing else moved: the tape, the wall, the sheet on the wall, the seam, the row motion, the foot.
 -->"""
 
-# ---------------- assemble ----------------
+# ---------------- assemble: one shell (the template), nine pages ----------------
+# The template is the homepage. Its middle (between the @home marks) and its motion layer (between the @homejs marks) belong to the homepage only;
+# every other page keeps the shell around them (head, the tape, the wall header, the foot) and puts its own <main> in the middle.
 tpl = open(TPL, encoding='utf-8').read()
+MARKS = ('<!--@home-->\n', '<!--@/home-->\n', '<!--@homejs-->\n', '<!--@/homejs-->\n')
+for m in MARKS:
+    assert tpl.count(m) == 1, m
+PAGES = {}     # path under the site root -> finished html
+
+
+def page(path, title, desc, og, middle=None, js='', home=None):
+    """Finish one page. Call it after the page's own html is made (so its lockups are registered under the right ROOT)."""
+    t = tpl
+    if middle is None:
+        for m in MARKS:
+            t = t.replace(m, '')
+    else:
+        a, b = t.index(MARKS[0]), t.index(MARKS[1]) + len(MARKS[1])
+        t = t[:a] + middle + t[b:]
+        a, b = t.index(MARKS[2]), t.index(MARKS[3]) + len(MARKS[3])
+        t = t[:a] + js + t[b:]
+    rep = {
+        '{{HL}}': HL,
+        '{{GRIT}}': GRIT,
+        '{{WM}}': logo(WORDMARK),
+        '{{LKDEFS}}': ''.join(LKDEFS),
+        '{{LOG}}': log_html(),
+        '{{REV}}': EV['synced'],
+        '{{TITLE}}': escape(title),
+        '{{DESC}}': escape(desc).replace('"', '&quot;'),          # inside content="...": only the double quote needs escaping, an apostrophe stays as typed
+        '{{OGURL}}': SITE_URL + os.path.dirname(path) + ('/' if os.path.dirname(path) else ''),
+        '{{OGIMG}}': og,
+        '{{HOME}}': '' if middle is None else ROOT,     # the nav's #next / #where: the page's own anchors on the homepage, ../#next from anywhere else
+        **(home or {}),
+        '{{ROOT}}': ROOT,                               # last, so a {{ROOT}} inside another value is filled too
+    }
+    for k, v in rep.items():
+        assert k in t, (path, k)
+        t = t.replace(k, v)
+    left = re.findall(r'\{\{[A-Z0-9]+\}\}', t)
+    assert not left, (path, left)
+    PAGES[path] = t
+    return t
+
+
 print('photos:')
+begin('')
 rows = rows_html()
 # the sheets carry the same lockups as their rows (registered above, so these are <use>s of the same image)
 sheets = '\n'.join(sheet_html(e, tilt) for e, tilt in SHEETS)
+built = built_html()
 logo(FAVICON)
-rep = {
-    '{{HL}}': HL,
-    '{{GRIT}}': GRIT,
-    '{{WM}}': logo(WORDMARK),
-    '{{LKDEFS}}': ''.join(LKDEFS),
-    '{{LOG}}': log_html(),
+out = page('index.html', 'Breakthrough', "You don't learn a breakthrough. You build one.", f'{SITE_URL}assets/img/og.jpg', home={
     '{{TAPEBAND}}': TAPEBAND,
     '{{ROWS}}': rows,
     '{{NROWS}}': f'{len(LIVE_ROWS):02d}',
     '{{NOTE}}': NOTE,
     '{{SHEETS}}': sheets,
-    **DATES,
-}
-out = tpl
-for k, v in rep.items():
-    assert k in out, k
-    out = out.replace(k, v)
-left = re.findall(r'\{\{[A-Z0-9]+\}\}', out)
-assert not left, left
+    '{{BUILT}}': built,
+    '{{NCOUNT}}': DATES['{{NCOUNT}}'],
+    '{{NEXTMETA}}': DATES['{{NEXTMETA}}'],
+})
+HOME_LK = list(LK)
 
-# ---------------- checks: same page as before, now referencing files ----------------
+begin('../')
+m = log_page()
+page('log/index.html', 'Build log · Breakthrough', REC['log']['lede'], og_image(FEATURED['key'], f'assets/rec/{FEATURED["photos"][0]["src"]}', FEATURED.get('og_focus', .5)), m, LOG_JS)
+for r in RECORDS:
+    begin('../../')
+    m = record_page(r)
+    page(f'log/{r["key"]}/index.html', f'{r["name"]} · {r["edition"]} · Breakthrough', r['text'],
+         og_image(r['key'], f'assets/rec/{r["photos"][0]["src"]}', r.get('og_focus', .5)), m)
+for c in COLLECTIONS:
+    begin('../../')
+    m = collection_page(c)
+    page(f'log/{c["key"]}/index.html', f'{c["name"]} · {c["h1"].rstrip(".")}', c['text'],
+         og_image(c['key'], f'assets/rec/{c["photos"][0]["src"]}', c.get('og_focus', .5)), m)
+begin('../')
+m = roundtable_page()
+page('roundtable/index.html', 'Breakthrough Roundtable', REC['roundtable']['lede'], og_image('roundtable', f'assets/rt/{EPISODES[0]["file"]}.jpg'), m)
+begin('')
+
+# ---------------- checks: the homepage as before, then every page's files and links ----------------
 assert 'base64' not in out, 'no base64 anywhere: photos and logos are files under assets/'
 refs = re.findall(r'(?:src|href)="(assets/[^"]+)"', out)
-for r in refs:
-    assert os.path.exists(os.path.join(SITE, r)), f'referenced file missing: {r}'
 photos = [r for r in refs if r.startswith('assets/img/')]
 assert len(photos) == len(PHOTOS) and len(set(photos)) == len(PHOTOS), 'every photo referenced exactly once'
 assert set(os.path.basename(p) for p in photos) == set(PHOTOS), 'every photo in PHOTOS is on the page'
 lks = [r for r in refs if r.endswith('-ink.svg')]
-assert len(lks) == len(LIVE_ROWS) and len(set(lks)) == len(LIVE_ROWS), 'one lockup per visible row, each embedded exactly once'
-assert out.count(f'href="{rep["{{WM}}"]}"') == 1, 'wordmark bitmap referenced exactly once'
+assert len(lks) == len(set(lks)) == len(HOME_LK), 'each lockup embedded exactly once'
+assert {r['slug'] for r in LIVE_ROWS} <= set(HOME_LK), 'every visible row has its lockup'
+assert out.count(f'href="{logo(WORDMARK)}"') == 1, 'wordmark bitmap referenced exactly once'
 assert os.path.exists(os.path.join(IMG, 'og.jpg')) and 'assets/img/og.jpg"' in out, 'the share image (1200x630, wordmark on the wall black) is in place and declared'
-for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
-    # 一行 + 一格; Live 在一个月两场的月份有两格 (decision 2026-09-20), 所以它是 2 或 3, 别的仍然只能是 2。
-    want = (2, 3) if (slug == 'breakthrough-live' and LIVE2) else (2,)
-    assert out.count(f'href="#lk-{slug}"') in want, f'{slug}: one use on its row, one per sheet (got {out.count(chr(34)+"#lk-"+slug+chr(34))})'
-assert out.count('<use href="#lk-') == len(LIVE_ROWS) + (4 if LIVE2 else 3), 'visible rows + the sheets (four when the month has two Lives)'
-assert 'class="kind"' not in out and 'class="ed"' not in out, 'the kind and edition lines are gone from the sheets'
 N_SHEETS = 4 if LIVE2 else 3
+N_BUILT = 2 + len(COLLECTIONS)          # section 03: the wide card, the newest cohort, one card per pooled page
+BUILT_SLUGS = [FEATURED['lockup'], LATEST['lockup']] + [c['lockup'] for c in COLLECTIONS]
+for slug in ('breakthrough-live', 'breakthrough-build-day', '2nd-brain-intensive'):
+    # 一行 + 一格 (Live 在一个月两场的月份有两格, decision 2026-09-20) + 第 03 段里印它的卡。
+    on_sheets = 2 if (slug == 'breakthrough-live' and LIVE2) else 1
+    want = 1 + on_sheets + BUILT_SLUGS.count(slug)
+    assert out.count(f'href="#lk-{slug}"') == want, f'{slug}: one use on its row, one per sheet, one per card in section 03 (got {out.count(chr(34)+"#lk-"+slug+chr(34))}, want {want})'
+assert out.count('<use href="#lk-') == len(LIVE_ROWS) + N_SHEETS + N_BUILT, 'visible rows + the sheets (four when the month has two Lives) + the cards of section 03'
+assert 'class="kind"' not in out and 'class="ed"' not in out, 'the kind and edition lines are gone from the sheets'
 assert out.count('class="idx" aria-hidden') == N_SHEETS and out.count('class="tick"') == N_SHEETS, 'one stub per sheet, each with its tape index and ticking serial'
-assert '<div class="idx">Row <b>03</b> / 04</div>' in out and 'id="buildday"' in out
-for rid in ('circle', 'challenge', 'roundtable'):
+assert '<div class="idx">Row <b>03</b> / 05</div>' in out and 'id="buildday"' in out and '<div class="idx">Row <b>05</b> / 05</div>' in out and 'id="roundtable"' in out
+for rid in ('circle', 'challenge'):
     assert f'id="{rid}"' not in out and f'href="#{rid}"' not in out, f'{rid} is hidden for now'
-ext = re.findall(r'(?:src|href)="(https?://[^"]+)"', out)
-for u in ext:
-    assert u.startswith(('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://join.project-breakthrough.com.my/', 'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/', 'https://claude.ai/')), u
+assert out.count('<a class="x-bc') == N_BUILT and out.count('<a class="x-bc x-feat"') == 1, 'section 03: one wide card and three beside it'
 assert out.startswith('<!doctype html>') and out.rstrip().endswith('</html>')
+
+EXTERNAL = ('https://cdnjs.cloudflare.com/', 'https://fonts.googleapis.com', 'https://kalozedu.com/', 'https://join.project-breakthrough.com.my/',
+            'https://wa.me/', 'https://chat.whatsapp.com/', 'https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.skool.com/',
+            'https://claude.ai/', 'https://www.youtube.com/')
+for path, html_ in PAGES.items():
+    here = os.path.dirname(path)
+    assert html_.startswith('<!doctype html>') and html_.rstrip().endswith('</html>'), path
+    assert 'base64' not in html_, path
+    assert all(m not in html_ for m in MARKS), path
+    assert html_.count('<h1') == 1, f'{path}: one h1'
+    if path != 'index.html':
+        assert 'gsap' not in html_ and 'class="hero' not in html_, f'{path}: the homepage\'s middle and motion layer stay on the homepage'
+    for u in re.findall(r'(?:src|href|poster)="([^"]+)"', html_):
+        if u.startswith(('http://', 'https://')):
+            assert u.startswith(EXTERNAL), (path, u)
+            continue
+        if u.startswith('#'):
+            assert u == '#top' or f'id="{u[1:]}"' in html_, f'{path}: nothing on the page is called {u}'
+            continue
+        target, _, frag = u.partition('#')
+        full = os.path.normpath(os.path.join(SITE, here, target))
+        assert full == SITE or full.startswith(SITE + os.sep), (path, u)
+        rel = os.path.relpath(full, SITE)
+        if target == '' or target.endswith('/'):            # a page of this site
+            dest = 'index.html' if rel == '.' else os.path.join(rel, 'index.html')
+            assert dest in PAGES, f'{path}: links to {u}, which is not a page this build writes'
+            assert not frag or f'id="{frag}"' in PAGES[dest], f'{path}: {u} points at an anchor {dest} does not have'
+        else:                                                # a file under assets/
+            assert os.path.exists(full), f'{path}: referenced file missing: {u}'
+    for u in re.findall(r'<meta property="og:image" content="([^"]+)"', html_):
+        assert u.startswith(SITE_URL) and os.path.exists(os.path.join(SITE, u[len(SITE_URL):])), f'{path}: share image missing: {u}'
+for e in EPISODES:
+    assert PAGES['roundtable/index.html'].count(f'watch?v={e["video"]}"') == 1, f'episode {e["n"]} is linked exactly once'
+assert len({e['video'] for e in EPISODES}) == len({e['n'] for e in EPISODES}) == len({e['file'] for e in EPISODES}) == len(EPISODES)
+for r in RECORDS + COLLECTIONS:
+    names = [p['src'] for p in r['photos']]
+    assert len(names) == len(set(names)), f'{r["key"]}: a photo is listed twice'
+    assert PAGES[f'log/{r["key"]}/index.html'].count('class="x-pin') == len(names), f'{r["key"]}: every photo in records.json is on its page, once'
+    assert f'href="log/{r["key"]}/"' in PAGES['log/index.html'].replace('../', ''), f'{r["key"]} can be reached from /log/'
 
 # ---------------- the feed: printed from the same table as the sheets, then held to the sheets as the finished page shows them ----------------
 FEED = feed()
@@ -630,9 +989,13 @@ def write_feed(body):
     return body
 
 
-open(OUT, 'w', encoding='utf-8').write(out)
+for path, html_ in PAGES.items():
+    full = os.path.join(SITE, path)
+    os.makedirs(os.path.dirname(full), exist_ok=True)
+    open(full, 'w', encoding='utf-8').write(html_)
 FEED = write_feed(FEED)
 print(f'upcoming.json {len(FEED["events"])} events ({len(SHEETS)} on sheets) · generatedAt {FEED["generatedAt"]}')
 size = lambda p: os.path.getsize(p)
 assets = sum(size(os.path.join(d, f)) for d, _, fs in os.walk(os.path.join(SITE, 'assets')) for f in fs)
-print(f'index.html {size(OUT)/1024:.0f} KB · assets/ {assets/1024/1024:.2f} MB')
+print(f'{len(PAGES)} pages: ' + ' · '.join(f'{"/" + os.path.dirname(p) + "/" if os.path.dirname(p) else "/"} {len(h.encode())/1024:.0f} KB' for p, h in PAGES.items()))
+print(f'assets/ {assets/1024/1024:.2f} MB')

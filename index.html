@@ -101,9 +101,11 @@ img{display:block;max-width:100%}
 .cta:hover .ar,.cta:focus-visible .ar{color:var(--black);transform:translateX(5px)}
 
 /* ---------- hero: black ground, nothing on the wall but the headline ---------- */
-.hero{position:relative;background:var(--black);padding-top:clamp(22px,3.4vh,36px);padding-bottom:clamp(36px,6vh,64px);min-height:calc(100vh - 128px);display:flex;flex-direction:column}
+/* JW 2026-10-06: the headline no longer sinks to the bottom of a full-height wall (too much empty wall above it), and its size stops at 126px
+   (at 150px a 1920 screen broke it into five lines and cut the wordmark off). */
+.hero{position:relative;background:var(--black);padding-top:clamp(22px,3.4vh,36px);padding-bottom:clamp(36px,6vh,64px);display:flex;flex-direction:column}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-d)}
-.h1{margin-top:auto;padding-top:clamp(28px,6vh,72px);font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(38px,8.6vw,150px);line-height:.9;letter-spacing:-.03em;color:var(--paper)}
+.h1{padding-top:clamp(40px,9vh,104px);font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(38px,8.6vw,126px);line-height:.9;letter-spacing:-.03em;color:var(--paper)}
 .h1 .l{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
 .h1 .l>span{display:inline-block}
 .h1 em{font-style:normal;color:var(--orange)}   /* build: clean orange, nothing on top of it */
@@ -251,10 +253,10 @@ img{display:block;max-width:100%}
 .rec+.soon{margin-top:2px}
 .soon .stamp{font-size:13px;letter-spacing:.2em;padding:10px 15px 9px;box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 3px var(--orange)}
 
-/* ---------- foot: the paper ends on a straight 1px ink edge, the black wall is under it. Two columns of small type (address, 来找我们), one base line. JW 2026-09-06: no About, no YouTube, no product-anchor column until the pages exist. ---------- */
+/* ---------- foot: the paper ends on a straight 1px ink edge, the black wall is under it. Three columns of small type (address, 做过的事, 来找我们), one base line. JW 2026-09-06: no About, no product-anchor column until the pages exist; 2026-10-06: 做过的事 links the build log and Roundtable. ---------- */
 .paper{border-bottom:1px solid var(--ink)}
 .foot{background:var(--black);color:var(--paper);padding:clamp(44px,7vh,80px) 0 22px;font-size:14px;line-height:1.7}
-.foot .cols3{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(28px,4vw,72px)}
+.foot .cols3{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:clamp(28px,4vw,72px)}
 .foot h4{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line-d);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-d)}
 .foot address{font-style:normal}
 .foot ul{list-style:none;margin:0;padding:0}
@@ -268,8 +270,13 @@ img{display:block;max-width:100%}
   .cols{grid-template-columns:1fr}
   .col+.col{margin-top:clamp(18px,2.2vw,30px)}
 }
-@media (max-width:980px){
+/* the four nav links and the CTA need about 1200px side by side (Build log and Roundtable joined the nav on 2026-10-06; at 1000px the CTA ran off the edge).
+   Under that the links go, as they already did under 980px, and the CTA keeps the right-hand end of the wall (it used to slide up against the wordmark from 641 to 980px). */
+@media (max-width:1200px){
   .hdr .links{display:none}
+  .cta{margin-left:auto}
+}
+@media (max-width:980px){
   .tape-tail{display:none}
 }
 @media (max-width:820px){
@@ -293,8 +300,7 @@ img{display:block;max-width:100%}
   .row .btn,.row .soon{order:6}
 }
 @media (max-width:640px){
-  .hero{min-height:0}
-  .h1{padding-top:44px;font-size:8.6vw;letter-spacing:-.04em}
+  .h1{padding-top:36px;font-size:8.6vw;letter-spacing:-.04em}
   .h1 .l>span{white-space:nowrap}
   .tape-log{height:32px}
   .tape-head{padding:0 14px 0 var(--gutter);font-size:11px;gap:8px}
@@ -333,11 +339,190 @@ img{display:block;max-width:100%}
   *,*::before,*::after{transition:none!important}
   .sheet:hover .piece,.sheet:focus-within .piece{transform:none}
 }
+
+/* ===== the build log pages (JW 2026-10-06): section 03 on the homepage, /log/, the record pages, /roundtable/. Every class here is x- prefixed.
+   The blocks below are layered in the order the design was settled (v2, v3, v4 each override the one before), kept that way on purpose:
+   this is the cascade the owner approved in the preview. ===== */
+.x-page{min-height:70vh}
+.x-page .sec{padding-top:clamp(28px,5vh,56px)}
+.x-back{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--mute-p);border-bottom:1px solid var(--soft);padding-bottom:3px;margin-bottom:clamp(48px,8vh,84px)}
+.x-back:hover,.x-back:focus-visible{color:var(--orange);border-bottom-color:var(--orange)}
+.x-lede{font-size:clamp(17px,1.5vw,21px);line-height:1.7;max-width:44ch;margin-bottom:clamp(28px,4vh,44px)}
+.x-k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+.x-lk{display:block;height:auto;overflow:visible}
+.x-pin{position:relative;margin:0}
+.x-pin img{display:block;width:100%;height:auto;border:1px solid var(--ink);background:var(--card)}
+.x-bc .stamp,.x-rh .stamp{background:var(--card)}
+/* homepage section 03 */
+.x-built{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(22px,2.6vw,40px);padding-top:18px}
+.x-bc{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;text-decoration:none;color:var(--ink);transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.x-bc:nth-child(odd){transform:rotate(-.7deg)}
+.x-bc:nth-child(even){transform:rotate(.6deg)}
+.x-bc:hover,.x-bc:focus-visible{transform:rotate(0) translateY(-6px)}
+.x-bc .x-pin img{aspect-ratio:4/3;object-fit:cover}
+.x-bc .stampw{top:-12px;right:-10px;z-index:3}
+.x-bc h3{margin:6px 0 0;line-height:0}
+.x-bc .x-lk{width:54%}
+.x-when{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-p);padding-top:6px;font-variant-numeric:tabular-nums}
+.x-ed{font-family:var(--disp);font-size:clamp(18px,1.7vw,26px);line-height:1.05;letter-spacing:-.015em;text-transform:uppercase}
+.x-go{align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;border-bottom:2px solid var(--orange);padding-bottom:3px;margin-top:4px}
+.x-more{margin-top:clamp(36px,6vh,64px)}
+/* /log */
+.x-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(12px,2vh,24px)}
+.x-chip{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:11px 15px 10px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.x-chip:hover{background:var(--card)}
+.x-chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.x-log{list-style:none;margin:0;padding:0}
+.x-year{font-family:var(--disp);font-size:clamp(56px,9vw,150px);line-height:.86;letter-spacing:-.04em;color:var(--ink);opacity:.13;padding:clamp(28px,5vh,56px) 0 10px;font-variant-numeric:tabular-nums}
+.x-en{border-top:1px solid var(--ink)}
+.x-en>a{display:grid;grid-template-columns:clamp(150px,17vw,250px) minmax(0,1fr) clamp(200px,26vw,380px);gap:clamp(20px,3.4vw,56px);align-items:center;padding:clamp(26px,4.4vh,52px) 0;text-decoration:none;color:inherit}
+.x-date{display:flex;align-items:flex-start;gap:14px;white-space:nowrap}
+.x-date b{font-family:var(--disp);font-weight:400;font-size:clamp(64px,8vw,128px);line-height:.82;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.x-date b.two{font-size:clamp(40px,4.6vw,74px);line-height:.86}
+.x-date b.two span{display:block}
+.x-date b.two i{font-style:normal;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--mute-p);margin-left:.3em}
+.x-date>span{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;line-height:1.7;padding-top:.2em}
+.x-what{display:flex;flex-direction:column;gap:12px;min-width:0}
+.x-what h3{margin:0;line-height:0}
+.x-what .x-lk{width:clamp(110px,12vw,170px)}
+.x-what strong{font-family:var(--disp);font-weight:400;font-size:clamp(22px,2.5vw,38px);line-height:1;letter-spacing:-.02em;text-transform:uppercase}
+.x-what p{font-size:15.5px;line-height:1.7;max-width:50ch;color:#2f2f2c}
+.x-ct{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-p)}
+.x-ct b{color:var(--orange);font-weight:700}
+.x-en .x-pin{transform:rotate(1.4deg);transition:transform .35s cubic-bezier(.2,.9,.2,1)}
+.x-en:nth-of-type(even) .x-pin{transform:rotate(-1.1deg)}
+.x-en>a:hover .x-pin,.x-en>a:focus-visible .x-pin{transform:rotate(0) translateY(-6px)}
+.x-en .x-pin img{aspect-ratio:3/2;object-fit:cover}
+.x-en.plain>div{display:flex;flex-wrap:wrap;gap:6px 18px;padding:17px 0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute-p);font-variant-numeric:tabular-nums}
+.x-en.plain>div>span:first-child{font-weight:700;color:var(--ink)}
+/* record page */
+.x-rh{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(22px,4.5vw,72px);align-items:end;padding-bottom:clamp(20px,2.6vw,34px);border-bottom:1px solid var(--ink)}
+.x-rh .x-date b{font-size:clamp(96px,15vw,240px)}
+.x-rh .x-date b.two{font-size:clamp(58px,8.6vw,138px)}
+.x-rh .stampw{top:-6px;right:0}
+.x-rh .stamp{font-size:13px;letter-spacing:.2em;padding:10px 15px 9px}
+.x-rt{display:flex;flex-direction:column;gap:clamp(12px,1.6vw,20px);min-width:0;padding-bottom:.2em}
+.x-rlk{line-height:0}
+.x-rlk .x-lk{width:clamp(140px,17vw,250px)}
+.x-rt h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(30px,5.2vw,84px);line-height:.95;letter-spacing:-.025em;text-wrap:balance}
+.x-fields{display:flex;flex-wrap:wrap;gap:14px 0;margin:0;padding:16px 0;border-bottom:1px solid var(--ink)}
+.x-fields>div{display:flex;flex-direction:column;gap:7px;padding:0 clamp(14px,2vw,30px);border-left:1px solid var(--soft);font-family:var(--mono)}
+.x-fields>div:first-child{padding-left:0;border-left:0}
+.x-fields dt{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute-p);line-height:1}
+.x-fields dd{margin:0;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1.3;font-variant-numeric:tabular-nums}
+.x-fields dd b{color:var(--orange);font-weight:700}
+.x-lead{margin-top:clamp(40px,7vh,76px);transform:rotate(-.4deg)}
+.x-lead .tape{width:140px;height:30px}
+.x-line{font-weight:700;font-size:clamp(21px,2.3vw,33px);line-height:1.4;letter-spacing:-.015em;max-width:30em;margin:clamp(40px,7vh,76px) 0}
+.x-film{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:center;background:var(--black);color:var(--paper);padding:clamp(22px,4vw,60px);margin-bottom:clamp(40px,7vh,76px)}
+.x-film video{display:block;width:100%;aspect-ratio:9/16;background:#000;border:1px solid var(--line-d)}
+.x-film h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(30px,5vw,76px);line-height:.94;letter-spacing:-.025em;margin:14px 0 16px}
+.x-film p{color:var(--mute-d);font-size:15.5px}
+.x-grid{columns:3;column-gap:clamp(12px,1.6vw,24px)}
+.x-grid .x-pin{margin-bottom:clamp(12px,1.6vw,24px);break-inside:avoid}
+.x-pn{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;border-top:1px solid var(--ink);margin-top:clamp(44px,7vh,80px);padding-top:20px}
+.x-pn a{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px}
+.x-pn a:hover,.x-pn a:focus-visible{color:var(--orange)}
+/* roundtable */
+.x-rtlk{margin:0;line-height:0}
+.x-rtlk .x-lk{width:clamp(200px,30vw,440px)}
+.x-eps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(30px,4vw,60px) clamp(20px,2.8vw,44px);padding-top:16px}
+.x-ep{display:flex;flex-direction:column;gap:8px;min-width:0}
+.x-ep:nth-child(3n+1) .x-pin{transform:rotate(-.6deg)}
+.x-ep:nth-child(3n) .x-pin{transform:rotate(.6deg)}
+.x-ep .x-pin{margin-bottom:8px}
+.x-ep .x-pin img{aspect-ratio:16/9;object-fit:cover}
+.x-ep span{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--mute-p)}
+.x-ep b{font-family:var(--disp);font-weight:400;font-size:clamp(18px,1.7vw,26px);line-height:1.08;letter-spacing:-.015em;text-transform:uppercase}
+.x-sub{border-top:1px solid var(--ink);margin-top:clamp(56px,9vh,110px);padding-top:18px}
+.x-sub h2{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3.6vw,52px);line-height:1.05;margin:10px 0 clamp(24px,4vh,40px)}
+.x-bts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.x-bts .x-pin img{aspect-ratio:3/2;object-fit:cover}
+@media (max-width:1100px){
+  .x-built{grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 28px}
+  .x-eps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:820px){
+  .x-en>a{grid-template-columns:1fr;gap:20px}
+  .x-en .x-pin{order:2;max-width:520px}
+  .x-what{order:3}
+  .x-grid{columns:2}
+  .x-film{grid-template-columns:1fr}
+  .x-film video{max-width:300px}
+  .x-bts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .x-rh{grid-template-columns:1fr;align-items:start}
+  .x-rh .stampw{top:4px}
+}
+@media (max-width:640px){
+  .x-built,.x-eps{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.x-bc,.x-bc:hover,.x-en .x-pin{transform:none!important}}
+
+/* v2: lockup first, then the photo; one featured card, then the latest of each recurring line */
+.x-built{grid-template-columns:1.5fr 1fr 1fr;align-items:start;gap:clamp(24px,3vw,48px)}
+.x-bc{gap:14px}
+.x-bc h3{margin:2px 0 0}
+.x-bc .x-lk{width:min(56%,190px)}
+.x-feat .x-lk{width:min(38%,230px)}
+.x-bc .x-pin{margin-top:8px}
+.x-feat .x-pin img{aspect-ratio:3/2}
+.x-feat .x-ed{font-size:clamp(22px,2.4vw,36px)}
+.x-bc p{font-size:15.5px;line-height:1.7;max-width:46ch;color:#2f2f2c}
+.x-bc .stampw{top:-4px;right:-4px}
+.x-bc:not(.x-feat) h3{display:flex;align-items:flex-end;height:clamp(104px,10.5vw,150px)}
+.x-bc:not(.x-feat) .x-lk{width:auto;height:100%;max-width:100%}
+.x-foot{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.x-foot .x-when{padding-top:0}
+.x-foot .x-go{margin-top:0}
+.x-en>a{position:relative}
+.x-en .stampw{top:14px;right:auto;left:clamp(150px,17vw,250px);margin-left:clamp(150px,16vw,240px)}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}.x-feat{grid-column:1/-1}}
+@media (max-width:820px){.x-en .stampw{left:auto;right:0;margin-left:0;top:22px}}
+@media (max-width:640px){.x-built{grid-template-columns:1fr}}
+
+/* v3: Live and Build Day are one pooled page each */
+.x-built{grid-template-columns:1.5fr 1fr}
+.x-built.x-two{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:8px}
+.x-two .x-bc h3{display:block;height:auto}
+.x-two .x-bc .x-lk{width:min(40%,190px);height:auto}
+.x-two .x-pin img{aspect-ratio:3/2}
+.x-when b{color:var(--orange);font-weight:700}
+.x-band{padding-bottom:clamp(8px,2vh,20px)}
+.x-sub2{margin-top:clamp(44px,7vh,84px);margin-bottom:18px}
+.x-rhc{grid-template-columns:1fr}
+.x-rhc .x-rlk .x-lk{width:clamp(170px,22vw,320px)}
+.x-pin figcaption{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-p);padding-top:7px}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.x-built,.x-built.x-two{grid-template-columns:1fr}}
+
+/* v4: featured runs full width (words left, photo right), then three equal cards: latest 2BI, Live, Build Day */
+.x-built{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(40px,6vh,72px) clamp(24px,3vw,48px)}
+.x-feat{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:clamp(24px,4vw,64px);align-items:center;transform:none!important;border-bottom:1px solid var(--ink);padding-bottom:clamp(36px,6vh,64px)}
+.x-ft{display:flex;flex-direction:column;gap:14px;min-width:0}
+.x-feat .x-lk{width:min(52%,240px)}
+.x-feat .x-ed{font-size:clamp(24px,2.8vw,42px);line-height:1}
+.x-feat p{font-size:clamp(16px,1.3vw,19px)}
+.x-feat .x-pin{margin-top:0;transform:rotate(.6deg)}
+.x-feat .stampw{top:-14px;right:-8px}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.x-feat{grid-template-columns:1fr}}
+@media (max-width:640px){.x-built{grid-template-columns:1fr}}
+
+.x-ep{text-decoration:none;color:inherit}
+.x-ep .x-pin{transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.x-ep:hover .x-pin,.x-ep:focus-visible .x-pin{transform:rotate(0) translateY(-6px)}
+.x-ep:hover span,.x-ep:focus-visible span{color:var(--orange)}
+
+/* a record told in the founder's own words: three paragraphs, the first set a size up */
+.x-story{display:flex;flex-direction:column;gap:1.3em;max-width:36em;margin:clamp(40px,7vh,76px) 0;font-size:clamp(17px,1.35vw,19.5px);line-height:1.95}
+.x-story p:first-child{font-weight:700;font-size:clamp(20px,1.9vw,27px);line-height:1.6;letter-spacing:-.01em}
+.x-sign{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-p)}
+.x-sign::before{content:"";display:inline-block;width:28px;height:2px;background:var(--orange);vertical-align:middle;margin-right:12px}
 </style>
 </head>
 <body>
 
-<svg class="defs" aria-hidden="true" focusable="false"><defs><image id="wm-png" href="assets/logos/wordmark.png" width="1024" height="643"/><image id="lk-breakthrough-live" href="assets/logos/breakthrough-live-ink.svg" x="12.01" y="99.55" width="489" height="375.41"/><image id="lk-2nd-brain-intensive" href="assets/logos/2nd-brain-intensive-ink.svg" x="47.63" y="67.85" width="437.58" height="391.55"/><image id="lk-breakthrough-build-day" href="assets/logos/breakthrough-build-day-ink.svg" x="10.88" y="83.39" width="474.23" height="367.38"/><image id="lk-brand-strategy-breakthrough" href="assets/logos/brand-strategy-breakthrough-ink.svg" x="40.8" y="56.98" width="465.37" height="424.71"/><filter id="lk-bristle" filterUnits="userSpaceOnUse" x="-900" y="-900" width="3000" height="3000"><feTurbulence type="fractalNoise" baseFrequency="0.026 0.17" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
+<svg class="defs" aria-hidden="true" focusable="false"><defs><image id="wm-png" href="assets/logos/wordmark.png" width="1024" height="643"/><image id="lk-breakthrough-live" href="assets/logos/breakthrough-live-ink.svg" x="12.01" y="99.55" width="489" height="375.41"/><image id="lk-2nd-brain-intensive" href="assets/logos/2nd-brain-intensive-ink.svg" x="47.63" y="67.85" width="437.58" height="391.55"/><image id="lk-breakthrough-build-day" href="assets/logos/breakthrough-build-day-ink.svg" x="10.88" y="83.39" width="474.23" height="367.38"/><image id="lk-brand-strategy-breakthrough" href="assets/logos/brand-strategy-breakthrough-ink.svg" x="40.8" y="56.98" width="465.37" height="424.71"/><image id="lk-breakthrough-roundtable" href="assets/logos/breakthrough-roundtable-ink.svg" x="11.08" y="78.81" width="483.84" height="390.61"/><image id="lk-brand-launch-off-challenge" href="assets/logos/brand-launch-off-challenge-ink.svg" x="23.44" y="49.48" width="473.1" height="418.14"/><filter id="lk-bristle" filterUnits="userSpaceOnUse" x="-900" y="-900" width="3000" height="3000"><feTurbulence type="fractalNoise" baseFrequency="0.026 0.17" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 
 <div class="tape-log" role="region" aria-label="Build log">
   <div class="tape-head"><i class="dot" aria-hidden="true"></i>Build log</div>
@@ -356,6 +541,8 @@ img{display:block;max-width:100%}
     <nav class="links" aria-label="主导航">
       <a class="nl" href="#next">What's getting built next</a>
       <a class="nl" href="#where">Where breakthroughs get built</a>
+      <a class="nl" href="log/">Build log</a>
+      <a class="nl" href="roundtable/">Roundtable</a>
     </nav>
     <a class="cta" href="https://join.project-breakthrough.com.my/breakthrough-live" lang="en">Come build with us <span class="ar" aria-hidden="true">→</span></a>
   </div>
@@ -520,18 +707,29 @@ img{display:block;max-width:100%}
     </div>
   </section>
 
-  <!-- 03 · where breakthroughs get built -->
-  <section class="sec wrap" id="where">
+  <!-- 03 · what's already been built -->
+  <section class="sec wrap" id="built">
     <div class="sh">
       <span class="n">03</span>
+      <h2 class="h2" lang="en"><span class="l"><span>What's already</span></span><span class="l"><span>been built.</span></span></h2>
+      <span class="meta">From the <b>build log</b></span>
+    </div>
+    <div class="x-built"><a class="x-bc x-feat" href="log/bloc-batch-01-luncheon/"><div class="stampw" style="--sr:-7deg"><span class="stamp">Milestone</span></div><span class="x-ft"><h3><svg class="x-lk" viewBox="23.44 49.48 473.1 418.14" aria-hidden="true" focusable="false"><use href="#lk-brand-launch-off-challenge"/></svg><span class="sr">Brand Launch Off Challenge</span></h3><span class="x-ed">Batch 01 · Graduation luncheon</span><p>他们来自不同的背景, 有着不同的身份; 但是来到这里, 每个人就只是一个想认认真真把事情一件一件落实的人。走完半年, 我们没有办典礼, 只是一桌人坐下来好好吃一顿饭。</p><span class="x-foot"><span class="x-when">2026 · 9月21日</span><span class="x-go">看这一场 →</span></span></span><figure class="x-pin "><img src="assets/rec/bloc-batch-01-luncheon-lead.jpg" width="1600" height="1067" alt="Brand Launch Off Challenge Batch 01 · Graduation luncheon 合照" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></figure></a><a class="x-bc" href="log/2bi-cohort-02/"><div class="stampw" style="--sr:-7deg"><span class="stamp">Built</span></div><h3><svg class="x-lk" viewBox="47.63 67.85 437.58 391.55" aria-hidden="true" focusable="false"><use href="#lk-2nd-brain-intensive"/></svg><span class="sr">2nd Brain Intensive</span></h3><span class="x-ed">Cohort 02</span><figure class="x-pin "><img src="assets/rec/2bi-cohort-02-lead.jpg" width="1600" height="1067" alt="2nd Brain Intensive Cohort 02 合照" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i></figure><span class="x-foot"><span class="x-when">2026 · 9月26至27日</span><span class="x-go">看这一场 →</span></span></a><a class="x-bc" href="log/live/"><div class="stampw" style="--sr:6deg"><span class="stamp">Every month</span></div><h3><svg class="x-lk" viewBox="12.01 99.55 489 375.41" aria-hidden="true" focusable="false"><use href="#lk-breakthrough-live"/></svg><span class="sr">Breakthrough Live</span></h3><span class="x-ed">Vol 01 to 04</span><figure class="x-pin "><img src="assets/rec/live-lead.jpg" width="1600" height="1200" alt="Breakthrough Live Vol 01 合照" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i></figure><span class="x-foot"><span class="x-when"><b>30</b> photos</span><span class="x-go">看全部照片 →</span></span></a><a class="x-bc" href="log/build-day/"><div class="stampw" style="--sr:6deg"><span class="stamp">Every month</span></div><h3><svg class="x-lk" viewBox="10.88 83.39 474.23 367.38" aria-hidden="true" focusable="false"><use href="#lk-breakthrough-build-day"/></svg><span class="sr">Breakthrough Build Day</span></h3><span class="x-ed">No. 01 to 03</span><figure class="x-pin "><img src="assets/rec/build-day-lead.jpg" width="1600" height="1200" alt="Breakthrough Build Day No. 02 现场" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i></figure><span class="x-foot"><span class="x-when"><b>12</b> photos</span><span class="x-go">看全部照片 →</span></span></a></div>
+    <div class="x-more"><a class="btn" href="log/">看整条 build log <span class="ar" aria-hidden="true">→</span></a></div>
+  </section>
+
+  <!-- 04 · where breakthroughs get built -->
+  <section class="sec wrap" id="where">
+    <div class="sh">
+      <span class="n">04</span>
       <h2 class="h2" lang="en"><span class="l"><span>Where breakthroughs</span></span><span class="l"><span>get built.</span></span></h2>
-      <span class="meta">Rows <b>01</b> to 04</span>
+      <span class="meta">Rows <b>01</b> to 05</span>
     </div>
 
     <div class="row" id="live">
       <div class="pics"><figure class="pinw a"><div class="pin"><img src="assets/img/live-grouphoto.jpg" alt="Breakthrough Live 大合照, 挑高白墙空间里满场笔电" style="--ar:4/3" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></div></figure><figure class="pinw b"><div class="pin"><img src="assets/img/live-stage.jpg" alt="Jia Wei 在 Breakthrough Live 前面讲, 两边屏幕, 满场笔电" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i></div></figure><figure class="pinw c"><div class="pin"><img src="assets/img/live-audience.jpg" alt="Breakthrough Live 全场举手" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:7deg;right:-10px;top:-8px"></i></div></figure></div>
       <div class="txt">
-        <div class="idx">Row <b>01</b> / 04</div>
+        <div class="idx">Row <b>01</b> / 05</div>
         <h3><svg class="lk" viewBox="12.01 99.55 489 375.41" aria-hidden="true" focusable="false"><defs><mask id="lk-m-breakthrough-live" maskUnits="userSpaceOnUse" x="-477" y="-276" width="1467" height="1126"><g fill="none" stroke="#fff" stroke-width="122.0" stroke-linecap="round" filter="url(#lk-bristle)"><path class="lk-stroke" pathLength="1" d="M -46.7 155.9 L 559.7 137.1"/><path class="lk-stroke" pathLength="1" d="M -46.7 249.7 L 559.7 230.9"/><path class="lk-stroke" pathLength="1" d="M -46.7 343.6 L 559.7 324.8"/><path class="lk-stroke" pathLength="1" d="M -46.7 437.4 L 559.7 418.6"/></g></mask></defs><g class="lk-paint" data-mask="url(#lk-m-breakthrough-live)"><use href="#lk-breakthrough-live"/></g></svg><span class="sr">Breakthrough Live</span></h3>
         <p class="one">每个月两场, 免费, 线下。不是讲座, 是一起动手: 先看 Jia Wei 现场跑自己的 2nd Brain, 再全场打开笔电, 一起 build 你自己的。走的时候, 你电脑里已经有一颗。</p>
         <div class="rec">Offline · Kaloz EDU, Shah Alam · 每月两场 (週五晚上 · 週六下午) · 下一场 <b>10月17日</b></div>
@@ -542,7 +740,7 @@ img{display:block;max-width:100%}
     <div class="row flip" id="intensive">
       <div class="pics"><figure class="pinw a"><div class="pin"><img src="assets/img/2bi-room.jpg" alt="2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁" style="--ar:4/3" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></div></figure><figure class="pinw b"><div class="pin"><img src="assets/img/2bi-huddle.jpg" alt="一桌学员围着一台笔电, 一起 build" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i></div></figure><figure class="pinw c"><div class="pin"><img src="assets/img/2bi-pair.jpg" alt="两位学员在 2nd Brain Intensive 里一起看一台笔电" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:7deg;right:-10px;top:-8px"></i></div></figure></div>
       <div class="txt">
-        <div class="idx">Row <b>02</b> / 04</div>
+        <div class="idx">Row <b>02</b> / 05</div>
         <h3><svg class="lk" style="--lw:0.84" viewBox="47.63 67.85 437.58 391.55" aria-hidden="true" focusable="false"><defs><mask id="lk-m-2nd-brain-intensive" maskUnits="userSpaceOnUse" x="-390" y="-324" width="1313" height="1175"><g fill="none" stroke="#fff" stroke-width="127.3" stroke-linecap="round" filter="url(#lk-bristle)"><path class="lk-stroke" pathLength="1" d="M -4.9 126.6 L 537.7 107.0"/><path class="lk-stroke" pathLength="1" d="M -4.9 224.5 L 537.7 204.9"/><path class="lk-stroke" pathLength="1" d="M -4.9 322.4 L 537.7 302.8"/><path class="lk-stroke" pathLength="1" d="M -4.9 420.2 L 537.7 400.7"/></g></mask></defs><g class="lk-paint" data-mask="url(#lk-m-2nd-brain-intensive)"><use href="#lk-2nd-brain-intensive"/></g></svg><span class="sr">2nd Brain Intensive</span></h3>
         <p class="one">很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天从这件事做起, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你, 接着让它每天照你的方法替你做事, 公司那一层也搭出第一版。这两天是加入 Breakthrough Circle 之后先上的, 之后你回去在自己的生意里接着 build, 卡住了在会员群里问, 每个月有一天 Build Day, 你带着手上在做的东西回来, 我们继续一起 build。</p>
         <div class="rec">Included in Circle · 两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>10月24至25日</b></div>
@@ -553,7 +751,7 @@ img{display:block;max-width:100%}
     <div class="row" id="buildday">
       <div class="pics"><figure class="pinw a" style="--op:50% 42%"><div class="pin"><img src="assets/img/buildday-front.jpg" alt="Build Day 现场, Jia Wei 在大屏前, 满桌笔电" style="--ar:4/3" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></div></figure><figure class="pinw b"><div class="pin"><img src="assets/img/buildday-board.jpg" alt="Jia Wei 指着屏幕讲一个系统怎么 build" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i></div></figure><figure class="pinw c" style="--op:50% 42%"><div class="pin"><img src="assets/img/buildday-banner.jpg" alt="Jia Wei 在 Breakthrough 立牌旁带 Build Day" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:7deg;right:-10px;top:-8px"></i></div></figure></div>
       <div class="txt">
-        <div class="idx">Row <b>03</b> / 04</div>
+        <div class="idx">Row <b>03</b> / 05</div>
         <h3><svg class="lk" viewBox="10.88 83.39 474.23 367.38" aria-hidden="true" focusable="false"><defs><mask id="lk-m-breakthrough-build-day" maskUnits="userSpaceOnUse" x="-463" y="-284" width="1423" height="1102"><g fill="none" stroke="#fff" stroke-width="119.4" stroke-linecap="round" filter="url(#lk-bristle)"><path class="lk-stroke" pathLength="1" d="M -46.0 138.5 L 542.0 120.1"/><path class="lk-stroke" pathLength="1" d="M -46.0 230.3 L 542.0 212.0"/><path class="lk-stroke" pathLength="1" d="M -46.0 322.2 L 542.0 303.8"/><path class="lk-stroke" pathLength="1" d="M -46.0 414.0 L 542.0 395.7"/></g></mask></defs><g class="lk-paint" data-mask="url(#lk-m-breakthrough-build-day)"><use href="#lk-breakthrough-build-day"/></g></svg><span class="sr">Breakthrough Build Day</span></h3>
         <p class="one">Circle 会员每个月一次的现场。带着生意上一个卡住的地方来, 一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来, 卡住了旁边就有人。</p>
         <div class="rec">Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>10月10日</b></div>
@@ -564,11 +762,22 @@ img{display:block;max-width:100%}
     <div class="row flip" id="strategy">
       <div class="pics"><figure class="pinw a"><div class="pin"><img src="assets/img/bsbb-room.jpg" alt="Brand Strategy Breakthrough 课室, 学员围桌, 屏上是品牌图" style="--ar:4/3" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></div></figure><figure class="pinw b"><div class="pin"><img src="assets/img/bsbb-flipchart.jpg" alt="Jia Wei 在 flipchart 前带 Brand Strategy Breakthrough" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i></div></figure><figure class="pinw c" style="--op:50% 22%"><div class="pin"><img src="assets/img/bsbb-marker.jpg" alt="Jia Wei 在白板上写" style="--ar:3/2" loading="lazy"><i class="tape" style="--tr:7deg;right:-10px;top:-8px"></i></div></figure></div>
       <div class="txt">
-        <div class="idx">Row <b>04</b> / 04</div>
+        <div class="idx">Row <b>04</b> / 05</div>
         <h3><svg class="lk" style="--lw:0.84" viewBox="40.8 56.98 465.37 424.71" aria-hidden="true" focusable="false"><defs><mask id="lk-m-brand-strategy-breakthrough" maskUnits="userSpaceOnUse" x="-425" y="-368" width="1396" height="1274"><g fill="none" stroke="#fff" stroke-width="138.0" stroke-linecap="round" filter="url(#lk-bristle)"><path class="lk-stroke" pathLength="1" d="M -15.0 120.7 L 562.0 99.5"/><path class="lk-stroke" pathLength="1" d="M -15.0 226.9 L 562.0 205.6"/><path class="lk-stroke" pathLength="1" d="M -15.0 333.0 L 562.0 311.8"/><path class="lk-stroke" pathLength="1" d="M -15.0 439.2 L 562.0 418.0"/></g></mask></defs><g class="lk-paint" data-mask="url(#lk-m-brand-strategy-breakthrough)"><use href="#lk-brand-strategy-breakthrough"/></g></svg><span class="sr">Brand Strategy Breakthrough</span></h3>
         <p class="one">三天, build 你的品牌策略, 用的是我们自己的方法论 Da Vinci Code。从六个 pillar, 把品牌一层一层理清楚: 你的定位是什么, 你跟别人的差异到底在哪里, 客户为什么非选你不可。</p>
         <div class="rec">三天 · Offline · Kaloz EDU, Shah Alam</div>
         
+      </div>
+    </div>
+
+    <div class="row" id="roundtable">
+      <div class="pics"><figure class="pinw a"><div class="pin"><img src="assets/rt/simon-pang.jpg" alt="Breakthrough Roundtable 一集的封面: Simon Pang" style="--ar:16/9" loading="lazy"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></div></figure><figure class="pinw b"><div class="pin"><img src="assets/rt/siu-chong.jpg" alt="Breakthrough Roundtable 一集的封面: Siu Chong" style="--ar:16/9" loading="lazy"><i class="tape" style="--tr:-8deg;left:-10px;top:-8px"></i></div></figure><figure class="pinw c"><div class="pin"><img src="assets/rt/jeff-chin.jpg" alt="Breakthrough Roundtable 一集的封面: Jeff Chin" style="--ar:16/9" loading="lazy"><i class="tape" style="--tr:7deg;right:-10px;top:-8px"></i></div></figure></div>
+      <div class="txt">
+        <div class="idx">Row <b>05</b> / 05</div>
+        <h3><svg class="lk" viewBox="11.08 78.81 483.84 390.61" aria-hidden="true" focusable="false"><defs><mask id="lk-m-breakthrough-roundtable" maskUnits="userSpaceOnUse" x="-473" y="-312" width="1452" height="1172"><g fill="none" stroke="#fff" stroke-width="126.9" stroke-linecap="round" filter="url(#lk-bristle)"><path class="lk-stroke" pathLength="1" d="M -47.0 137.4 L 553.0 117.9"/><path class="lk-stroke" pathLength="1" d="M -47.0 235.1 L 553.0 215.5"/><path class="lk-stroke" pathLength="1" d="M -47.0 332.7 L 553.0 313.2"/><path class="lk-stroke" pathLength="1" d="M -47.0 430.4 L 553.0 410.8"/></g></mask></defs><g class="lk-paint" data-mask="url(#lk-m-breakthrough-roundtable)"><use href="#lk-breakthrough-roundtable"/></g></svg><span class="sr">Breakthrough Roundtable</span></h3>
+        <p class="one">别人的 Breakthrough, 是怎么 build 出来的? 一档访谈节目, 每集请一位真的在做生意的人坐下来, 不讲成功学, 拆他把方法落地的过程: 怎么判断、怎么取舍、踩过什么坑。</p>
+        <div class="rec">访谈节目 · 华语为主 · 每集一位嘉宾</div>
+        <a class="btn" href="roundtable/">看每一集 <span class="ar" aria-hidden="true">→</span></a>
       </div>
     </div>
 
@@ -582,6 +791,13 @@ img{display:block;max-width:100%}
         <h4>Breakthrough</h4>
         <address>Kaloz EDU<br>No.4, Unit 6, Glen 9, Jalan Pensyarah U1/28,<br>HICOM-Glenmarie, 40150 Shah Alam, Selangor</address>
       </div>
+      <nav aria-label="做过的事">
+        <h4>做过的事</h4>
+        <ul>
+          <li><a href="log/">Build log</a></li>
+          <li><a href="roundtable/">Breakthrough Roundtable</a></li>
+        </ul>
+      </nav>
       <nav aria-label="来找我们">
         <h4>来找我们</h4>
         <ul>
