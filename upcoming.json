@@ -1,62 +1,8 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-05T05:57:49Z",
+ "generatedAt": "2026-10-16T11:00:23Z",
  "source": "https://project-breakthrough.com.my/",
  "events": [
-  {
-   "id": "build-day-04",
-   "kind": "buildday",
-   "product": "Build Day",
-   "edition": "No. 04",
-   "editionLabel": "No.",
-   "editionNumber": "04",
-   "start": "2026-10-10",
-   "end": "2026-10-10",
-   "days": [
-    "10"
-   ],
-   "through": "至",
-   "month": "10月",
-   "weekdays": "SAT",
-   "time": "10AM to 7PM",
-   "dateLine": "10月10日 · SAT · 10AM to 7PM",
-   "stamp": "Members only",
-   "paragraph": "带着生意上一个卡住的地方来。一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来。",
-   "cta": {
-    "label": "WHATSAPP US →",
-    "href": "https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day."
-   },
-   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-build-day-ink.svg",
-   "tapeIndex": "0014",
-   "onSheet": true
-  },
-  {
-   "id": "vol05",
-   "kind": "live",
-   "product": "Breakthrough Live",
-   "edition": "Vol 05",
-   "editionLabel": "Vol",
-   "editionNumber": "05",
-   "start": "2026-10-17",
-   "end": "2026-10-17",
-   "days": [
-    "17"
-   ],
-   "through": "至",
-   "month": "10月",
-   "weekdays": "SAT",
-   "time": "1:30 PM",
-   "dateLine": "10月17日 · SAT · 1:30 PM",
-   "stamp": "Free meetup",
-   "paragraph": "同一个月的第二场, 换成周末下午。一样是现场 build, 走不开平日晚上的就来这一场。",
-   "cta": {
-    "label": "RSVP →",
-    "href": "https://join.project-breakthrough.com.my/breakthrough-live"
-   },
-   "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
-   "tapeIndex": "0015",
-   "onSheet": true
-  },
   {
    "id": "2bi-cohort-03",
    "kind": "intensive",
@@ -137,7 +83,7 @@
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-build-day-ink.svg",
    "tapeIndex": "0018",
-   "onSheet": false
+   "onSheet": true
   },
   {
    "id": "vol07",
@@ -164,7 +110,7 @@
    },
    "logo": "https://project-breakthrough.com.my/assets/logos/breakthrough-live-ink.svg",
    "tapeIndex": "0019",
-   "onSheet": false
+   "onSheet": true
   },
   {
    "id": "2bi-cohort-04",
