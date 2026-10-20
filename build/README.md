@@ -16,6 +16,7 @@ python3 build/build.py
   - `ROWS`: 第三节的行 (Breakthrough Live, 2nd Brain Intensive, Build Day, Circle, Brand Strategy Breakthrough, Brand Launch Off Challenge, Roundtable) 的段落 `para`、记录行 `rec`、按钮 `action` (`('link', url)` 出「了解更多」, `('soon',)` 出 Coming soon 印章), 以及每行三张照片 `pics` (档名、宽高比、alt 中文描述)。行的顺序就是表的顺序。带 `hidden=True` 的行留在表里但不上页 (2026-09-06 起 Circle / Challenge 这样藏着, Roundtable 2026-10-06 放回来当最后一行; 要放一行出来: 拿掉 flag, 补 `pics`, 页脚 `index.tpl.html` 加回那行的锚点, 跑 build)。
   - `SHEET_COPY` / `PRODUCT`: 第二节每张卡的印章字样、那一句话、go 链接 (字样与 href), 以及每种活动印哪个 lockup。卡上的字只住这里 (2026-09-24 起从模板搬来), 因为同一张表也印 `upcoming.json` (见下面「给 Portal 的 feed」)。Live 週六或週日那场用 `live-weekend` 那句, 週五那场用 `live` 那句。
   - `ENTRIES`: 顶上那条 build log 胶带的条目, `x` 是做过的, `o` 是排定的, `now` 是游标。⚠️ 2026-09-06 起不手打: 它从 `events.json` 生 (下面「改日期」)。
+- **`build.py` 的 `VENUE` / `AT_KALOZ`**: 第三节 Live、2BI、Build Day 三行「下一场」前面印的地点。Kaloz EDU 2026 年 11 月起装修, 之后的活动都在 Wisma Peter's (JW 2026-10-20); 还在 Kaloz 办的那一场写它的 id 进 `AT_KALOZ`, 不写日期, 那场过了就自己换掉。搬回 Kaloz 时手动改回。BSBB 那行、页脚地址、`records.json` 的 `where` 讲的是公司或办过的场, 不跟着搬。
 - **`index.tpl.html`**: 页脚 (地址、链接); `<head>` 里的 title / description / og。CSS 和动画脚本也在这里, 但那是设计层, 不是改字。第二节的卡整张由 `build.py` 生 (模板里只剩 `{{SHEETS}}`), 卡上的日期与届次也不在这里 (见「改日期」)。
 
 ## Build log 那几页 (2026-10-06 起)
@@ -50,7 +51,7 @@ python3 build/build.py                 # 重出 index.html, 预览, 再 push
 每次 build 也在站根写 `upcoming.json` (上线后在 https://breakthrough-edu.github.io/breakthrough-site/upcoming.json , GitHub Pages 自带 `access-control-allow-origin: *`)。2BI Student Portal 的 Home 读它, 在右边那条「What's getting built next」印票根。
 
 - 内容: `events.json` 里还没过 `now` 的活动, 只收站上有字 (`SHEET_COPY`) 的那些, 按日期排; 每条带 id、kind、英文产品名、期数、起讫日期、月份与星期 (照卡上印的)、时间、印章字样、卡上那句话、go 链接的字样与 href、lockup 的绝对网址、`onSheet` (是不是第二节那几张卡之一)。`schemaVersion` 现在是 1; `generatedAt` 是内容最后一次变的时间, 内容没变就不动, 所以重跑 build 不会平白多出 diff。
-- 它跟卡永远一致: build 末尾把 feed 开头那几条跟页面上实际印出的卡逐项比 (从 HTML 读回来比, 不是跟表比), 对不上就停下不写。也要求 feed 开头就是那几张卡 (按日期); 哪天有一场不上卡的活动排在某张卡之前, build 会停下来说, 那时再决定卡的规则。
+- 它跟卡永远一致: build 末尾把 feed 里标 `onSheet` 的那几条跟页面上实际印出的卡逐项比 (从 HTML 读回来比, 不是跟表比), 对不上就停下不写。卡的规则: 每种活动的下一场各一张, 加当月第二场 Live, 所以 feed 一定从一张卡开头。2BI 也一个月两届之后 (2026-11 起), 同一种活动的第二场可以夹在卡之间而不上卡 (例: 2026-10-20 时 Cohort 04 的 11/7 排在 Build Day 05 的卡前面); 只有这种准许。夹在卡之间、却没有同种活动更早的卡的, build 会停下来说, 那时再决定卡的规则 (2026-10-20 定)。
 - 改卡上的字 = 改 `SHEET_COPY`, 跑 build, 两处一起变。⛔ 别手改 `upcoming.json`。
 - 改 feed 的形状 (加减栏位) 前先想 Portal: 它用 Zod 整份验, 不认得的形状整份丢掉只显示 motto。要改就把 `schemaVersion` 加一, Portal 那边先接好新版再推站。
 

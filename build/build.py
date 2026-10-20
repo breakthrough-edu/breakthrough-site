@@ -194,6 +194,18 @@ for k in ('live', 'buildday', 'intensive'):
 LIVE2 = next((e for e in UPCOMING if e['kind'] == 'live' and e is not NEXT['live']), None)
 WD = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
 
+# Where the next one meets, as the rows print it. Kaloz EDU renovates from November 2026 and every event from then on is at
+# Wisma Peter's (JW 2026-10-20). An occurrence still held at Kaloz is named by its id here, never by a date: once it is past,
+# the next occurrence is simply not in the set. Flip back by hand when the events return to Kaloz (the site has no custom values).
+KALOZ = 'Kaloz EDU, Shah Alam'
+VENUE = "Wisma Peter's, Petaling Jaya"
+AT_KALOZ = {'2bi-cohort-03'}
+assert AT_KALOZ <= {e['id'] for e in EV['upcoming']}, f'AT_KALOZ names an event events.json does not have: {AT_KALOZ}'
+
+
+def venue(e):
+    return KALOZ if e['id'] in AT_KALOZ else VENUE
+
 
 def d(iso):
     return datetime.date.fromisoformat(iso)
@@ -440,14 +452,14 @@ ROWS = [
                ('live-stage.jpg', '3/2', 'Jia Wei 在 Breakthrough Live 前面讲, 两边屏幕, 满场笔电', ''),
                ('live-audience.jpg', '3/2', 'Breakthrough Live 全场举手', '')],
          para='每个月两场, 免费, 线下。不是讲座, 是一起动手: 先看 Jia Wei 现场跑自己的 2nd Brain, 再全场打开笔电, 一起 build 你自己的。走的时候, 你电脑里已经有一颗。',
-         rec=f'Offline · Kaloz EDU, Shah Alam · 每月两场 (週五晚上 · 週六下午) · 下一场 <b>{zh_date(NEXT["live"])}</b>',
+         rec=f'Offline · {venue(NEXT["live"])} · 每月两场 · 下一场 <b>{zh_date(NEXT["live"])}</b>',
          action=('link', 'https://join.project-breakthrough.com.my/breakthrough-live')),
     dict(id='intensive', slug='2nd-brain-intensive', name='2nd Brain Intensive', lw=.84,
          pics=[('2bi-room.jpg', '4/3', '2nd Brain Intensive 课室, 满桌黑 T 恤, Jia Wei 在前面的 Breakthrough 立牌旁', ''),
                ('2bi-huddle.jpg', '3/2', '一桌学员围着一台笔电, 一起 build', ''),
                ('2bi-pair.jpg', '3/2', '两位学员在 2nd Brain Intensive 里一起看一台笔电', '')],
          para='很多老板用了 AI, 觉得它做出来的东西不像自己, 因为你怎么报价、怎么带人、怎么拍板, 全部还在你脑袋里, AI 读不到。这两天从这件事做起, 我们一起把你脑袋里那套做法, 一样一样写进你自己的 2nd Brain, AI 读得到了, 做出来的东西才会像你, 接着让它每天照你的方法替你做事, 公司那一层也搭出第一版。这两天是加入 Breakthrough Circle 之后先上的, 之后你回去在自己的生意里接着 build, 卡住了在会员群里问, 每个月有一天 Build Day, 你带着手上在做的东西回来, 我们继续一起 build。',
-         rec=f'Included in Circle · 两天 · 周末 · Kaloz EDU, Shah Alam · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
+         rec=f'Included in Circle · 两天 · 周末 · {venue(NEXT["intensive"])} · 下一届 <b>{zh_date(NEXT["intensive"])}</b>',
          action=('link', 'https://join.project-breakthrough.com.my/2nd-brain-intensive')),
     # JW 2026-09-06: Build Day before Circle.
     dict(id='buildday', slug='breakthrough-build-day', name='Breakthrough Build Day', lw=1,
@@ -455,7 +467,7 @@ ROWS = [
                ('buildday-board.jpg', '3/2', 'Jia Wei 指着屏幕讲一个系统怎么 build', ''),
                ('buildday-banner.jpg', '3/2', 'Jia Wei 在 Breakthrough 立牌旁带 Build Day', ' style="--op:50% 42%"')],
          para='Circle 会员每个月一次的现场。带着生意上一个卡住的地方来, 一整天, 用 AI 亲手 build 一套解决它的系统; 不是上课, 是做出来, 卡住了旁边就有人。',
-         rec=f'Offline · Kaloz EDU, Shah Alam · 每月一次 · 下一场 <b>{zh_date(NEXT["buildday"])}</b>',
+         rec=f'Offline · {venue(NEXT["buildday"])} · 每月一次 · 下一场 <b>{zh_date(NEXT["buildday"])}</b>',
          # JW 2026-09-06: WhatsApp button instead of the stamp (same link as the sheet in section 02)
          action=('wa', 'https://wa.me/60167226505?text=Hi%20CT%21%20I%27d%20like%20to%20join%20the%20upcoming%20Build%20Day.')),
     # Circle: a tall cluster (one portrait photo, the SKOOL sticker, one blank card), so it does not read as Build Day's wide cluster again
@@ -960,15 +972,20 @@ def rendered_sheets(page):
 PAGE_SHEETS = rendered_sheets(out)
 assert len(PAGE_SHEETS) == len(SHEETS), f'the page shows {len(PAGE_SHEETS)} sheets, SHEETS lists {len(SHEETS)}'
 BY_DATE = sorted(range(len(SHEETS)), key=lambda i: (SHEETS[i][0]['start'], SHEETS[i][0]['end'], SHEETS[i][0]['id']))
-FIRST = FEED['events'][:len(SHEETS)]
-assert [f['id'] for f in FIRST] == [SHEETS[i][0]['id'] for i in BY_DATE], (
-    'upcoming.json must open with the sheets, in date order; an event that is not on a sheet now falls before one that is: '
-    f'{[f["id"] for f in FIRST]} vs {[SHEETS[i][0]["id"] for i in BY_DATE]}')
-for f, i in zip(FIRST, BY_DATE):
+ON = [f for f in FEED['events'] if f['onSheet']]
+assert [f['id'] for f in ON] == [SHEETS[i][0]['id'] for i in BY_DATE], (
+    'every sheet is in upcoming.json once, in date order, and only the sheets are marked onSheet: '
+    f'{[f["id"] for f in ON]} vs {[SHEETS[i][0]["id"] for i in BY_DATE]}')
+for f, i in zip(ON, BY_DATE):
     want = {k: f[k] for k in PAGE_SHEETS[i]}
     assert want == PAGE_SHEETS[i], f'upcoming.json {f["id"]} differs from its sheet on the page: {want} vs {PAGE_SHEETS[i]}'
-    assert f['onSheet'], f['id']
-assert not any(f['onSheet'] for f in FEED['events'][len(SHEETS):]), 'only the sheets are marked onSheet'
+# The sheets are the next of each kind (plus the month's second Live), so the feed opens with one. Since 2BI runs twice a month
+# (from November 2026) a kind's second occurrence can fall between the sheets without a sheet of its own; that, and only that,
+# may sit among them: an event among the sheets with no earlier sheet of its kind would be a product section 02 leaves out.
+LAST = FEED['events'].index(ON[-1])
+for f in FEED['events'][:LAST]:
+    assert f['onSheet'] or any(s['kind'] == f['kind'] and s['start'] < f['start'] for s, _ in SHEETS), (
+        f'{f["id"]} falls among the sheets but no earlier sheet shows its kind: decide the sheet rule (build/README.md, the feed section)')
 assert all(f['logo'].startswith('https://') for f in FEED['events']), 'feed logos are absolute https links'
 assert len({f['id'] for f in FEED['events']}) == len(FEED['events']), 'feed ids are unique'
 
