@@ -16,7 +16,7 @@ python3 build/build.py
   - `ROWS`: 第三节的行 (Breakthrough Live, 2nd Brain Intensive, Build Day, Circle, Brand Strategy Breakthrough, Brand Launch Off Challenge, Roundtable) 的段落 `para`、记录行 `rec`、按钮 `action` (`('link', url)` 出「了解更多」, `('soon',)` 出 Coming soon 印章), 以及每行三张照片 `pics` (档名、宽高比、alt 中文描述)。行的顺序就是表的顺序。带 `hidden=True` 的行留在表里但不上页 (2026-09-06 起 Circle / Challenge 这样藏着, Roundtable 2026-10-06 放回来当最后一行; 要放一行出来: 拿掉 flag, 补 `pics`, 页脚 `index.tpl.html` 加回那行的锚点, 跑 build)。
   - `SHEET_COPY` / `PRODUCT`: 第二节每张卡的印章字样、那一句话、go 链接 (字样与 href), 以及每种活动印哪个 lockup。卡上的字只住这里 (2026-09-24 起从模板搬来), 因为同一张表也印 `upcoming.json` (见下面「给 Portal 的 feed」)。Live 週六或週日那场用 `live-weekend` 那句, 週五那场用 `live` 那句。
   - `ENTRIES`: 顶上那条 build log 胶带的条目, `x` 是做过的, `o` 是排定的, `now` 是游标。⚠️ 2026-09-06 起不手打: 它从 `events.json` 生 (下面「改日期」)。
-- **`build.py` 的 `VENUE` / `AT_KALOZ`**: 第三节 Live、2BI、Build Day 三行「下一场」前面印的地点。Kaloz EDU 2026 年 11 月起装修, 之后的活动都在 Wisma Peter's (JW 2026-10-20); 还在 Kaloz 办的那一场写它的 id 进 `AT_KALOZ`, 不写日期, 那场过了就自己换掉。搬回 Kaloz 时手动改回。BSBB 那行、页脚地址、`records.json` 的 `where` 讲的是公司或办过的场, 不跟着搬。
+- **`build.py` 的 `VENUE` / `AT_KALOZ`**: 第三节 Live、2BI、Build Day 三行「下一场」前面印的地点。Kaloz EDU 装修, 从 2BI Cohort 03 (10 月) 起的活动都在 Wisma Peter's (JW 2026-10-20); 哪一场还在 Kaloz 办, 就写它的 id 进 `AT_KALOZ` (现在是空的), 不写日期, 那场过了就自己换掉。搬回 Kaloz 时手动改回。BSBB 那行、页脚地址、`records.json` 的 `where` 讲的是公司或办过的场, 不跟着搬。
 - **`index.tpl.html`**: 页脚 (地址、链接); `<head>` 里的 title / description / og。CSS 和动画脚本也在这里, 但那是设计层, 不是改字。第二节的卡整张由 `build.py` 生 (模板里只剩 `{{SHEETS}}`), 卡上的日期与届次也不在这里 (见「改日期」)。
 
 ## Build log 那几页 (2026-10-06 起)

@@ -194,12 +194,12 @@ for k in ('live', 'buildday', 'intensive'):
 LIVE2 = next((e for e in UPCOMING if e['kind'] == 'live' and e is not NEXT['live']), None)
 WD = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
 
-# Where the next one meets, as the rows print it. Kaloz EDU renovates from November 2026 and every event from then on is at
+# Where the next one meets, as the rows print it. Kaloz EDU renovates, and every event from 2BI Cohort 03 (October) on is at
 # Wisma Peter's (JW 2026-10-20). An occurrence still held at Kaloz is named by its id here, never by a date: once it is past,
 # the next occurrence is simply not in the set. Flip back by hand when the events return to Kaloz (the site has no custom values).
 KALOZ = 'Kaloz EDU, Shah Alam'
 VENUE = "Wisma Peter's, Petaling Jaya"
-AT_KALOZ = {'2bi-cohort-03'}
+AT_KALOZ = set()   # none today: Cohort 03 moved too (JW 2026-10-20)
 assert AT_KALOZ <= {e['id'] for e in EV['upcoming']}, f'AT_KALOZ names an event events.json does not have: {AT_KALOZ}'
 
 
