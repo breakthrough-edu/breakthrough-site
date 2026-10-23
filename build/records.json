@@ -839,6 +839,62 @@
      "h": 640,
      "orig": "Breakthrough-Live/2026-10-vol04/photos/DSC03024.jpg",
      "cap": "Vol 04"
+    },
+    {
+     "src": "live-30.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/camera/DSC03299.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-31.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/camera/DSC03321.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-32.jpg",
+     "w": 960,
+     "h": 720,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/phone/IMG_8945.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-33.jpg",
+     "w": 720,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/phone/IMG_8947.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-34.jpg",
+     "w": 960,
+     "h": 720,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/phone/IMG_8959.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-35.jpg",
+     "w": 540,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/phone/IMG_9008.jpg",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-36.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/camera/DSC03276.JPG",
+     "cap": "Vol 05"
+    },
+    {
+     "src": "live-37.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Live/2026-10-vol05/photos/camera/DSC03269.JPG",
+     "cap": "Vol 05"
     }
    ]
   },
@@ -940,6 +996,76 @@
      "h": 960,
      "orig": "Breakthrough-Circle/2026-09-build-day-03/photos/IMG_2277.HEIC",
      "cap": "No. 03"
+    },
+    {
+     "src": "build-day-12.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03062.jpg",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-13.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03194.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-14.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03189.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-15.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03202.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-16.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03206.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-17.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03208.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-18.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03216.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-19.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03224.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-20.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03250.JPG",
+     "cap": "No. 04"
+    },
+    {
+     "src": "build-day-21.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "Breakthrough-Circle/2026-10-build-day-04/photos/DSC03107.jpg",
+     "cap": "No. 04"
     }
    ]
   }

@@ -1,0 +1,70 @@
+<!-- Picker page for build/event-photos.py pick: __DATA__ is replaced with {key, title, want, items}. Picks are saved to the artifact's db at picks/<key>. -->
+<title>__TITLE__</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter+Tight:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* layout: a contact sheet on paper; one sticky ink bar on top carries the count and the filters */
+:root{--black:#151513;--paper:#f0eee8;--card:#faf8f3;--ink:#2a2a28;--orange:#FF6600;--mute:#6a6a64;--soft:rgba(42,42,40,.28);
+--disp:"Archivo Black","Arial Black","PingFang SC",sans-serif;--body:"Inter Tight","Helvetica Neue",Arial,"PingFang SC",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,"PingFang SC",monospace}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--black);color:var(--paper);padding:12px clamp(16px,3vw,40px);display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+.count{font-family:var(--disp);font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.count b{color:var(--orange);font-weight:400}
+.state{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9b9990;margin-left:auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 11px;border:1px solid #55534d;background:transparent;color:var(--paper);cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--paper);color:var(--black);border-color:var(--paper)}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+main{padding-inline:clamp(16px,3vw,40px);padding-block:28px 80px}
+h1{font-family:var(--disp);font-weight:400;font-size:clamp(26px,4vw,48px);line-height:1;text-transform:uppercase;margin:0 0 10px}
+.lede{max-width:60ch;margin:0 0 24px;color:var(--mute)}
+.grid{columns:var(--cw,300px);column-gap:14px}
+.grid.big{--cw:460px}
+.ph{position:relative;padding:0;border:1px solid var(--ink);background:var(--card);cursor:pointer;display:block;width:100%;text-align:left;break-inside:avoid;margin:0 0 14px}
+.ph img{display:block;width:100%;height:auto}
+.ph .m{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.ph .m i{font-style:normal;color:var(--orange);font-weight:700}
+.ph .tick{position:absolute;top:8px;right:8px;width:30px;height:30px;border:2px solid var(--paper);background:rgba(21,21,19,.45);color:transparent;font:700 16px var(--mono);display:flex;align-items:center;justify-content:center}
+.ph[aria-pressed=true]{outline:4px solid var(--orange);outline-offset:-1px}
+.ph[aria-pressed=true] .tick{background:var(--orange);border-color:var(--orange);color:var(--black)}
+.ph .n{position:absolute;top:8px;left:8px;background:var(--black);color:var(--paper);font:700 11px var(--mono);padding:3px 6px}
+</style>
+<div class="bar">
+  <div class="count"><b id="n">0</b> / <span id="want">30</span></div>
+  <div class="chips" id="chips"></div>
+  <div class="chips"><button type="button" id="size" aria-pressed="false">放大</button></div>
+  <div class="state" id="state">读取中</div>
+</div>
+<main>
+  <h1 id="title"></h1>
+  <p class="lede">每张都是完整画面, 没有裁切。点一下选, 再点一下取消; 想看大一点按顶上的「放大」。选择会自己存起来, 关掉再开还在。橙色小点是索引里标成最好的那批; 照片上如果看得到别人的屏幕、名字或金额, 不要选。</p>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+const DATA=__DATA__;
+const SET=DATA,KEY=DATA.key;
+const SHOT={'group-photo':'合照','small-group':'几个人','crowd':'全场','duo':'两人','solo':'单人','detail':'细节','venue':'场地'};
+let picked=new Set(),filter='all',db=null,timer=null;
+const $=id=>document.getElementById(id);
+$('title').textContent=SET.title;$('want').textContent=SET.want;
+try{const l=JSON.parse(localStorage.getItem('pick-'+KEY)||'[]');picked=new Set(l)}catch(e){}
+const GR=[...new Set(SET.items.map(i=>i.grp).filter(Boolean))];
+const F=[['all','全部'],['hero','最好的'],['picked','已选'],['group','合照 · 全场'],['people','两三人'],['solo','单人']].concat(GR.map(g=>['g:'+g,g]));
+function show(it){if(filter.startsWith('g:'))return it.grp===filter.slice(2);if(filter==='hero')return it.hero;if(filter==='picked')return picked.has(it.id);if(filter==='group')return ['group-photo','crowd'].includes(it.shot);if(filter==='people')return ['duo','small-group'].includes(it.shot);if(filter==='solo')return it.shot==='solo';return true}
+function draw(){
+  $('chips').innerHTML='';F.forEach(([k,t])=>{const b=document.createElement('button');b.type='button';b.id='f-'+k.replace(/[^a-z0-9]/gi,'_');b.textContent=t;b.setAttribute('aria-pressed',k===filter);b.onclick=()=>{filter=k;draw()};$('chips').append(b)});
+  const g=$('grid');g.innerHTML='';
+  SET.items.filter(show).forEach(it=>{const b=document.createElement('button');b.type='button';b.className='ph';b.id='p-'+it.id;b.setAttribute('aria-pressed',picked.has(it.id));b.title=it.note;
+    b.innerHTML='<img loading="lazy" width="'+it.w+'" height="'+it.h+'" src="'+it.src+'" alt=""><span class="n">'+it.id.replace(/^DSC[F0]?/,'').replace(/^2026\d{4}_/,'')+'</span><span class="tick">✓</span><span class="m"><span>'+(it.grp?it.grp+' · ':'')+(SHOT[it.shot]||it.shot)+'</span>'+(it.hero?'<i>●</i>':'')+'</span>';
+    b.onclick=()=>{picked.has(it.id)?picked.delete(it.id):picked.add(it.id);b.setAttribute('aria-pressed',picked.has(it.id));count();save()};g.append(b)});
+  count()}
+function count(){$('n').textContent=picked.size}
+function save(){try{localStorage.setItem('pick-'+KEY,JSON.stringify([...picked]))}catch(e){}
+  if(!db){$('state').textContent='只存在这个浏览器';return}
+  $('state').textContent='存档中';clearTimeout(timer);
+  timer=setTimeout(()=>db.doc('picks/'+KEY).set({ids:[...picked],count:picked.size,updatedAt:new Date().toISOString()}).then(()=>$('state').textContent='已存 '+picked.size+' 张').catch(()=>$('state').textContent='没存到, 再点一张试试'),700)}
+$('size').onclick=function(){const on=$('grid').classList.toggle('big');this.setAttribute('aria-pressed',on);this.textContent=on?'缩小':'放大'};
+draw();
+(window.claude?claude.use('db'):Promise.resolve(null)).then(async d=>{db=d;if(!d){$('state').textContent='只存在这个浏览器';return}
+  try{const s=await d.doc('picks/'+KEY).get();if(s.exists){const ids=(s.data()||{}).ids||[];if(ids.length||!picked.size){picked=new Set(ids);draw()}}$('state').textContent='已存 '+picked.size+' 张'}catch(e){$('state').textContent='只存在这个浏览器'}});
+</script>

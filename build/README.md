@@ -32,6 +32,24 @@ python3 build/build.py
 - **分享预览**: 每张子页有自己的标题、描述 (卡上那句短文案) 与分享图。分享图在 `assets/og/<key>.jpg`, 第一次 build 时从那页的主图裁成 1200x630; 裁的位置不对就在那笔记录加 `og_focus` (0 是贴上缘, 1 是贴下缘), 删掉那张 og 图再跑 build。
 - **改字**: 这几页的文案是站主逐段过的, 先改 vault 的 SOT, 再改 `records.json`。
 
+## 活动办完, 照片上站 (2026-10-23 起, 每一场都做)
+
+几时做、谁交照片、谁挑, 住 vault 的 Event Prep 流程图「活动之后: 照片上官网」那节; 这里只讲工具 `build/event-photos.py`。前提: 那一场的照片已经在资产库 `<brand>/<YYYY-MM-event>/photos/`, 而且做过照片索引 (`_index.tsv`)。
+
+```
+# 1. 出挑图页 (那一场的全部照片, 一张都不先筛; 页面与它的 manifest 放资产库 Breakthrough-EDU/website/event-photos/<YYYY-MM-event>/)
+python3 build/event-photos.py pick build-day <photos 夹> --name "Build Day 05 挑图" --title "Build Day No. 05 · 2026-11-14" --cap "No. 05" --want 6 --out <夹>/picker.html
+#    发成 artifact (capabilities: db), 站主点选; 选择存在 artifact 的 db, picks/<target> 的 ids
+# 2. 照站主的名单压图进 repo, 写进 records.json
+python3 build/event-photos.py add <夹>/picker.manifest.json --ids <逗号分隔>
+#    2BI 新的一届第一次 add 要带: --like 2bi-cohort-02 --edition "Cohort 03" --start 2026-10-24 --end 2026-10-25 (--lead 指主图, 默认第一张)
+# 3. python3 build/build.py, 本机看一眼, push
+```
+
+- target 是 `live` / `build-day` 就加进那张合起来的照片页 (每张带 `--cap` 的场次); 其他 key 是一笔自己的记录 (`/log/<key>/`)。
+- 一个 `photos/` 底下分了几个夹 (例: Vol05 的 `camera/` 与 `phone/`), 全部列在 `pick` 后面, 挑图页会按夹分组。
+- 站主点完就推, 不再先给他看 (点选就是批准); 只有特别活动有新文案时例外。`add` 不覆盖任何已有的档, 同一张原档不会上两次。
+
 ## 改日期
 
 页上所有日期 (胶带 · 三张卡的日期与届次 · 各行「下一场」· Rev 章) 都从 **`build/events.json`** 生, 而它的 `upcoming` 段是 **`build/sync-events.py`** 从 vault 的活动正本 (Event Prep skill 的 `overrides.json` → 各活动 brief 的 `started` / `due`) 刷出来的, 不手打。活动日期定了或改了, 从站根跑:
