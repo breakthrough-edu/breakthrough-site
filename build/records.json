@@ -33,6 +33,200 @@
  },
  "records": [
   {
+   "key": "2bi-cohort-03",
+   "line": "2bi",
+   "lockup": "2nd-brain-intensive",
+   "name": "2nd Brain Intensive",
+   "stamp": "Built",
+   "copy": "2bi",
+   "edition": "Cohort 03",
+   "start": "2026-10-24",
+   "end": "2026-10-25",
+   "photos": [
+    {
+     "src": "2bi-cohort-03-lead.jpg",
+     "w": 1600,
+     "h": 1200,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/IMG_7351.heic",
+     "group": true
+    },
+    {
+     "src": "2bi-cohort-03-01.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03407.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-02.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03409.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-03.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03415.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-04.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03424.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-05.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03427.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-06.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03429.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-07.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03432.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-08.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03444.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-09.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03454.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-10.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03461.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-11.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03477.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-12.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03481.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-13.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03486.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-14.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03504.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-15.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03542.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-16.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03546.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-17.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03548.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-18.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03553.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-19.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03561.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-20.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03586.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-21.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03604.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-22.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-24 Day 1/DSC03610.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-23.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03699.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-24.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03715.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-25.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03721.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-26.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03730.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-27.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03759.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-28.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03760.JPG"
+    },
+    {
+     "src": "2bi-cohort-03-29.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-10-cohort-03/photos/2026-10-25 Day 2/DSC03769.JPG"
+    }
+   ]
+  },
+  {
    "key": "2bi-cohort-02",
    "line": "2bi",
    "lockup": "2nd-brain-intensive",
