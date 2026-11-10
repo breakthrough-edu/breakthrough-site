@@ -37,9 +37,10 @@ python3 build/build.py
 几时做、谁交照片、谁挑, 住 vault 的 Event Prep 流程图「活动之后: 照片上官网」那节; 这里只讲工具 `build/event-photos.py`。前提: 那一场的照片已经在资产库 `<brand>/<YYYY-MM-event>/photos/`, 而且做过照片索引 (`_index.tsv`)。
 
 ```
-# 1. 出挑图页 (那一场的全部照片, 一张都不先筛; 页面与它的 manifest 放资产库 Breakthrough-EDU/website/event-photos/<YYYY-MM-event>/)
-python3 build/event-photos.py pick build-day <photos 夹> --name "Build Day 05 挑图" --title "Build Day No. 05 · 2026-11-14" --cap "No. 05" --want 6 --out <夹>/picker.html
-#    发成 artifact (capabilities: db), 站主点选; 选择存在 artifact 的 db, picks/<target> 的 ids
+# 1. 出挑图页 (那一场的全部照片, 一张都不先筛; 页面夹与它的 manifest 放资产库 Breakthrough-EDU/website/event-photos/<YYYY-MM-event>/)
+python3 build/event-photos.py pick build-day <photos 夹> --name "Build Day 05 挑图" --title "Build Day No. 05 · 2026-11-14" --cap "No. 05" --want 6 --out <夹>/picker
+#    写出 <夹>/picker/ (index.html · app.js · data.js · img/<id>.jpg) 与旁边的 <夹>/picker.manifest.json
+#    整个 picker/ 发成一个 artifact (见下), 站主点选; 选择存在 artifact 的 db, picks/<target> 的 ids
 # 2. 照站主的名单压图进 repo, 写进 records.json
 python3 build/event-photos.py add <夹>/picker.manifest.json --ids <逗号分隔>
 #    2BI 新的一届第一次 add 要带: --like 2bi-cohort-02 --edition "Cohort 03" --start 2026-10-24 --end 2026-10-25 (--lead 指主图, 默认第一张)
@@ -48,6 +49,8 @@ python3 build/event-photos.py add <夹>/picker.manifest.json --ids <逗号分隔
 
 - target 是 `live` / `build-day` 就加进那张合起来的照片页 (每张带 `--cap` 的场次); 其他 key 是一笔自己的记录 (`/log/<key>/`)。
 - 一个 `photos/` 底下分了几个夹 (例: Vol05 的 `camera/` 与 `phone/`), 全部列在 `pick` 后面, 挑图页会按夹分组。
+- **挑图页怎么发**: 用 claude-artifacts 的 `publish_files`, `picker/` 里每个档各一行, `as` 就是它在夹里的路径 (`index.html` · `app.js` · `data.js` · `img/<id>.jpg`), `path` 是本机绝对路径; 发完 `declare_capabilities` 给 `{db:{}, user:{}}`。一次最多 256 个档、合计 64 MiB: 照片超过 253 张时, 第一次先发 `index.html`、两个 `.js` 和前面一批照片, 其余用同一个 slug 再发 (`patch`, 只加档)。发完先在站主自己的 Chrome 打开, 看到照片了才把链接递给他。
+- ⛔ 别再发成单一 HTML (照片全部 base64 内嵌在页里): 2026-11-10 Live 06 那样发, 程序不跑, 页面停在「读取中」一张照片都没有。`pick` 从那天之后就写成上面那个夹 (`--out` 给 `.html` 结尾也照样写夹, 结尾的 `.html` 会被去掉)。页面的程序住 `build/picker.app.js`, 版面住 `build/picker.tpl.html`。
 - 站主点完就推, 不再先给他看 (点选就是批准); 只有特别活动有新文案时例外。`add` 不覆盖任何已有的档, 同一张原档不会上两次。
 
 ## 改日期

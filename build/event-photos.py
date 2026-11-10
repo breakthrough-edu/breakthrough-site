@@ -2,8 +2,9 @@
 """After every event its photos reach the site: the owner picks them on a picker page, this script puts his picks in.
 Process map (when, who): the vault's Event-Prep-System-Process-Map,「活动之后: 照片上官网」. How to run: build/README.md.
 
-  pick  writes a picker page (every photo of the event, none left out: the owner picks every photo himself) plus a
-        manifest next to it that maps each photo id to its original in the Drive asset library.
+  pick  writes a picker page folder (every photo of the event, none left out: the owner picks every photo himself):
+        index.html, app.js, data.js and img/<id>.jpg, published as a claude.ai artifact; plus a manifest next to the
+        folder that maps each photo id to its original in the Drive asset library.
   add   takes the ids he picked, makes the site's JPEGs from the originals, adds them to build/records.json.
         Then run build/build.py, look, push.
 
@@ -11,7 +12,7 @@ Targets: `live` / `build-day` add to the pooled photo page (each photo carries `
 record of its own (/log/<key>/), created on first `add` from `--like` (a record of the same line, e.g. the previous
 2BI cohort) with its edition and dates; its first photo is the lead.
 """
-import argparse, base64, csv, io, json, os, re, subprocess, sys, tempfile
+import argparse, csv, json, os, re, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(HERE)
@@ -58,26 +59,46 @@ def cmd_pick(a):
             items.append(dict(id=pid, grp=tag, shot=r['shot'], hero=r.get('quality') == 'hero',
                               note=r['content'][:70], path=os.path.join(folder, r['file'])))
 
+    out = os.path.abspath(os.path.expanduser(re.sub(r'\.html$', '', a.out.rstrip('/'))))
+    img = os.path.join(out, 'img')
+    os.makedirs(img, exist_ok=True)
+    for f in os.listdir(img):                      # a re-run replaces the old thumbnails, nothing else in the folder
+        if f.endswith('.jpg'):
+            os.remove(os.path.join(img, f))
+
     def thumb(it):
         im = load(it.pop('path'))
         im.thumbnail((THUMB, THUMB))
-        buf = io.BytesIO()
-        im.save(buf, 'JPEG', quality=70, optimize=True)
-        it.update(w=im.width, h=im.height, src='data:image/jpeg;base64,' + base64.b64encode(buf.getvalue()).decode())
+        src = 'img/' + re.sub(r'[^A-Za-z0-9_-]', '_', it['id']) + '.jpg'
+        im.save(os.path.join(out, src), 'JPEG', quality=70, optimize=True)
+        it.update(w=im.width, h=im.height, src=src)
         return it
 
     with ThreadPoolExecutor(8) as ex:
         items = list(ex.map(thumb, items))
-    out = os.path.abspath(os.path.expanduser(a.out))
-    os.makedirs(os.path.dirname(out), exist_ok=True)
+    srcs = [it['src'] for it in items]
+    if len(set(srcs)) != len(srcs):
+        sys.exit('two photo ids make the same file name under img/; rename one of the originals')
+    # The page is published as a claude.ai artifact (publish_files, the whole folder): one file per photo plus small
+    # scripts. A single HTML with every photo inlined as base64 never ran there (2026-11-10, Live 06).
     with open(os.path.join(HERE, 'picker.tpl.html'), encoding='utf-8') as f:
         page = f.read()
+    with open(os.path.join(out, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(page.replace('__TITLE__', a.name))
+    with open(os.path.join(HERE, 'picker.app.js'), encoding='utf-8') as f:
+        app = f.read()
+    with open(os.path.join(out, 'app.js'), 'w', encoding='utf-8') as f:
+        f.write(app)
     data = dict(key=a.target, title=a.title, want=a.want, items=items)
-    with open(out, 'w', encoding='utf-8') as f:
-        f.write(page.replace('__TITLE__', a.name).replace('__DATA__', json.dumps(data, ensure_ascii=False)))
-    with open(re.sub(r'\.html$', '', out) + '.manifest.json', 'w', encoding='utf-8') as f:
+    with open(os.path.join(out, 'data.js'), 'w', encoding='utf-8') as f:
+        f.write('window.PICKER_DATA=' + json.dumps(data, ensure_ascii=False) + ';\n')
+    with open(out + '.manifest.json', 'w', encoding='utf-8') as f:
         json.dump(dict(target=a.target, cap=a.cap, photos=manifest), f, ensure_ascii=False, indent=1)
-    print(f'{out}: {len(items)} photos, {os.path.getsize(out) // 1024} KB')
+    kb = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(out) for f in fs) // 1024
+    print(f'{out}/: index.html, app.js, data.js, img/ ({len(items)} photos), {kb} KB in all')
+    print(f'{out}.manifest.json')
+    print('Next: publish the folder as an artifact (claude-artifacts publish_files: index.html, app.js, data.js and every '
+          'img/<id>.jpg, each "as" its own path), then declare_capabilities {db:{}, user:{}}.')
 
 
 def cmd_add(a):
@@ -152,7 +173,8 @@ p.add_argument('--title', required=True, help='heading on the picker page, e.g. 
 p.add_argument('--name', required=True, help='the page\'s name in the gallery, e.g. "Build Day 04 挑图"')
 p.add_argument('--cap', help='edition label for a pooled page, e.g. "Vol 05" / "No. 04"')
 p.add_argument('--want', type=int, required=True, help='suggested number to pick (the owner decides)')
-p.add_argument('--out', required=True, help='path of the picker page (.html); its manifest is written beside it')
+p.add_argument('--out', required=True, help='the picker page folder, e.g. <event>/picker (a trailing .html is dropped); '
+               'its manifest <folder>.manifest.json is written beside it')
 p = sub.add_parser('add', help="put the owner's picks into records.json and assets/rec/")
 p.add_argument('manifest', help='the .manifest.json written by pick')
 p.add_argument('--ids', required=True, help='picked ids, comma-separated, in the order they should appear')
