@@ -33,6 +33,87 @@
  },
  "records": [
   {
+   "key": "2bi-cohort-04",
+   "line": "2bi",
+   "lockup": "2nd-brain-intensive",
+   "name": "2nd Brain Intensive",
+   "stamp": "Built",
+   "copy": "2bi",
+   "edition": "Cohort 04",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "photos": [
+    {
+     "src": "2bi-cohort-04-lead.jpg",
+     "w": 1600,
+     "h": 900,
+     "orig": "2BI/2026-11-cohort-04/photos/2026-11-08 Day 2/631A6622.jpg",
+     "group": true
+    },
+    {
+     "src": "2bi-cohort-04-01.jpg",
+     "w": 960,
+     "h": 540,
+     "orig": "2BI/2026-11-cohort-04/photos/2026-11-08 Day 2/631A6620.jpg",
+     "group": true
+    },
+    {
+     "src": "2bi-cohort-04-02.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6445.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-03.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6070.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-04.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6080.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-05.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6085.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-06.jpg",
+     "w": 640,
+     "h": 960,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6476.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-07.jpg",
+     "w": 960,
+     "h": 540,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6192.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-08.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6521.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-09.jpg",
+     "w": 960,
+     "h": 640,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6574.jpg"
+    },
+    {
+     "src": "2bi-cohort-04-10.jpg",
+     "w": 960,
+     "h": 540,
+     "orig": "2BI/2026-11-cohort-04/photos/camera-2026-11-10/631A6328.jpg"
+    }
+   ]
+  },
+  {
    "key": "2bi-cohort-03",
    "line": "2bi",
    "lockup": "2nd-brain-intensive",
