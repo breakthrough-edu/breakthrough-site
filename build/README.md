@@ -32,6 +32,16 @@ python3 build/build.py
 - **分享预览**: 每张子页有自己的标题、描述 (卡上那句短文案) 与分享图。分享图在 `assets/og/<key>.jpg`, 第一次 build 时从那页的主图裁成 1200x630; 裁的位置不对就在那笔记录加 `og_focus` (0 是贴上缘, 1 是贴下缘), 删掉那张 og 图再跑 build。
 - **改字**: 这几页的文案是站主逐段过的, 先改 vault 的 SOT, 再改 `records.json`。
 
+## 介绍页 `/bloc/` (2026-11-10 起)
+
+一个产品讲成一条路 (是什么、为什么有它、做过什么), 内容全部住 **`build/intro.json`** (档头 `_readme` 逐项说明), 每个 key 写出一张 `/<key>/`。现在只有 `bloc` (Brand Launch Off Challenge, 五站 journey); 之后 BSBB 介绍页照同一个形状加一笔就好。长相是模板 CSS 最后那段 (`j-` 开头的 class), 照片与短片借 `x-pin` / `x-film`。
+
+- **不讲机制**: 堂数、Zoom、gate、退款、下一届都不准出现 (vault SOT「已定」); build 末尾会扫这几个字, 出现就停。
+- **照片**: 每一站的 `photos` 写原档在资产库里的路径 (`orig`), build 第一次跑时压进 `assets/intro/` (页首大图长边 1600, 其余 960, q78), 之后不再碰。没照片的站就只有字, 不放空框。照片由站主挑 (2026-11-10 那一次是他明说「你帮我挑吧」, 草稿给他过目才推)。
+- **影片**: 那一站加 `films` (`assets/film/<名字>.mp4` 与同名 `.jpg`); KY 的 Vlog 与 Promo Video 到了就照这样加一行。
+- **Review**: 只放学员真讲过的话; 空着整段不出现。
+- **首页那张大卡**: `records.json` 的 `home.featured_href` 有值时, 第 03 段的大卡改连那张页 (现在是 `bloc/`, 按钮字「了解更多 →」), 午宴记录页从 `/bloc/` 第五站与 `/log/` 都还进得去。
+
 ## 活动办完, 照片上站 (2026-10-23 起, 每一场都做)
 
 几时做、谁交照片、谁挑, 住 vault 的 Event Prep 流程图「活动之后: 照片上官网」那节; 这里只讲工具 `build/event-photos.py`。前提: 那一场的照片已经在资产库 `<brand>/<YYYY-MM-event>/photos/`, 而且做过照片索引 (`_index.tsv`)。

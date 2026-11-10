@@ -1,0 +1,107 @@
+{
+ "_readme": "The intro pages (one product, told as what it is and what it has done; no course mechanics, no session counts, no Zoom, no gate, no refund, no next batch: vault SOT, 已定). build.py writes one page per key at /<key>/. Words were approved line by line in the vault's Official-Website-Structure-and-Content-SOT.md: change them there first, then here. PHOTOS: the owner picks every photo himself on a picker page (build/event-photos.py pick), nothing is auto-selected. Each photo is {orig, group?}: `orig` is its path inside the Drive asset library (~/Documents/Breakthrough-Assets/); the build makes assets/intro/<key>-<name>.jpg from it the first time (hero 1600px long side, the rest 960px, JPEG q78) and never touches it again. The alt text is written by the build (which stop + 现场 / 合照); the photo index's descriptions of people never go on the page. A stop with no photos simply prints none (no empty placeholder). FILM: a stop may carry `films`, each {file, duration, label}: assets/film/<file>.mp4 + .jpg; add the Vlog / Promo Video here when they are delivered. REVIEWS: real words only, each {quote, name, brand}; an empty list hides the section. A stop's `more` is {href, label}: a link to a page of this site.",
+ "bloc": {
+  "lockup": "brand-launch-off-challenge",
+  "name": "Brand Launch Off Challenge",
+  "title": "Brand Launch Off Challenge · Breakthrough",
+  "kicker": "Brand Launch Off Challenge · 六个月 · 带着你的团队",
+  "h1": "六个月, 把品牌从 0 build 到 launch。",
+  "sub": "这不是课。你带着团队下场, 我们在你旁边当军师; 六个月, 一个真的要推到市场上的品牌, 从策略一路做到打市场, 每一步真的做出来。",
+  "hero": {
+   "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01556.jpg",
+   "group": true
+  },
+  "why": {
+   "h": "策略写好那一刻, 最难的一步才开始。",
+   "label": "为什么叫 challenge",
+   "paras": [
+    "品牌策略写在纸上的时候, 什么都是对的。定位很清楚, 主张很漂亮, 六根 pillar 讲同一个故事。然后你回到公司, 星期一早上, 订单还是要出, 员工还是要管, 那张纸就一直放在那里。",
+    "多数人卡在这里, 不是不懂, 是没有人陪着做, 也没有一个非做不可的期限。所以它是 challenge: 有一个团队, 有一个期限, 有一个真的要上市的品牌; 我们不在台上讲, 我们在你旁边。"
+   ]
+  },
+  "journey": {
+   "h": "六个月, 是这样走的。",
+   "label": "The journey · 五站",
+   "stops": [
+    {
+     "tag": "起点",
+     "title": "图纸",
+     "text": "每一队带着自己的 Da Vinci Code 进来。那是他们在 Brand Strategy Breakthrough 里 build 出来的品牌策略, 六根 pillar, 一个故事。它是图纸, 还不是房子。",
+     "photos": []
+    },
+    {
+     "tag": "第一段路",
+     "title": "打地基",
+     "text": "先不急着上市。图纸上的东西, 要一样一样拿到真实的市场上过一遍: 这个定位有没有人要, 这个产品值不值这个价, 客户会从哪一条路走进来。这一段最不好看, 也最省不得; 地基打歪了, 上面盖什么都歪。",
+     "photos": []
+    },
+    {
+     "tag": "第二段路",
+     "title": "下场",
+     "text": "然后品牌真的推出去。广告上了, 内容出了, 第一批客户来了, 数据回来了。这时候军师的活才真正开始: 一起看数字, 一起判断哪里对了、哪里要改, 改完再推。品牌不是 launch 那一天 build 出来的, 是 launch 之后一次一次改出来的。",
+     "photos": []
+    },
+    {
+     "tag": "第三段路",
+     "title": "人, 也是品牌",
+     "date": "2026-09-09 · Activities Day",
+     "where": "9/9",
+     "text": "走到这里, 品牌已经在市场上了。最后一层地基, 是品牌背后那个人。老板的脸, 是品牌的第一张海报; 他怎么站、怎么穿、怎么被拍, 客户第一眼读到的就是这个。所以六个月的最后, 我们带着他们去做了一天: 色彩、造型、一场正式的 photoshoot。个人品牌的 fundamental, 也是要 build 的。",
+     "photos": [
+      {
+       "orig": "BLOC/batch-01/graduation/social-posts/2026-10-activities-day-carousel/zi-kang/17.png"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/social-posts/2026-10-activities-day-carousel/dr-beh/12.png"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/social-posts/2026-10-activities-day-carousel/chia-han/6.png"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/social-posts/2026-10-activities-day-carousel/iz-phang/1.png"
+      }
+     ]
+    },
+    {
+     "tag": "终点",
+     "title": "同一张桌子",
+     "date": "2026-09-21 · Graduation Luncheon",
+     "where": "9/21",
+     "text": "六个月后, 同一批人坐在同一张桌子。这一天不上课, 不看数据, 只做一件事: 把这六个月真的做出来的东西, 拿出来, 认一认。有人拿了奖, 有人没有; 但每一个人手上都有一个已经在市场上的品牌, 而六个月前, 它还只是一张图纸。",
+     "photos": [
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01345.jpg"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01300.jpg"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01452.jpg"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01543.jpg"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01489.jpg"
+      },
+      {
+       "orig": "BLOC/batch-01/graduation/photos/2026-09-21-luncheon/DSC01214.jpg"
+      }
+     ],
+     "films": [
+      {
+       "file": "bloc-batch-01-luncheon-final",
+       "duration": "1:35",
+       "label": "The highlight."
+      }
+     ],
+     "more": {
+      "href": "log/bloc-batch-01-luncheon/",
+      "label": "那一天的全部照片"
+     }
+    }
+   ]
+  },
+  "reviews": []
+ }
+}

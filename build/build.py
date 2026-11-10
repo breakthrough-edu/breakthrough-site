@@ -618,6 +618,10 @@ def built_card(r, feat=False):
     head = f'<h3>{x_lockup(r["lockup"], r["name"])}</h3><span class="x-ed">{escape(r["edition"])}</span>'
     foot = f'<span class="x-foot"><span class="x-when">{when(r)}</span><span class="x-go">看这一场 →</span></span>'
     href = f'{ROOT}log/{r["key"]}/'
+    go = '看这一场 →'
+    if feat and REC['home'].get('featured_href'):      # JW 2026-11-10: the BLOC card opens the intro page /bloc/, which links back to the luncheon record
+        href, go = ROOT + REC['home']['featured_href'], '了解更多 →'
+        foot = f'<span class="x-foot"><span class="x-when">{when(r)}</span><span class="x-go">{go}</span></span>'
     if feat:
         return (f'<a class="x-bc x-feat" href="{href}">{stamp(r["stamp"], "-7deg")}<span class="x-ft">{head}<p>{escape(r["text"])}</p>{foot}</span>'
                 f'{pin(lead, rec_label(r), tapes=2)}</a>')
@@ -784,6 +788,88 @@ def og_image(name, source, focus=.5):
     return f'{SITE_URL}assets/og/{name}.jpg'
 
 
+# ---------------- the intro pages (/bloc/ first, 2026-11-10): one product told as a journey, words and photos from build/intro.json ----------------
+# No mechanics on these pages (no session counts, Zoom, gate, refund, next batch): vault SOT 已定. Photos are the owner's picks, made here from the
+# originals in the Drive asset library the first time they are missing (like PHOTOS above); a stop without photos prints none, never a placeholder.
+INTRO = {k: v for k, v in json.load(open(os.path.join(HERE, 'intro.json'), encoding='utf-8')).items() if not k.startswith('_')}
+INTRO_DIR = os.path.join(SITE, 'assets', 'intro')
+LIB = os.path.expanduser(os.environ.get('BT_ASSETS', '~/Documents/Breakthrough-Assets'))
+
+
+def intro_photo(key, p, hero=False):
+    """The site's JPEG of one picked photo (assets/intro/<key>-<original's name>.jpg), made from the original only if it is not there yet."""
+    from PIL import Image, ImageOps
+    stem = re.sub(r'[^a-z0-9]+', '-', os.path.splitext(os.path.basename(p['orig']))[0].lower()).strip('-')
+    name = f'{key}-{stem}' + ('-hero' if hero else '') + '.jpg'
+    path = os.path.join(INTRO_DIR, name)
+    if ARGS.refresh_photos or not os.path.exists(path):
+        src = os.path.join(LIB, p['orig'])
+        if not os.path.exists(src):
+            sys.exit(f'assets/intro/{name} is missing and so is its original: {src}')
+        im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+        im.thumbnail((1600, 1600) if hero else (960, 960), Image.LANCZOS)
+        os.makedirs(INTRO_DIR, exist_ok=True)
+        im.save(path, 'JPEG', quality=78, optimize=True, progressive=True)
+        print(f'  made  assets/intro/{name} {im.width}x{im.height} {os.path.getsize(path)/1024:.0f} KB  (from {p["orig"]})')
+    with Image.open(path) as im:
+        w, h = im.size
+    return f'assets/intro/{name}', w, h
+
+
+def intro_pin(key, p, label, cls='', tapes=0, eager=False, hero=False):
+    src, w, h = intro_photo(key, p, hero)
+    t = '' if not tapes else '<i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i>' + ('<i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i>' if tapes > 1 else '')
+    alt = label + (' 合照' if p.get('group') else ' 现场')
+    lazy = '' if eager else ' loading="lazy"'
+    return f'<figure class="x-pin {cls}"><img src="{ROOT}{src}" width="{w}" height="{h}" alt="{escape(alt, quote=True)}"{lazy}>{t}</figure>'
+
+
+def intro_film(f, label):
+    for ext in ('mp4', 'jpg'):
+        assert os.path.exists(os.path.join(SITE, 'assets', 'film', f'{f["file"]}.{ext}')), f'film file missing: assets/film/{f["file"]}.{ext}'
+    return (f'<div class="x-film j-film"><video controls playsinline preload="none" poster="{ROOT}assets/film/{f["file"]}.jpg" aria-label="{escape(label, quote=True)}">'
+            f'<source src="{ROOT}assets/film/{f["file"]}.mp4" type="video/mp4"></video>'
+            f'<div><span class="x-k">Film · {escape(f["duration"])}</span><h2>{escape(f["label"])}</h2></div></div>')
+
+
+def intro_page(key):
+    P = INTRO[key]
+    name = P['name']
+    hero = (f'<div class="j-herop">{intro_pin(key, P["hero"], name, "x-lead", tapes=2, eager=True, hero=True)}</div>') if P.get('hero') else ''
+    why = ''.join(f'<p>{escape(t)}</p>' for t in P['why']['paras'])
+    stops = ''
+    n = len(P['journey']['stops'])
+    for i, s in enumerate(P['journey']['stops'], 1):
+        label = f'{name} {s["where"]}' if s.get('where') else name
+        date = f'<span class="j-date">{escape(s["date"])}</span>' if s.get('date') else ''
+        pics = f'<div class="j-ph{" j-n4" if len(s["photos"]) == 4 else ""}">{"".join(intro_pin(key, p, label) for p in s["photos"])}</div>' if s.get('photos') else ''
+        films = ''.join(intro_film(f, f'{label} {f["label"]}') for f in s.get('films', []))
+        more = f'<a class="j-more" href="{ROOT}{s["more"]["href"]}">{escape(s["more"]["label"])} <span aria-hidden="true">→</span></a>' if s.get('more') else ''
+        stops += (f'<li class="j-stop{" j-lit" if s.get("photos") or s.get("films") else ""}"><div class="j-rail"><span class="j-no">{i:02d}<i>/ {n:02d}</i></span><span class="j-tag">{escape(s["tag"])}</span></div>'
+                  f'<div class="j-body"><h3>{escape(s["title"])}</h3>{date}<p>{escape(s["text"])}</p>{pics}{films}{more}</div></li>')
+    reviews = ''
+    if P.get('reviews'):
+        cards = ''.join(f'<figure class="j-rv"><blockquote>「{escape(r["quote"])}」</blockquote><figcaption>{escape(r["name"])} · {escape(r["brand"])}</figcaption></figure>' for r in P['reviews'])
+        reviews = f'''<section class="j-sec"><div class="sh"><span class="n">04</span><h2 class="j-h2">走完的人怎么说。</h2><span class="meta">Review</span></div><div class="j-rvs">{cards}</div></section>'''
+    return main(f'''  <a class="x-back" href="{ROOT}">← 回首页</a>
+  <header class="j-hero">
+    <p class="j-kick">{escape(P['kicker'])}</p>
+    <div class="j-lk">{x_lockup(P['lockup'], name)}</div>
+    <h1 class="j-h1">{escape(P['h1'])}</h1>
+    <p class="j-sub">{escape(P['sub'])}</p>
+  </header>
+  {hero}
+  <section class="j-sec"><div class="sh"><span class="n">02</span><h2 class="j-h2">{escape(P['why']['h'])}</h2><span class="meta">{escape(P['why']['label'])}</span></div>
+    <div class="j-why">{why}</div></section>
+  <section class="j-sec"><div class="sh"><span class="n">03</span><h2 class="j-h2">{escape(P['journey']['h'])}</h2><span class="meta">{escape(P['journey']['label'])}</span></div>
+    <ol class="j-stops">{stops}</ol></section>
+  {reviews}''')
+
+
+def intro_photos(P):
+    return ([P['hero']] if P.get('hero') else []) + [p for s in P['journey']['stops'] for p in s['photos']]
+
+
 NOTE = """<!--
 DESIGN NOTE · MIX-BLACK V6 (two client comments, 2026-09-06)
 1 Everything v5 settled stays. V6 does two things: Circle and Build Day become two rows, and the three sheets carry the product lockups instead of typed titles.
@@ -876,6 +962,14 @@ for c in COLLECTIONS:
 begin('../')
 m = roundtable_page()
 page('roundtable/index.html', 'Breakthrough Roundtable', REC['roundtable']['lede'], og_image('roundtable', f'assets/rt/{EPISODES[0]["file"]}.jpg'), m)
+for key, P in INTRO.items():
+    begin('../')
+    m = intro_page(key)
+    if P.get('hero'):
+        og = og_image(key, intro_photo(key, P['hero'], True)[0], P.get('og_focus', .5))
+    else:   # no hero picked yet: borrow the luncheon's share picture (same batch, same people)
+        og = f'{SITE_URL}assets/og/{FEATURED["key"]}.jpg'
+    page(f'{key}/index.html', P['title'], P['sub'], og, m)
 begin('')
 
 # ---------------- checks: the homepage as before, then every page's files and links ----------------
@@ -944,6 +1038,15 @@ for r in RECORDS + COLLECTIONS:
     assert len(names) == len(set(names)), f'{r["key"]}: a photo is listed twice'
     assert PAGES[f'log/{r["key"]}/index.html'].count('class="x-pin') == len(names), f'{r["key"]}: every photo in records.json is on its page, once'
     assert f'href="log/{r["key"]}/"' in PAGES['log/index.html'].replace('../', ''), f'{r["key"]} can be reached from /log/'
+for key, P in INTRO.items():
+    pg = PAGES[f'{key}/index.html']
+    want = len(intro_photos(P))
+    assert pg.count('src="../assets/intro/') == want, f'/{key}/: every picked photo in intro.json is on the page, once'
+    assert len({p['orig'] for p in intro_photos(P)}) == want, f'/{key}/: a photo is picked twice'
+    assert ('class="j-rvs"' in pg) == bool(P.get('reviews')), f'/{key}/: the review section shows only with real reviews'
+    assert 'Photo · to come' not in pg and 'class="ph"' not in pg, f'/{key}/: no empty placeholders on an intro page'
+    for word in ('Zoom', 'Batch 02', 'refund', '退款', '堂课', 'gate'):
+        assert word not in re.sub(r'<[^>]+>', ' ', pg.split('<main', 1)[1].split('</main>', 1)[0]), f'/{key}/: intro pages explain no mechanics ({word})'
 
 # ---------------- the feed: printed from the same table as the sheets, then held to the sheets as the finished page shows them ----------------
 FEED = feed()

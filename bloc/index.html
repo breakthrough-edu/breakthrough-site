@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#151513">
+<title>Brand Launch Off Challenge · Breakthrough</title>
+<meta name="description" content="这不是课。你带着团队下场, 我们在你旁边当军师; 六个月, 一个真的要推到市场上的品牌, 从策略一路做到打市场, 每一步真的做出来。">
+<meta property="og:title" content="Brand Launch Off Challenge · Breakthrough">
+<meta property="og:description" content="这不是课。你带着团队下场, 我们在你旁边当军师; 六个月, 一个真的要推到市场上的品牌, 从策略一路做到打市场, 每一步真的做出来。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://project-breakthrough.com.my/bloc/">
+<meta property="og:image" content="https://project-breakthrough.com.my/assets/og/bloc.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../assets/logos/b-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --black:#151513;            /* roll-up banner black, not pure */
+  --paper:#f0eee8;            /* unbleached document paper */
+  --card:#faf8f3;             /* the sheet taped onto the paper */
+  --ink:#2a2a28;
+  --orange:#FF6600;           /* the only accent */
+  --mute-d:#9b9990;           /* muted on black */
+  --mute-p:#6a6a64;           /* muted on paper */
+  --line-d:#2b2b28;
+  --soft:rgba(42,42,40,.32);
+  --graph:rgba(42,42,40,.075);
+  --tape:rgba(219,207,172,.94);
+  --gutter:clamp(18px,4.5vw,64px);
+  --disp:"Archivo Black","Arial Black","PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  --body:"Inter Tight","Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",monospace;
+  --hl:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'%3E %3Cpolygon points='1,5 400,0 398,55 0,60' fill='%23FF6600'/%3E %3C/svg%3E");
+  --grit:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='80'%3E %3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='11'/%3E %3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 3.6 -0.95'/%3E%3C/filter%3E %3Crect width='200' height='80' filter='url(%23g)'/%3E %3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--black)}
+body{margin:0;background:var(--black);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.top,.hero,.wall,.seam,.paper,.end{overflow-x:clip}   /* bleed is clipped on the element, never the root, so 375 keeps a 375 layout viewport */
+h1,h2,h3,p,figure,ol,ul,dl{margin:0}
+a{color:inherit}
+img{display:block;max-width:100%}
+.defs{position:absolute;width:0;height:0;overflow:hidden}   /* the one copy of the wordmark bitmap and of each product lockup; every wordmark and lockup on the page is a <use> of these */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+::selection{background:var(--orange);color:var(--black)}
+.wrap{padding-left:var(--gutter);padding-right:var(--gutter);max-width:1520px;margin-left:auto;margin-right:auto}
+
+/* ---------- the one button: solid rectangle, zero radius ---------- */
+.btn{display:inline-flex;align-items:center;gap:16px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);font-family:var(--body);font-weight:700;font-size:17px;letter-spacing:-.01em;line-height:1;padding:19px 26px;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.btn .ar{font-family:var(--mono);font-weight:400;color:var(--orange);transition:transform .25s ease,color .2s}
+.btn:hover,.btn:focus-visible{background:var(--orange);border-color:var(--orange);color:var(--black)}
+.btn:hover .ar,.btn:focus-visible .ar{color:var(--black);transform:translateX(6px)}
+.btn.inv{background:var(--paper);color:var(--black);border-color:var(--paper)}   /* same rectangle, inverted for the black ground */
+.btn.sm{padding:0 20px;height:100%;font-size:12px;font-family:var(--mono);font-weight:700;letter-spacing:.08em;text-transform:uppercase;gap:10px}
+
+/* ---------- tape, stamp, highlight (the Brush's materials) ---------- */
+.tape{position:absolute;height:24px;width:104px;background:var(--tape);transform:rotate(var(--tr,-4deg));clip-path:polygon(0 10%,2% 0,98% 3%,100% 14%,99% 92%,97% 100%,3% 97%,1% 86%);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ink);display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;pointer-events:none;z-index:2}
+.tape.lab{position:static;width:auto;height:auto;padding:7px 14px;display:inline-flex;font-size:11px}
+.stampw{position:absolute;top:16px;right:14px;transform:rotate(var(--sr,-8deg));transform-origin:center;z-index:2}
+.stamp{display:inline-block;font-family:var(--mono);font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);border:2.5px solid var(--orange);box-shadow:inset 0 0 0 2px var(--card),inset 0 0 0 3px var(--orange);padding:8px 11px 7px;white-space:nowrap;-webkit-mask:var(--grit) 0 0/200px 80px;mask:var(--grit) 0 0/200px 80px}
+/* highlighter: one clean solid orange block, hard edges, a hair off square at each end. No bristles, no black anywhere. */
+.hl{background:var(--hl) left center/100% 100% no-repeat;color:var(--black);padding:.04em .3em;margin:0 -.1em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+/* ---------- A · TAPE ON WALL. Two materials. The build log is a strip of printed paper tape stuck along the top of the black wall; the header IS the wall.
+   The tape carries the record (BUILD LOG label, entries, SHEET/REV tail); the wall carries the brand (wordmark, plain mono nav, one outlined CTA). Nothing white on the wall except type.
+   The tape is sticky and never changes ink: its 1px ink rule along the bottom edge is printed on it from the start, so on the paper section the same rule is what still draws it as a strip. ---------- */
+.tape-log{position:sticky;top:0;z-index:30;display:flex;height:34px;background:var(--paper);color:var(--ink);border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase}
+.tape-head{flex:none;display:flex;align-items:center;gap:10px;padding:0 20px 0 var(--gutter);font-weight:700;letter-spacing:.14em;white-space:nowrap;border-right:1px solid var(--ink);position:relative;z-index:2;background:var(--paper)}
+.dot{width:9px;height:9px;background:var(--orange);flex:none;animation:blink 1.4s steps(1) infinite}
+@keyframes blink{50%{opacity:.25}}
+.log-view{flex:1;min-width:0;overflow:hidden;position:relative;height:100%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 48px,#000 calc(100% - 72px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 48px,#000 calc(100% - 72px),transparent 100%)}
+.log-track{display:flex;width:max-content;height:100%;animation:run 80s linear infinite}
+.log-view:hover .log-track{animation-play-state:paused}
+@keyframes run{to{transform:translateX(-50%)}}
+.log-copy{display:flex;height:100%}
+.e{display:inline-flex;align-items:center;gap:10px;height:100%;padding:0 22px 0 0;white-space:nowrap}
+.e .box{font-weight:700}
+.e .d{opacity:.5}
+.e.todo .box{color:var(--orange)}
+.e.now{background:var(--orange);color:var(--black);font-weight:700;padding:0 18px;margin-right:22px}
+.tape-tail{flex:none;display:flex;align-items:center;padding:0 var(--gutter) 0 20px;border-left:1px solid var(--ink);font-size:11px;letter-spacing:.1em;color:var(--mute-p);white-space:nowrap;position:relative;z-index:2;background:var(--paper);font-variant-numeric:tabular-nums}
+.tape-tail b{color:var(--ink);font-weight:700}
+/* the wall: wordmark left, bare mono nav, one outlined CTA, one 1px rule under it all */
+.top{border-bottom:1px solid var(--line-d)}
+.hdr{display:flex;align-items:center;height:92px;gap:clamp(24px,3vw,48px)}
+.hdr .wm{display:block;width:126px;flex:none;text-decoration:none}
+.hdr .wm svg{display:block;width:100%;height:auto}
+.hdr .links{margin-left:auto;display:flex;align-items:center;gap:clamp(24px,2.8vw,44px);height:100%}
+.nl{position:relative;display:inline-flex;align-items:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--paper);white-space:nowrap}
+.nl::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--orange);transform:scaleX(0);transform-origin:0 50%;transition:transform .25s ease}
+.nl:hover::after,.nl:focus-visible::after{transform:scaleX(1)}
+.cta{display:inline-flex;align-items:center;gap:12px;height:40px;padding:0 18px;border:1px solid var(--paper);color:var(--paper);font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.cta .ar{color:var(--orange);font-weight:400;transition:transform .25s ease,color .2s}
+.cta:hover,.cta:focus-visible{background:var(--orange);border-color:var(--orange);color:var(--black)}
+.cta:hover .ar,.cta:focus-visible .ar{color:var(--black);transform:translateX(5px)}
+
+/* ---------- hero: black ground, nothing on the wall but the headline ---------- */
+/* JW 2026-10-06: the headline no longer sinks to the bottom of a full-height wall (too much empty wall above it), and its size stops at 126px
+   (at 150px a 1920 screen broke it into five lines and cut the wordmark off). */
+.hero{position:relative;background:var(--black);padding-top:clamp(22px,3.4vh,36px);padding-bottom:clamp(36px,6vh,64px);display:flex;flex-direction:column}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-d)}
+.h1{padding-top:clamp(40px,9vh,104px);font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(38px,8.6vw,126px);line-height:.9;letter-spacing:-.03em;color:var(--paper)}
+.h1 .l{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.h1 .l>span{display:inline-block}
+.h1 em{font-style:normal;color:var(--orange)}   /* build: clean orange, nothing on top of it */
+.ctas{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-top:clamp(28px,4.5vh,48px)}
+.quiet{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute-d);text-decoration:none;border-bottom:1px solid var(--line-d);padding-bottom:3px}
+.quiet:hover,.quiet:focus-visible{color:var(--paper);border-bottom-color:var(--paper)}
+
+/* ---------- the wall: black, and one sheet taped to it. The manifesto is a letterhead document, not a list. Same paper, same tape as the cards below, one size up. ---------- */
+.wall{background:var(--black);border-top:1px solid var(--line-d);padding:clamp(44px,8vh,96px) clamp(16px,3vw,44px) clamp(64px,11vh,128px)}
+.doc{position:relative;max-width:1280px;margin:0 auto;background:var(--card);color:var(--ink);padding:clamp(30px,3.6vw,52px) clamp(22px,3.8vw,56px) clamp(24px,2.8vw,40px);transform:rotate(var(--r,.5deg));transform-origin:50% 40%}
+.doc .tape{width:140px;height:30px}
+.doc .tape.tl{left:-14px;top:-11px}
+.doc .tape.tr{right:-14px;top:-10px}
+.doc .tape.bl{left:-12px;bottom:-10px}
+.doc .tape.br{right:-12px;bottom:-11px}
+.doc .stampw{top:clamp(18px,2.4vw,30px);right:clamp(18px,3.2vw,44px);--sr:-7deg}
+.doc .stamp{font-size:12px;padding:9px 13px 8px}
+/* letterhead: wordmark left, title-block fields right, one ink rule under both */
+.lh{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:clamp(16px,2vw,26px);border-bottom:1px solid var(--ink)}
+.lh .wmpaint{display:block;width:clamp(150px,30%,400px);height:auto;margin-left:-.7%;flex:none}
+.lh .fields{display:flex;margin:0;padding-bottom:4px}
+.lh .fields>div{display:flex;flex-direction:column;gap:7px;padding:0 clamp(14px,1.5vw,22px);border-left:1px solid var(--soft);font-family:var(--mono);white-space:nowrap}
+.lh .fields>div:last-child{padding-right:0}
+.lh .fields dt{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute-p);line-height:1}
+.lh .fields dd{margin:0;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.lh .fields dd b{color:var(--orange);font-weight:700}
+/* the opening line: the sheet's title, display size, build in orange */
+.num{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--mute-p);padding-top:.6em;line-height:1}
+.open{display:grid;grid-template-columns:36px 1fr;gap:14px;padding:clamp(26px,3.2vw,44px) 0 clamp(22px,2.6vw,36px)}
+.open .num{padding-top:1.1em}
+.open p{font-weight:700;font-size:clamp(25px,2.55vw,38px);line-height:1.25;letter-spacing:-.02em;color:var(--ink)}
+.nb{white-space:nowrap}
+.doc em{font-style:normal;color:var(--orange)}
+/* body: two columns, mono margin numbers printed on the sheet, 32 to 40 characters a line */
+.cols{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(28px,3.4vw,52px);padding-top:clamp(6px,.8vw,12px)}
+.col{display:flex;flex-direction:column;gap:clamp(18px,2.2vw,30px)}
+.para{display:grid;grid-template-columns:36px 1fr;gap:14px}
+.para p{font-size:clamp(15.5px,1.1vw,17px);line-height:1.8;color:var(--ink)}
+/* closing line across both columns, an end rule, then a small mono sign-off */
+.closing{display:grid;grid-template-columns:36px 1fr;gap:14px;margin-top:clamp(30px,3.6vw,52px);padding-bottom:clamp(16px,1.8vw,24px);border-bottom:1px solid var(--ink)}
+.closing p{font-weight:700;font-size:clamp(18px,1.55vw,23px);line-height:1.4;letter-spacing:-.012em;color:var(--ink)}
+.endline{display:flex;justify-content:flex-end;padding-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-p)}
+
+/* ---------- the seam: tape band across black turning to paper ---------- */
+.seam{position:relative;background:var(--black);padding:clamp(22px,4vh,40px) 0 clamp(22px,4vh,40px)}
+.seam::after{content:"";position:absolute;left:0;right:0;top:50%;bottom:0;background:var(--paper)}
+.band{position:relative;z-index:1;transform:rotate(-1.6deg);background:var(--tape);width:120%;margin-left:-10%;overflow:hidden;clip-path:polygon(0 12%,.4% 0,99.6% 6%,100% 16%,99.7% 90%,99.3% 100%,.5% 96%,.1% 84%)}
+.track{display:flex;width:max-content;animation:mq 34s linear infinite}
+.band:hover .track{animation-play-state:paused}
+.track>span{display:flex;flex-shrink:0}
+.track b{font-family:var(--disp);font-weight:400;font-size:clamp(20px,2.8vw,40px);line-height:1;padding:.45em .9em .38em 0;color:#1a1a18;white-space:nowrap}
+.track b.o{color:var(--orange)}
+.track i{font-style:normal;font-family:var(--mono);font-size:.6em;align-self:center;padding:0 .9em 0 0;color:#1a1a18}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- paper: swiss order, graph paper under everything ---------- */
+.paper{background:var(--paper);color:var(--ink);background-image:linear-gradient(var(--graph) 1px,transparent 1px),linear-gradient(90deg,var(--graph) 1px,transparent 1px);background-size:48px 48px}
+.sec{padding-top:clamp(48px,8vh,96px);padding-bottom:clamp(56px,9vh,110px)}
+.sh{position:relative;border-bottom:1px solid var(--ink);padding-bottom:clamp(14px,2vw,26px);margin-bottom:clamp(30px,5vh,56px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.sh .n{position:absolute;left:0;top:-1.4em;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--orange);font-weight:700}
+.h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(30px,5.4vw,84px);line-height:.94;letter-spacing:-.025em;text-wrap:balance}
+.h2 .l{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.h2 .l>span{display:inline-block}
+.sh .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute-p);padding-bottom:.3em}
+.sh .meta b{color:var(--orange);font-weight:700}
+
+/* ---------- the three sheets = entries in the build log (B3, JW 2026-09-06). Each is two pieces of the same paper joined at a perforation:
+   the stub (orange bar, boxed serial, a ruled ledger field with the DAY as the biggest thing on the card and the tape's entry index ghosted behind)
+   and the piece below it (lockup, one line, the go link; its block is .qb, not .quiet, which is the hero's link). At rest everything is already on the paper; the motion layer only stamps the writing in. ---------- */
+.sheets{--hero:clamp(104px,11.6vw,168px);--lh:24.75px;--rule:rgba(42,42,40,.11);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px);align-items:stretch;padding-top:18px}
+/* 一个月两场 Live 的月份 = 四格 (decision 2026-09-20)。只有这一档收紧, 三格的月份维持原比例。 */
+.sheets.s4{--hero:clamp(70px,6.4vw,102px);grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.4vw,22px)}
+.sheets.s4 .sheet .day{padding:var(--pad-t) 16px 20px;gap:10px}
+.sheets.s4 .sheet .day .col{font-size:11px;letter-spacing:.14em;gap:7px}
+.sheets.s4 .sheet .day .idx{right:12px;bottom:8px;font-size:calc(var(--hero) * .5)}
+.sheets.s4 .piece .qb p{font-size:14px}
+.sheetw{display:flex;min-width:0}
+.sheet{position:relative;flex:1;min-width:0;color:var(--ink);display:grid;grid-template-rows:auto auto 1fr;transform:rotate(var(--r,0deg))}
+.stub{position:relative;background:var(--card);border:1px solid var(--ink);border-bottom:0}
+.piece{position:relative;z-index:1;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--ink);border-top:0;transform-origin:0 0;transition:transform .38s cubic-bezier(.2,.9,.2,1)}
+.sheet:hover .piece,.sheet:focus-within .piece{transform:rotate(1.5deg) translateY(4px)}   /* the lower piece is being torn off */
+.sheet .bar{height:14px;background:var(--orange);border-bottom:1px solid var(--ink)}
+.sheet .serial{display:flex;align-items:center;padding:20px 26px 0;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.34em;text-transform:uppercase;line-height:1;white-space:nowrap}
+.sheet .serial span{display:inline-block;border:1px solid var(--ink);padding:7px 6px 6px 10px}
+.sheet .serial em{font-style:normal}
+.sheet .serial b{font-weight:700;font-variant-numeric:tabular-nums}
+/* the ledger field: rules at the copy's line-height; the rule under the day lands 1px under the number's baseline (ink bottom = padding-top + .735 x hero) */
+.sheet .day{--pad-t:14px;position:relative;display:flex;align-items:flex-start;gap:clamp(14px,1.4vw,22px);padding:var(--pad-t) 26px 22px;min-height:calc(var(--hero) * .96 + 36px);overflow:hidden;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--lh) - 1px),var(--rule) calc(var(--lh) - 1px),var(--rule) var(--lh));
+  --rule-y:calc(var(--pad-t) + var(--hero) * .735 + 1.5px - 23.75px - 24.75px * 4);background-position:0 var(--rule-y)}
+.sheet .day .idx{position:absolute;right:20px;bottom:10px;z-index:0;font-family:var(--mono);font-weight:700;font-size:calc(var(--hero) * .6);line-height:1;letter-spacing:-.03em;color:var(--ink);opacity:.08;pointer-events:none;user-select:none;font-variant-numeric:tabular-nums}
+.sheet .day .n{position:relative;z-index:1;font-family:var(--disp);font-size:var(--hero);line-height:.82;letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;margin-left:-.04em;transform-origin:50% 55%}
+.sheet .day .n.two{font-size:calc(var(--hero) * .56);line-height:.84;margin-left:-.05em}
+.sheet .day .n.two span{display:block}
+.sheet .day .n.two i{font-style:normal;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.28em;color:var(--mute-p);vertical-align:baseline;margin-left:.12em}
+.sheet .day .col{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px;padding-top:.12em;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;line-height:1;white-space:nowrap}
+.sheet .day .col .m{color:var(--ink)}
+.sheet .day .col .t{color:var(--mute-p)}
+/* the perforation: dashed rule, half-circle notches cut into both edges */
+.sheet .tear{position:relative;z-index:2;height:0;border-top:2px dashed var(--ink);margin:0 14px}
+.sheet .tear::before,.sheet .tear::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--ink)}
+.sheet .tear::before{left:-25px;clip-path:inset(0 0 0 50%)}
+.sheet .tear::after{right:-25px;clip-path:inset(0 50% 0 0)}
+/* the "what": the product lockup printed on the lower piece, 44% wide (the day is the hero, not the logo), then the quiet block */
+.sheet .what{padding:22px 26px 0}
+.sheet .what h3{margin:0;line-height:0}
+.sheet .lkc{display:block;width:44%;height:auto;overflow:visible}
+.sheet .qb{margin-top:auto;padding:16px 26px 26px;display:flex;flex-direction:column;gap:18px}
+.sheet p{font-size:15px;line-height:1.65;color:#2f2f2c;margin:0}
+.sheet .go{align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px;transition:color .2s,border-color .2s}
+.sheet .go:hover,.sheet .go:focus-visible{color:var(--orange)}
+.sheet .stampw{top:30px;right:-18px;z-index:3}
+/* a sheet too narrow for the stamp and the boxed serial side by side (four sheets from 821px to about 1250px wide, three near 821px):
+   the stamp keeps its corner, pulled in so it stays in the gutter, and the serial drops under it, so the two never touch
+   (2026-09-24: PAID WORKSHOP sat on COHORT 02 at 1000px). The sheet is the container, so the rule follows the sheet's own width. */
+.sheet{container:sheet/inline-size}
+@container sheet (max-width:290px){
+  .sheet .stampw{top:26px;right:-6px}
+  .sheet .serial{padding-top:62px}
+}
+
+/* ecosystem rows: seven of them, photos left / right / left, one 1px ink rule between rows. The product lockup is the row's title (ink version, on paper). */
+.row{display:grid;grid-template-columns:5fr 6fr;gap:clamp(24px,5vw,80px);align-items:center;padding:clamp(8px,2vh,24px) 0 clamp(32px,6vh,64px)}
+.row+.row{border-top:1px solid var(--ink);padding-top:clamp(40px,6vh,72px)}
+.row.flip{grid-template-columns:6fr 5fr}
+.row.flip .pics{order:2}
+.row .pics{position:relative;aspect-ratio:4/3}
+.row .pinw{position:absolute;margin:0}
+.row .pinw.a{left:0;top:0;width:74%}
+.row .pinw.b{right:0;top:36%;width:42%;z-index:1}
+.row .pinw.c{left:7%;bottom:0;width:34%;z-index:1}
+.row .pinw img,.row .ph{display:block;width:100%;aspect-ratio:var(--ar,4/3);object-fit:cover;object-position:var(--op,50% 50%)}
+/* a photo not taken yet: the same paper as the sheets, one strip of tape, a mono note. No hatch, that is wireframe language. */
+.row .ph{background:var(--card);border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--mute-p)}
+.row .ph.note{font-family:var(--disp);font-weight:400;font-size:clamp(15px,1.5vw,22px);letter-spacing:-.01em;text-transform:none;color:var(--ink)}
+.row .idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--mute-p);margin-bottom:14px}
+.row .idx b{color:var(--orange);font-weight:700}
+.row h3{margin:0 0 clamp(18px,2vw,26px);line-height:0}
+.lk{display:block;width:calc(clamp(200px,22vw,320px) * var(--lw,1));height:auto;overflow:visible}
+.row .one{font-size:clamp(16px,1.3vw,19px);line-height:1.7;max-width:48ch}
+.row .rec{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--mute-p);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:12px 0;margin:22px 0 26px;font-variant-numeric:tabular-nums;line-height:1.7}
+.row .rec b{color:var(--orange);font-weight:700}
+/* coming soon: not a dead button, the same rubber stamp as FREE MEETUP, pressed a little askew where the button would be. No link, no hover. */
+.soon{display:inline-block;margin:24px 0 0 4px;transform:rotate(-5deg);transform-origin:0 50%}
+.rec+.soon{margin-top:2px}
+.soon .stamp{font-size:13px;letter-spacing:.2em;padding:10px 15px 9px;box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 3px var(--orange)}
+
+/* ---------- foot: the paper ends on a straight 1px ink edge, the black wall is under it. Three columns of small type (address, 做过的事, 来找我们), one base line. JW 2026-09-06: no About, no product-anchor column until the pages exist; 2026-10-06: 做过的事 links the build log and Roundtable. ---------- */
+.paper{border-bottom:1px solid var(--ink)}
+.foot{background:var(--black);color:var(--paper);padding:clamp(44px,7vh,80px) 0 22px;font-size:14px;line-height:1.7}
+.foot .cols3{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:clamp(28px,4vw,72px)}
+.foot h4{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line-d);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-d)}
+.foot address{font-style:normal}
+.foot ul{list-style:none;margin:0;padding:0}
+.foot li{margin:0 0 6px}
+.foot a{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--line-d);transition:color .2s,border-color .2s}
+.foot a:hover,.foot a:focus-visible{color:var(--orange);border-bottom-color:var(--orange)}
+.foot .base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:clamp(40px,6vh,64px);padding-top:16px;border-top:1px solid var(--line-d);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute-d)}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .cols{grid-template-columns:1fr}
+  .col+.col{margin-top:clamp(18px,2.2vw,30px)}
+}
+/* the four nav links and the CTA need about 1200px side by side (Build log and Roundtable joined the nav on 2026-10-06; at 1000px the CTA ran off the edge).
+   Under that the links go, as they already did under 980px, and the CTA keeps the right-hand end of the wall (it used to slide up against the wordmark from 641 to 980px). */
+@media (max-width:1200px){
+  .hdr .links{display:none}
+  .cta{margin-left:auto}
+}
+@media (max-width:980px){
+  .tape-tail{display:none}
+}
+@media (max-width:820px){
+  .sheets,.sheets.s3,.sheets.s4{grid-template-columns:1fr;gap:34px}
+  .sheet .serial{padding:18px 22px 0}
+  .sheet .day{--pad-t:12px;padding:var(--pad-t) 22px 20px}
+  .sheet .day .idx{right:18px}
+  .sheet .what{padding:20px 22px 0}
+  .sheet .lkc{width:42%}
+  .sheet .qb{padding:14px 22px 22px}
+  .sheet .stampw{right:-8px}
+  /* one column, read like a page: Row index, the lockup (the title), then the photo cluster as the illustration, then the line, the record line, the action.
+     JW 2026-09-06: photos first felt wrong on a phone. .txt dissolves into the row's grid so its children can be ordered around the photos. */
+  .row,.row.flip{grid-template-columns:1fr;gap:0}
+  .row .txt{display:contents}
+  .row .idx{order:1}
+  .row .txt h3{order:2}
+  .row .pics,.row.flip .pics{order:3;margin:2px 0 28px}
+  .row .one{order:4}
+  .row .rec{order:5}
+  .row .btn,.row .soon{order:6}
+}
+@media (max-width:640px){
+  .h1{padding-top:36px;font-size:8.6vw;letter-spacing:-.04em}
+  .h1 .l>span{white-space:nowrap}
+  .tape-log{height:32px}
+  .tape-head{padding:0 14px 0 var(--gutter);font-size:11px;gap:8px}
+  .hdr{height:72px}
+  .hdr .wm{width:104px}
+  .cta{margin-left:auto;height:36px;padding:0 14px;font-size:11px}
+  .wall{padding:36px 16px 64px}
+  .doc{padding:28px 18px 22px}
+  .doc .tape{width:110px;height:26px}
+  .doc .tape.tl,.doc .tape.bl{left:-10px}
+  .doc .tape.tr,.doc .tape.br{right:-10px}
+  .doc .stampw{top:16px;right:14px}
+  .doc .stamp{font-size:10.5px;padding:8px 11px 7px}
+  .lh{flex-direction:column;align-items:flex-start;gap:18px;padding-bottom:16px}
+  .lh .wmpaint{width:54%;margin-left:-1.5%}
+  .lh .fields{padding-bottom:0}
+  .lh .fields>div:first-child{padding-left:0;border-left:0}
+  .open,.para,.closing{grid-template-columns:26px 1fr;gap:10px}
+  .open{padding:24px 0 20px}
+  .open p{font-size:25px;line-height:1.3}
+  .col{gap:20px}
+  .col+.col{margin-top:20px}
+  .closing{margin-top:30px}
+  .sh .meta{display:none}
+  .row .pinw.a{width:80%}
+  .row .pinw.b{width:44%;top:44%}
+  .row .pinw.c{width:36%;left:4%}
+  .row h3{margin-bottom:18px}
+  .foot .cols3{grid-template-columns:1fr;gap:30px}
+  .foot{padding-top:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .log-track,.track,.dot{animation:none!important}
+  .log-view,.band{overflow-x:auto}
+  *,*::before,*::after{transition:none!important}
+  .sheet:hover .piece,.sheet:focus-within .piece{transform:none}
+}
+
+/* ===== the build log pages (JW 2026-10-06): section 03 on the homepage, /log/, the record pages, /roundtable/. Every class here is x- prefixed.
+   The blocks below are layered in the order the design was settled (v2, v3, v4 each override the one before), kept that way on purpose:
+   this is the cascade the owner approved in the preview. ===== */
+.x-page{min-height:70vh}
+.x-page .sec{padding-top:clamp(28px,5vh,56px)}
+.x-back{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--mute-p);border-bottom:1px solid var(--soft);padding-bottom:3px;margin-bottom:clamp(48px,8vh,84px)}
+.x-back:hover,.x-back:focus-visible{color:var(--orange);border-bottom-color:var(--orange)}
+.x-lede{font-size:clamp(17px,1.5vw,21px);line-height:1.7;max-width:44ch;margin-bottom:clamp(28px,4vh,44px)}
+.x-k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+.x-lk{display:block;height:auto;overflow:visible}
+.x-pin{position:relative;margin:0}
+.x-pin img{display:block;width:100%;height:auto;border:1px solid var(--ink);background:var(--card)}
+.x-bc .stamp,.x-rh .stamp{background:var(--card)}
+/* homepage section 03 */
+.x-built{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(22px,2.6vw,40px);padding-top:18px}
+.x-bc{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;text-decoration:none;color:var(--ink);transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.x-bc:nth-child(odd){transform:rotate(-.7deg)}
+.x-bc:nth-child(even){transform:rotate(.6deg)}
+.x-bc:hover,.x-bc:focus-visible{transform:rotate(0) translateY(-6px)}
+.x-bc .x-pin img{aspect-ratio:4/3;object-fit:cover}
+.x-bc .stampw{top:-12px;right:-10px;z-index:3}
+.x-bc h3{margin:6px 0 0;line-height:0}
+.x-bc .x-lk{width:54%}
+.x-when{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-p);padding-top:6px;font-variant-numeric:tabular-nums}
+.x-ed{font-family:var(--disp);font-size:clamp(18px,1.7vw,26px);line-height:1.05;letter-spacing:-.015em;text-transform:uppercase}
+.x-go{align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;border-bottom:2px solid var(--orange);padding-bottom:3px;margin-top:4px}
+.x-more{margin-top:clamp(36px,6vh,64px)}
+/* /log */
+.x-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(12px,2vh,24px)}
+.x-chip{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:11px 15px 10px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.x-chip:hover{background:var(--card)}
+.x-chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.x-log{list-style:none;margin:0;padding:0}
+.x-year{font-family:var(--disp);font-size:clamp(56px,9vw,150px);line-height:.86;letter-spacing:-.04em;color:var(--ink);opacity:.13;padding:clamp(28px,5vh,56px) 0 10px;font-variant-numeric:tabular-nums}
+.x-en{border-top:1px solid var(--ink)}
+.x-en>a{display:grid;grid-template-columns:clamp(150px,17vw,250px) minmax(0,1fr) clamp(200px,26vw,380px);gap:clamp(20px,3.4vw,56px);align-items:center;padding:clamp(26px,4.4vh,52px) 0;text-decoration:none;color:inherit}
+.x-date{display:flex;align-items:flex-start;gap:14px;white-space:nowrap}
+.x-date b{font-family:var(--disp);font-weight:400;font-size:clamp(64px,8vw,128px);line-height:.82;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.x-date b.two{font-size:clamp(40px,4.6vw,74px);line-height:.86}
+.x-date b.two span{display:block}
+.x-date b.two i{font-style:normal;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--mute-p);margin-left:.3em}
+.x-date>span{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;line-height:1.7;padding-top:.2em}
+.x-what{display:flex;flex-direction:column;gap:12px;min-width:0}
+.x-what h3{margin:0;line-height:0}
+.x-what .x-lk{width:clamp(110px,12vw,170px)}
+.x-what strong{font-family:var(--disp);font-weight:400;font-size:clamp(22px,2.5vw,38px);line-height:1;letter-spacing:-.02em;text-transform:uppercase}
+.x-what p{font-size:15.5px;line-height:1.7;max-width:50ch;color:#2f2f2c}
+.x-ct{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-p)}
+.x-ct b{color:var(--orange);font-weight:700}
+.x-en .x-pin{transform:rotate(1.4deg);transition:transform .35s cubic-bezier(.2,.9,.2,1)}
+.x-en:nth-of-type(even) .x-pin{transform:rotate(-1.1deg)}
+.x-en>a:hover .x-pin,.x-en>a:focus-visible .x-pin{transform:rotate(0) translateY(-6px)}
+.x-en .x-pin img{aspect-ratio:3/2;object-fit:cover}
+.x-en.plain>div{display:flex;flex-wrap:wrap;gap:6px 18px;padding:17px 0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute-p);font-variant-numeric:tabular-nums}
+.x-en.plain>div>span:first-child{font-weight:700;color:var(--ink)}
+/* record page */
+.x-rh{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(22px,4.5vw,72px);align-items:end;padding-bottom:clamp(20px,2.6vw,34px);border-bottom:1px solid var(--ink)}
+.x-rh .x-date b{font-size:clamp(96px,15vw,240px)}
+.x-rh .x-date b.two{font-size:clamp(58px,8.6vw,138px)}
+.x-rh .stampw{top:-6px;right:0}
+.x-rh .stamp{font-size:13px;letter-spacing:.2em;padding:10px 15px 9px}
+.x-rt{display:flex;flex-direction:column;gap:clamp(12px,1.6vw,20px);min-width:0;padding-bottom:.2em}
+.x-rlk{line-height:0}
+.x-rlk .x-lk{width:clamp(140px,17vw,250px)}
+.x-rt h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(30px,5.2vw,84px);line-height:.95;letter-spacing:-.025em;text-wrap:balance}
+.x-fields{display:flex;flex-wrap:wrap;gap:14px 0;margin:0;padding:16px 0;border-bottom:1px solid var(--ink)}
+.x-fields>div{display:flex;flex-direction:column;gap:7px;padding:0 clamp(14px,2vw,30px);border-left:1px solid var(--soft);font-family:var(--mono)}
+.x-fields>div:first-child{padding-left:0;border-left:0}
+.x-fields dt{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute-p);line-height:1}
+.x-fields dd{margin:0;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1.3;font-variant-numeric:tabular-nums}
+.x-fields dd b{color:var(--orange);font-weight:700}
+.x-lead{margin-top:clamp(40px,7vh,76px);transform:rotate(-.4deg)}
+.x-lead .tape{width:140px;height:30px}
+.x-line{font-weight:700;font-size:clamp(21px,2.3vw,33px);line-height:1.4;letter-spacing:-.015em;max-width:30em;margin:clamp(40px,7vh,76px) 0}
+.x-film{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:center;background:var(--black);color:var(--paper);padding:clamp(22px,4vw,60px);margin-bottom:clamp(40px,7vh,76px)}
+.x-film video{display:block;width:100%;aspect-ratio:9/16;background:#000;border:1px solid var(--line-d)}
+.x-film h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(30px,5vw,76px);line-height:.94;letter-spacing:-.025em;margin:14px 0 0}
+.x-grid{columns:3;column-gap:clamp(12px,1.6vw,24px)}
+.x-grid .x-pin{margin-bottom:clamp(12px,1.6vw,24px);break-inside:avoid}
+.x-pn{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;border-top:1px solid var(--ink);margin-top:clamp(44px,7vh,80px);padding-top:20px}
+.x-pn a{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px}
+.x-pn a:hover,.x-pn a:focus-visible{color:var(--orange)}
+/* roundtable */
+.x-rtlk{margin:0;line-height:0}
+.x-rtlk .x-lk{width:clamp(200px,30vw,440px)}
+.x-eps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(30px,4vw,60px) clamp(20px,2.8vw,44px);padding-top:16px}
+.x-ep{display:flex;flex-direction:column;gap:8px;min-width:0}
+.x-ep:nth-child(3n+1) .x-pin{transform:rotate(-.6deg)}
+.x-ep:nth-child(3n) .x-pin{transform:rotate(.6deg)}
+.x-ep .x-pin{margin-bottom:8px}
+.x-ep .x-pin img{aspect-ratio:16/9;object-fit:cover}
+.x-ep span{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--mute-p)}
+.x-ep b{font-family:var(--disp);font-weight:400;font-size:clamp(18px,1.7vw,26px);line-height:1.08;letter-spacing:-.015em;text-transform:uppercase}
+.x-sub{border-top:1px solid var(--ink);margin-top:clamp(56px,9vh,110px);padding-top:18px}
+.x-sub h2{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3.6vw,52px);line-height:1.05;margin:10px 0 clamp(24px,4vh,40px)}
+.x-bts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.x-bts .x-pin img{aspect-ratio:3/2;object-fit:cover}
+@media (max-width:1100px){
+  .x-built{grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 28px}
+  .x-eps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:820px){
+  .x-en>a{grid-template-columns:1fr;gap:20px}
+  .x-en .x-pin{order:2;max-width:520px}
+  .x-what{order:3}
+  .x-grid{columns:2}
+  .x-film{grid-template-columns:1fr}
+  .x-film video{max-width:300px}
+  .x-bts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .x-rh{grid-template-columns:1fr;align-items:start}
+  .x-rh .stampw{top:4px}
+}
+@media (max-width:640px){
+  .x-built,.x-eps{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.x-bc,.x-bc:hover,.x-en .x-pin{transform:none!important}}
+
+/* v2: lockup first, then the photo; one featured card, then the latest of each recurring line */
+.x-built{grid-template-columns:1.5fr 1fr 1fr;align-items:start;gap:clamp(24px,3vw,48px)}
+.x-bc{gap:14px}
+.x-bc h3{margin:2px 0 0}
+.x-bc .x-lk{width:min(56%,190px)}
+.x-feat .x-lk{width:min(38%,230px)}
+.x-bc .x-pin{margin-top:8px}
+.x-feat .x-pin img{aspect-ratio:3/2}
+.x-feat .x-ed{font-size:clamp(22px,2.4vw,36px)}
+.x-bc p{font-size:15.5px;line-height:1.7;max-width:46ch;color:#2f2f2c}
+.x-bc .stampw{top:-4px;right:-4px}
+.x-bc:not(.x-feat) h3{display:flex;align-items:flex-end;height:clamp(104px,10.5vw,150px)}
+.x-bc:not(.x-feat) .x-lk{width:auto;height:100%;max-width:100%}
+.x-foot{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.x-foot .x-when{padding-top:0}
+.x-foot .x-go{margin-top:0}
+.x-en>a{position:relative}
+.x-en .stampw{top:14px;right:auto;left:clamp(150px,17vw,250px);margin-left:clamp(150px,16vw,240px)}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}.x-feat{grid-column:1/-1}}
+@media (max-width:820px){.x-en .stampw{left:auto;right:0;margin-left:0;top:22px}}
+@media (max-width:640px){.x-built{grid-template-columns:1fr}}
+
+/* v3: Live and Build Day are one pooled page each */
+.x-built{grid-template-columns:1.5fr 1fr}
+.x-built.x-two{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:8px}
+.x-two .x-bc h3{display:block;height:auto}
+.x-two .x-bc .x-lk{width:min(40%,190px);height:auto}
+.x-two .x-pin img{aspect-ratio:3/2}
+.x-when b{color:var(--orange);font-weight:700}
+.x-band{padding-bottom:clamp(8px,2vh,20px)}
+.x-sub2{margin-top:clamp(44px,7vh,84px);margin-bottom:18px}
+.x-rhc{grid-template-columns:1fr}
+.x-rhc .x-rlk .x-lk{width:clamp(170px,22vw,320px)}
+.x-pin figcaption{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-p);padding-top:7px}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.x-built,.x-built.x-two{grid-template-columns:1fr}}
+
+/* v4: featured runs full width (words left, photo right), then three equal cards: latest 2BI, Live, Build Day */
+.x-built{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(40px,6vh,72px) clamp(24px,3vw,48px)}
+.x-feat{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:clamp(24px,4vw,64px);align-items:center;transform:none!important;border-bottom:1px solid var(--ink);padding-bottom:clamp(36px,6vh,64px)}
+.x-ft{display:flex;flex-direction:column;gap:14px;min-width:0}
+.x-feat .x-lk{width:min(52%,240px)}
+.x-feat .x-ed{font-size:clamp(24px,2.8vw,42px);line-height:1}
+.x-feat p{font-size:clamp(16px,1.3vw,19px)}
+.x-feat .x-pin{margin-top:0;transform:rotate(.6deg)}
+.x-feat .stampw{top:-14px;right:-8px}
+@media (max-width:1100px){.x-built{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.x-feat{grid-template-columns:1fr}}
+@media (max-width:640px){.x-built{grid-template-columns:1fr}}
+
+.x-ep{text-decoration:none;color:inherit}
+.x-ep .x-pin{transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.x-ep:hover .x-pin,.x-ep:focus-visible .x-pin{transform:rotate(0) translateY(-6px)}
+.x-ep:hover span,.x-ep:focus-visible span{color:var(--orange)}
+
+/* a record told in the founder's own words: three paragraphs, the first set a size up */
+.x-story{display:flex;flex-direction:column;gap:1.3em;max-width:36em;margin:clamp(40px,7vh,76px) 0;font-size:clamp(17px,1.35vw,19.5px);line-height:1.95}
+.x-story p:first-child{font-weight:700;font-size:clamp(20px,1.9vw,27px);line-height:1.6;letter-spacing:-.01em}
+.x-sign{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-p)}
+.x-sign::before{content:"";display:inline-block;width:28px;height:2px;background:var(--orange);vertical-align:middle;margin-right:12px}
+
+/* ===== the intro pages (/bloc/, 2026-11-10): one product told as a journey. Every class here is j- prefixed; photos and films reuse x-pin / x-film. ===== */
+.j-hero{padding-bottom:clamp(28px,4vh,44px);border-bottom:1px solid var(--ink)}
+.j-kick{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin:0 0 clamp(18px,3vh,30px)}
+.j-lk .x-lk{display:block;width:clamp(200px,30vw,420px);height:auto;margin-bottom:clamp(22px,3.5vh,40px)}
+.j-h1{font-family:var(--disp);font-weight:400;font-size:clamp(34px,5.6vw,88px);line-height:1.08;letter-spacing:-.02em;margin:0 0 .45em;max-width:14em;text-wrap:balance}
+.j-sub{font-size:clamp(17px,1.5vw,21px);line-height:1.8;max-width:34em;margin:0}
+.j-herop{max-width:1100px}
+.j-sec{margin-top:clamp(72px,12vh,140px)}
+.j-h2{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3.6vw,54px);line-height:1.12;letter-spacing:-.015em;margin:0;max-width:16em;text-wrap:balance}
+.j-why{display:flex;flex-direction:column;gap:1.3em;max-width:36em;font-size:clamp(17px,1.35vw,19.5px);line-height:1.95}
+.j-why p,.j-body p{margin:0}
+.j-stops{list-style:none;margin:0;padding:0}
+.j-stop{display:grid;grid-template-columns:clamp(110px,14vw,190px) minmax(0,1fr);gap:clamp(18px,3vw,48px);padding:clamp(30px,5vh,52px) 0;border-top:1px solid var(--soft)}
+.j-stop:first-child{border-top:0;padding-top:0}
+.j-rail{display:flex;flex-direction:column;gap:10px;font-family:var(--mono);text-transform:uppercase}
+.j-no{font-size:clamp(34px,4vw,58px);font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.j-no i{font-style:normal;font-size:11px;letter-spacing:.14em;color:var(--mute-p);margin-left:6px;vertical-align:top}
+.j-lit .j-no{color:var(--orange)}
+.j-tag{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--mute-p)}
+.j-body{max-width:56em}
+.j-body h3{font-family:var(--disp);font-weight:400;font-size:clamp(24px,2.8vw,40px);line-height:1.15;margin:0 0 10px}
+.j-body>p{max-width:36em;font-size:clamp(17px,1.35vw,19.5px);line-height:1.95}
+.j-date{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:var(--orange);color:var(--black);padding:5px 9px 4px;margin:0 0 16px}
+.j-ph{columns:3;column-gap:clamp(12px,1.6vw,22px);margin-top:clamp(26px,4vh,40px)}
+.j-ph.j-n4{columns:4}
+.j-ph .x-pin{margin-bottom:clamp(12px,1.6vw,22px);break-inside:avoid}
+.j-film{margin:clamp(26px,4vh,40px) 0 0}
+.j-more{display:inline-block;margin-top:clamp(22px,3vh,32px);font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:3px}
+.j-more:hover,.j-more:focus-visible{color:var(--orange)}
+.j-rvs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.j-rv{margin:0;background:var(--card);border:1px solid var(--ink);padding:clamp(18px,2vw,28px)}
+.j-rv blockquote{margin:0 0 14px;font-size:clamp(17px,1.4vw,20px);line-height:1.7;font-weight:700}
+.j-rv figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute-p)}
+@media (max-width:820px){
+  .j-stop{grid-template-columns:1fr;gap:12px}
+  .j-rail{flex-direction:row;align-items:baseline;gap:14px}
+  .j-ph,.j-ph.j-n4{columns:2}
+  .j-rvs{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<svg class="defs" aria-hidden="true" focusable="false"><defs><image id="wm-png" href="../assets/logos/wordmark.png" width="1024" height="643"/><image id="lk-brand-launch-off-challenge" href="../assets/logos/brand-launch-off-challenge-ink.svg" x="23.44" y="49.48" width="473.1" height="418.14"/><filter id="lk-bristle" filterUnits="userSpaceOnUse" x="-900" y="-900" width="3000" height="3000"><feTurbulence type="fractalNoise" baseFrequency="0.026 0.17" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
+
+<div class="tape-log" role="region" aria-label="Build log">
+  <div class="tape-head"><i class="dot" aria-hidden="true"></i>Build log</div>
+  <div class="log-view">
+    <div class="log-track">
+      <div class="log-copy"><span class="e done"><span class="box">[x]</span><span class="d">0001 2024-12-18</span>Brand Strategy Breakthrough · Class 01</span><span class="e done"><span class="box">[x]</span><span class="d">0002 2026-03-19</span>Brand Launch Off Challenge · Batch 01 start</span><span class="e done"><span class="box">[x]</span><span class="d">0003 2026-05-22</span>Brand Strategy Breakthrough · Class 10</span><span class="e done"><span class="box">[x]</span><span class="d">0004 2026-07-03</span>Breakthrough Live · Vol01</span><span class="e done"><span class="box">[x]</span><span class="d">0005 2026-07-25</span>Build Day 01</span><span class="e done"><span class="box">[x]</span><span class="d">0006 2026-08-07</span>Breakthrough Live · Vol02</span><span class="e done"><span class="box">[x]</span><span class="d">0007 2026-08-15</span>Build Day 02</span><span class="e done"><span class="box">[x]</span><span class="d">0008 2026-08-20</span>Brand Launch Off Challenge · Batch 01 graduated</span><span class="e done"><span class="box">[x]</span><span class="d">0009 2026-08-29</span>2nd Brain Intensive · Cohort 01</span><span class="e done"><span class="box">[x]</span><span class="d">0010 2026-09-11</span>Breakthrough Live · Vol03</span><span class="e done"><span class="box">[x]</span><span class="d">0011 2026-09-19</span>Build Day 03</span><span class="e done"><span class="box">[x]</span><span class="d">0012 2026-09-26</span>2nd Brain Intensive · Cohort 02</span><span class="e done"><span class="box">[x]</span><span class="d">0013 2026-10-02</span>Breakthrough Live · Vol04</span><span class="e done"><span class="box">[x]</span><span class="d">0014 2026-10-10</span>Build Day 04</span><span class="e done"><span class="box">[x]</span><span class="d">0015 2026-10-17</span>Breakthrough Live · Vol05</span><span class="e done"><span class="box">[x]</span><span class="d">0016 2026-10-24</span>2nd Brain Intensive · Cohort 03</span><span class="e done"><span class="box">[x]</span><span class="d">0017 2026-11-06</span>Breakthrough Live · Vol06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0018 2026-11-07</span>2nd Brain Intensive · Cohort 04</span><span class="e now">▶ Now 2026-11-07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0019 2026-11-14</span>Build Day 05</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0020 2026-11-21</span>Breakthrough Live · Vol07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0021 2026-11-28</span>2nd Brain Intensive · Cohort 05</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0022 2026-12-02</span>Breakthrough Live · Vol08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0023 2026-12-05</span>2nd Brain Intensive · Cohort 06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0024 2026-12-12</span>Breakthrough Live · Vol09</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0025 2026-12-13</span>Build Day 06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0026 2026-12-19</span>2nd Brain Intensive · Cohort 07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0027 2027-01-09</span>Breakthrough Live · Vol10</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0028 2027-01-10</span>Build Day 07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0029 2027-01-16</span>2nd Brain Intensive · Cohort 08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0030 2027-02-20</span>Breakthrough Live · Vol11</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0031 2027-02-21</span>Build Day 08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0032 2027-02-27</span>2nd Brain Intensive · Cohort 09</span></div>
+      <div class="log-copy" aria-hidden="true"><span class="e done"><span class="box">[x]</span><span class="d">0001 2024-12-18</span>Brand Strategy Breakthrough · Class 01</span><span class="e done"><span class="box">[x]</span><span class="d">0002 2026-03-19</span>Brand Launch Off Challenge · Batch 01 start</span><span class="e done"><span class="box">[x]</span><span class="d">0003 2026-05-22</span>Brand Strategy Breakthrough · Class 10</span><span class="e done"><span class="box">[x]</span><span class="d">0004 2026-07-03</span>Breakthrough Live · Vol01</span><span class="e done"><span class="box">[x]</span><span class="d">0005 2026-07-25</span>Build Day 01</span><span class="e done"><span class="box">[x]</span><span class="d">0006 2026-08-07</span>Breakthrough Live · Vol02</span><span class="e done"><span class="box">[x]</span><span class="d">0007 2026-08-15</span>Build Day 02</span><span class="e done"><span class="box">[x]</span><span class="d">0008 2026-08-20</span>Brand Launch Off Challenge · Batch 01 graduated</span><span class="e done"><span class="box">[x]</span><span class="d">0009 2026-08-29</span>2nd Brain Intensive · Cohort 01</span><span class="e done"><span class="box">[x]</span><span class="d">0010 2026-09-11</span>Breakthrough Live · Vol03</span><span class="e done"><span class="box">[x]</span><span class="d">0011 2026-09-19</span>Build Day 03</span><span class="e done"><span class="box">[x]</span><span class="d">0012 2026-09-26</span>2nd Brain Intensive · Cohort 02</span><span class="e done"><span class="box">[x]</span><span class="d">0013 2026-10-02</span>Breakthrough Live · Vol04</span><span class="e done"><span class="box">[x]</span><span class="d">0014 2026-10-10</span>Build Day 04</span><span class="e done"><span class="box">[x]</span><span class="d">0015 2026-10-17</span>Breakthrough Live · Vol05</span><span class="e done"><span class="box">[x]</span><span class="d">0016 2026-10-24</span>2nd Brain Intensive · Cohort 03</span><span class="e done"><span class="box">[x]</span><span class="d">0017 2026-11-06</span>Breakthrough Live · Vol06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0018 2026-11-07</span>2nd Brain Intensive · Cohort 04</span><span class="e now">▶ Now 2026-11-07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0019 2026-11-14</span>Build Day 05</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0020 2026-11-21</span>Breakthrough Live · Vol07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0021 2026-11-28</span>2nd Brain Intensive · Cohort 05</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0022 2026-12-02</span>Breakthrough Live · Vol08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0023 2026-12-05</span>2nd Brain Intensive · Cohort 06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0024 2026-12-12</span>Breakthrough Live · Vol09</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0025 2026-12-13</span>Build Day 06</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0026 2026-12-19</span>2nd Brain Intensive · Cohort 07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0027 2027-01-09</span>Breakthrough Live · Vol10</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0028 2027-01-10</span>Build Day 07</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0029 2027-01-16</span>2nd Brain Intensive · Cohort 08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0030 2027-02-20</span>Breakthrough Live · Vol11</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0031 2027-02-21</span>Build Day 08</span><span class="e todo"><span class="box">[&nbsp;]</span><span class="d">0032 2027-02-27</span>2nd Brain Intensive · Cohort 09</span></div>
+    </div>
+  </div>
+  <div class="tape-tail"><span>Sheet <b>01</b> · Rev 2026-11-07</span></div>
+</div>
+
+<header class="top">
+  <div class="hdr wrap">
+    <a class="wm" href="../#top" aria-label="Breakthrough"><svg viewBox="0 0 1024 643" aria-hidden="true" focusable="false"><use href="#wm-png"/></svg></a>
+    <nav class="links" aria-label="主导航">
+      <a class="nl" href="../#next">What's getting built next</a>
+      <a class="nl" href="../#where">Where breakthroughs get built</a>
+      <a class="nl" href="../log/">Build log</a>
+      <a class="nl" href="../roundtable/">Roundtable</a>
+    </nav>
+    <a class="cta" href="https://join.project-breakthrough.com.my/breakthrough-live" lang="en">Come build with us <span class="ar" aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main class="paper x-page"><section class="sec wrap">
+  <a class="x-back" href="../">← 回首页</a>
+  <header class="j-hero">
+    <p class="j-kick">Brand Launch Off Challenge · 六个月 · 带着你的团队</p>
+    <div class="j-lk"><svg class="x-lk" viewBox="23.44 49.48 473.1 418.14" aria-hidden="true" focusable="false"><use href="#lk-brand-launch-off-challenge"/></svg><span class="sr">Brand Launch Off Challenge</span></div>
+    <h1 class="j-h1">六个月, 把品牌从 0 build 到 launch。</h1>
+    <p class="j-sub">这不是课。你带着团队下场, 我们在你旁边当军师; 六个月, 一个真的要推到市场上的品牌, 从策略一路做到打市场, 每一步真的做出来。</p>
+  </header>
+  <div class="j-herop"><figure class="x-pin x-lead"><img src="../assets/intro/bloc-dsc01556-hero.jpg" width="1600" height="1067" alt="Brand Launch Off Challenge 合照"><i class="tape" style="--tr:-6deg;left:-12px;top:-9px"></i><i class="tape" style="--tr:5deg;right:-12px;top:-8px"></i></figure></div>
+  <section class="j-sec"><div class="sh"><span class="n">02</span><h2 class="j-h2">策略写好那一刻, 最难的一步才开始。</h2><span class="meta">为什么叫 challenge</span></div>
+    <div class="j-why"><p>品牌策略写在纸上的时候, 什么都是对的。定位很清楚, 主张很漂亮, 六根 pillar 讲同一个故事。然后你回到公司, 星期一早上, 订单还是要出, 员工还是要管, 那张纸就一直放在那里。</p><p>多数人卡在这里, 不是不懂, 是没有人陪着做, 也没有一个非做不可的期限。所以它是 challenge: 有一个团队, 有一个期限, 有一个真的要上市的品牌; 我们不在台上讲, 我们在你旁边。</p></div></section>
+  <section class="j-sec"><div class="sh"><span class="n">03</span><h2 class="j-h2">六个月, 是这样走的。</h2><span class="meta">The journey · 五站</span></div>
+    <ol class="j-stops"><li class="j-stop"><div class="j-rail"><span class="j-no">01<i>/ 05</i></span><span class="j-tag">起点</span></div><div class="j-body"><h3>图纸</h3><p>每一队带着自己的 Da Vinci Code 进来。那是他们在 Brand Strategy Breakthrough 里 build 出来的品牌策略, 六根 pillar, 一个故事。它是图纸, 还不是房子。</p></div></li><li class="j-stop"><div class="j-rail"><span class="j-no">02<i>/ 05</i></span><span class="j-tag">第一段路</span></div><div class="j-body"><h3>打地基</h3><p>先不急着上市。图纸上的东西, 要一样一样拿到真实的市场上过一遍: 这个定位有没有人要, 这个产品值不值这个价, 客户会从哪一条路走进来。这一段最不好看, 也最省不得; 地基打歪了, 上面盖什么都歪。</p></div></li><li class="j-stop"><div class="j-rail"><span class="j-no">03<i>/ 05</i></span><span class="j-tag">第二段路</span></div><div class="j-body"><h3>下场</h3><p>然后品牌真的推出去。广告上了, 内容出了, 第一批客户来了, 数据回来了。这时候军师的活才真正开始: 一起看数字, 一起判断哪里对了、哪里要改, 改完再推。品牌不是 launch 那一天 build 出来的, 是 launch 之后一次一次改出来的。</p></div></li><li class="j-stop j-lit"><div class="j-rail"><span class="j-no">04<i>/ 05</i></span><span class="j-tag">第三段路</span></div><div class="j-body"><h3>人, 也是品牌</h3><span class="j-date">2026-09-09 · Activities Day</span><p>走到这里, 品牌已经在市场上了。最后一层地基, 是品牌背后那个人。老板的脸, 是品牌的第一张海报; 他怎么站、怎么穿、怎么被拍, 客户第一眼读到的就是这个。所以六个月的最后, 我们带着他们去做了一天: 色彩、造型、一场正式的 photoshoot。个人品牌的 fundamental, 也是要 build 的。</p><div class="j-ph j-n4"><figure class="x-pin "><img src="../assets/intro/bloc-17.jpg" width="720" height="960" alt="Brand Launch Off Challenge 9/9 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-12.jpg" width="720" height="960" alt="Brand Launch Off Challenge 9/9 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-6.jpg" width="720" height="960" alt="Brand Launch Off Challenge 9/9 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-1.jpg" width="720" height="960" alt="Brand Launch Off Challenge 9/9 现场" loading="lazy"></figure></div></div></li><li class="j-stop j-lit"><div class="j-rail"><span class="j-no">05<i>/ 05</i></span><span class="j-tag">终点</span></div><div class="j-body"><h3>同一张桌子</h3><span class="j-date">2026-09-21 · Graduation Luncheon</span><p>六个月后, 同一批人坐在同一张桌子。这一天不上课, 不看数据, 只做一件事: 把这六个月真的做出来的东西, 拿出来, 认一认。有人拿了奖, 有人没有; 但每一个人手上都有一个已经在市场上的品牌, 而六个月前, 它还只是一张图纸。</p><div class="j-ph"><figure class="x-pin "><img src="../assets/intro/bloc-dsc01345.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-dsc01300.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-dsc01452.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-dsc01543.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-dsc01489.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure><figure class="x-pin "><img src="../assets/intro/bloc-dsc01214.jpg" width="960" height="640" alt="Brand Launch Off Challenge 9/21 现场" loading="lazy"></figure></div><div class="x-film j-film"><video controls playsinline preload="none" poster="../assets/film/bloc-batch-01-luncheon-final.jpg" aria-label="Brand Launch Off Challenge 9/21 The highlight."><source src="../assets/film/bloc-batch-01-luncheon-final.mp4" type="video/mp4"></video><div><span class="x-k">Film · 1:35</span><h2>The highlight.</h2></div></div><a class="j-more" href="../log/bloc-batch-01-luncheon/">那一天的全部照片 <span aria-hidden="true">→</span></a></div></li></ol></section>
+  
+</section></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="cols3">
+      <div>
+        <h4>Breakthrough</h4>
+        <address>Kaloz EDU<br>No.4, Unit 6, Glen 9, Jalan Pensyarah U1/28,<br>HICOM-Glenmarie, 40150 Shah Alam, Selangor</address>
+      </div>
+      <nav aria-label="做过的事">
+        <h4>做过的事</h4>
+        <ul>
+          <li><a href="../log/">Build log</a></li>
+          <li><a href="../roundtable/">Breakthrough Roundtable</a></li>
+          <li><a href="../bloc/">Brand Launch Off Challenge</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="来找我们">
+        <h4>来找我们</h4>
+        <ul>
+          <li><a href="https://chat.whatsapp.com/Lv7hMIdmp2p2OUXm3frQhm">WhatsApp community</a></li>
+          <li><a href="https://www.facebook.com/jiaweistrategist">Facebook</a></li>
+          <li><a href="https://www.instagram.com/jiawei_strategist/">Instagram</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="base">
+      <span>© 2026 Breakthrough · operated by Kaloz EDU</span>
+      <span>End of sheet 01</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
